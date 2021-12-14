@@ -1517,6 +1517,20 @@
          style="fill:#c46d00;fill-opacity:1;fill-rule:evenodd;stroke:#c46d00;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
          id="path1489-11-3-01-90-8-05-3-8-4" />
     </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Mend-5-6-3-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(-0.6)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#c46d00;fill-opacity:1;fill-rule:evenodd;stroke:#c46d00;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1489-11-3-2-4" />
+    </marker>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -1525,9 +1539,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="500.43757"
-     inkscape:cy="402.14441"
+     inkscape:zoom="2.8284272"
+     inkscape:cx="750.8518"
+     inkscape:cy="308.12794"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -1675,8 +1689,8 @@
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1404-4"
-       width="23.8125"
-       height="34.395832"
+       width="23.812468"
+       height="37.041668"
        x="121.70837"
        y="64.822914" />
     <text
@@ -1824,8 +1838,8 @@
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1404-4-5"
-       width="23.812479"
-       height="34.395836"
+       width="23.812506"
+       height="38.364582"
        x="248.70833"
        y="39.6875" />
     <path
@@ -1898,12 +1912,12 @@
          id="tspan4398">MEMORY</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-3)"
-       d="m 145.52085,88.635412 70.11458,5e-6 -3e-5,-25.135413 31.75003,-4e-6"
+       d="m 145.52084,92.604162 70.11458,5e-6 -3e-5,-25.135413 31.75003,-4e-6"
        id="path1460-55-2-3"
        sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-2)"
-       d="m 145.52085,92.604162 74.10701,6e-6 -0.0237,-25.135414 27.78126,-4e-6"
+       d="m 145.52084,96.572912 74.10701,6e-6 -0.0237,-25.135414 27.78126,-4e-6"
        id="path1460-55-2-8"
        sodipodi:nodetypes="cccc" />
     <text
@@ -1912,7 +1926,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-8"
-       transform="translate(76.738547,30.419853)"><tspan
+       transform="translate(76.950869,34.39584)"><tspan
          id="tspan1406-2-8-1-1"
          x="173.03284"
          y="41.729237"
@@ -1923,62 +1937,62 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0"
-       transform="translate(76.738547,26.451097)"><tspan
+       transform="translate(76.950869,30.427084)"><tspan
          id="tspan1406-2-8-1-7"
          x="173.03284"
          y="41.729237"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">RD</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 256.64588,74.083334 1.32291,-1.322921 1.32292,1.322921"
+       d="m 256.8582,78.059321 1.32291,-1.322921 1.32292,1.322921"
        id="path1410-4" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="255.91049"
-       y="72.156326"
+       x="256.1228"
+       y="76.132317"
        id="text1408-6-2-0"><tspan
          sodipodi:role="line"
          id="tspan1406-2-9-1"
-         x="255.91049"
-         y="72.156326"
+         x="256.1228"
+         y="76.132317"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">CLK</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="263.10797"
-       y="72.156326"
+       x="263.32028"
+       y="76.132317"
        id="text1408-6-0"><tspan
          sodipodi:role="line"
          id="tspan1406-2-6"
-         x="263.10797"
-         y="72.156326"
+         x="263.32028"
+         y="76.132317"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">CE</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 129.64587,99.21875 1.32291,-1.32292 1.32292,1.32292"
+       d="m 129.64584,101.86458 1.32291,-1.32292 1.32292,1.32292"
        id="path1410-4-6" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="128.91052"
-       y="97.29174"
+       x="128.91049"
+       y="99.937576"
        id="text1408-6-2-0-5"><tspan
          sodipodi:role="line"
          id="tspan1406-2-9-1-2"
-         x="128.91052"
-         y="97.29174"
+         x="128.91049"
+         y="99.937576"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">CLK</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="136.108"
-       y="97.29174"
+       x="136.10797"
+       y="99.937576"
        id="text1408-6-0-9"><tspan
          sodipodi:role="line"
          id="tspan1406-2-6-4"
-         x="136.108"
-         y="97.29174"
+         x="136.10797"
+         y="99.937576"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">CE</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -2071,7 +2085,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-8-6"
-       transform="translate(-26.050053,54.239581)"><tspan
+       transform="translate(-26.314665,58.208334)"><tspan
          id="tspan1406-2-8-1-1-4"
          x="173.03284"
          y="41.729237"
@@ -2082,7 +2096,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3"
-       transform="translate(-26.236598,50.270829)"><tspan
+       transform="translate(-26.351355,54.239584)"><tspan
          id="tspan1406-2-8-1-7-7"
          x="173.03284"
          y="41.729237"
@@ -2155,34 +2169,34 @@
          id="tspan2481-1-8-6">FETCH</tspan></text>
     <path
        style="fill:none;stroke:#0e9300;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8)"
-       d="m 128.32294,104.51042 h 9.26041 l 2e-5,-3.96876"
+       d="m 128.32291,107.15625 h 9.26041 l 2e-5,-3.96876"
        id="path1460-55-2-5-2-2"
        sodipodi:nodetypes="ccc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="127.79483"
-       y="103.90632"
+       x="127.7948"
+       y="106.55215"
        id="text1408-6-3-8-2-8-5-0-61-4"><tspan
          sodipodi:role="line"
-         x="127.79483"
-         y="103.90632"
+         x="127.7948"
+         y="106.55215"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-1-8-6-5">DECODE</tspan></text>
     <path
        style="fill:none;stroke:#0e9300;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-6)"
-       d="m 254.11685,83.343749 10.58332,10e-7 -1e-5,-7.9375"
+       d="m 254.32917,87.319736 10.58332,10e-7 -10e-6,-7.9375"
        id="path1460-55-2-5-2-2-0"
        sodipodi:nodetypes="ccc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="254.70851"
-       y="82.739655"
+       x="254.92084"
+       y="86.715645"
        id="text1408-6-3-8-2-8-5-0-61-4-4"><tspan
          sodipodi:role="line"
-         x="254.70851"
-         y="82.739655"
+         x="254.92084"
+         y="86.715645"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-1-8-6-5-1">MEMORY</tspan></text>
     <path
@@ -2196,14 +2210,14 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-0"
-       transform="translate(-60.922344,54.239578)"><tspan
+       transform="translate(-60.922344,56.885413)"><tspan
          id="tspan1406-2-8-1-7-7-0"
          x="173.03284"
          y="41.729237"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">BRANCH</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-0-8)"
-       d="m 121.70837,96.57291 h -9.26042 v 13.22917 H 9.2604224 V 71.437501 h 2.6458326"
+       d="m 121.70833,99.21875 h -9.26042 l 4e-5,10.58333 H 9.2604224 V 71.437501 h 2.6458326"
        id="path1460-55-2-5-1-9"
        sodipodi:nodetypes="cccccc" />
     <path
@@ -2817,14 +2831,14 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-0-4"
-       transform="translate(-57.809353,50.045519)"><tspan
+       transform="translate(-57.809353,52.691354)"><tspan
          id="tspan1406-2-8-1-7-7-0-0"
          x="173.03284"
          y="41.729237"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">JUMP</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-0-8-4)"
-       d="m 121.70837,92.604161 h -11.90625 v 14.552089 l -96.572953,0 v -31.75 h 5.291666 v -2.645833 l 3.968755,0"
+       d="m 121.70833,95.250001 h -11.90625 l 4e-5,11.906249 H 13.229167 v -31.75 h 5.291666 v -2.645833 h 3.968755"
        id="path1460-55-2-5-1-9-9"
        sodipodi:nodetypes="cccccccc" />
     <path
@@ -2926,17 +2940,17 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="274.5322"
-       y="70.83342"
+       x="274.74451"
+       y="74.80941"
        id="text1408-6-3-8-2-8-5-0-61-2-7-7"><tspan
          sodipodi:role="line"
-         x="274.5322"
-         y="70.83342"
+         x="274.74451"
+         y="74.80941"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-1-8-6-94-5-1">MEM_WAIT</tspan></text>
     <path
        style="fill:none;stroke:#0e9300;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-6-0-58-2)"
-       d="M 272.63769,71.437502 H 288.5127"
+       d="m 272.85001,75.413489 h 15.87501"
        id="path1460-55-2-5-2-2-0-4-5-3"
        sodipodi:nodetypes="cc" />
     <text
@@ -2973,7 +2987,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-2-8)"
-       d="m 145.52087,96.57292 78.07576,-1e-5 -0.0237,-25.135403 23.81256,-7e-6"
+       d="m 145.52086,100.54167 78.07576,-1e-5 -0.0237,-25.135403 23.81256,-7e-6"
        id="path1460-55-2-8-9"
        sodipodi:nodetypes="cccc" />
     <text
@@ -2982,7 +2996,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-7"
-       transform="translate(-26.107419,46.169789)"><tspan
+       transform="translate(-26.636616,50.138542)"><tspan
          id="tspan1406-2-8-1-7-7-2"
          x="173.03284"
          y="41.729237"
@@ -2993,7 +3007,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-7-4"
-       transform="translate(76.667739,22.357294)"><tspan
+       transform="translate(76.880061,26.333281)"><tspan
          id="tspan1406-2-8-1-7-7-2-9"
          x="173.03284"
          y="41.729237"
@@ -3119,7 +3133,7 @@
          y="82.618729"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-9-8"
-         sodipodi:role="line">BRANCH_FUNCT</tspan></text>
+         sodipodi:role="line">FUNC</tspan></text>
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1404-43-3-0"
@@ -3275,6 +3289,33 @@
          y="38.962482"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-1-7-3-5">PC_NEXT</tspan></text>
+    <path
+       style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-3-0)"
+       d="m 145.52087,88.635408 66.14583,5e-6 -3e-5,-25.135413 35.71878,-4e-6"
+       id="path1460-55-2-3-6"
+       sodipodi:nodetypes="cccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="173.03284"
+       y="41.729237"
+       id="text1408-6-9-6-0-3-7-0"
+       transform="translate(-26.636616,46.169792)"><tspan
+         id="tspan1406-2-8-1-7-7-2-5"
+         x="173.03284"
+         y="41.729237"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">LOAD_UNSIGNED</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="173.03284"
+       y="41.729237"
+       id="text1408-6-9-6-0-3-7-0-1"
+       transform="translate(76.714697,22.368661)"><tspan
+         id="tspan1406-2-8-1-7-7-2-5-1"
+         x="173.03284"
+         y="41.729237"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">LOAD_UNSIGNED</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
