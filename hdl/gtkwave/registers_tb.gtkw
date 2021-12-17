@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Thu Dec 16 17:20:58 2021
+[*]
+[dumpfile] "/media/sf_W_DRIVE/riscv_mk1/hdl/vcd/registers_tb.vcd"
+[dumpfile_mtime] "Thu Dec 16 17:16:28 2021"
+[dumpfile_size] 18631
+[savefile] "/media/sf_W_DRIVE/riscv_mk1/hdl/gtkwave/registers_tb.gtkw"
+[timestart] 0
+[size] 2560 1203
+[pos] -1 -1
+*-26.403814 93600000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] registers_tb.
+[sst_width] 233
+[signals_width] 214
+[sst_expanded] 1
+[sst_vpaned_height] 354
+@28
+registers_tb.regs.i_clk
+registers_tb.regs.i_ce
+@25
+registers_tb.regs.i_rs1[4:0]
+registers_tb.regs.i_rs2[4:0]
+registers_tb.regs.i_rd[4:0]
+@22
+registers_tb.regs.i_value[31:0]
+registers_tb.regs.o_reg1[31:0]
+registers_tb.regs.o_reg2[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

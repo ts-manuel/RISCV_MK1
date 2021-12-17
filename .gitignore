@@ -1,0 +1,5 @@
+hdl/work/*
+!hdl/work/.gitkeep
+
+hdl/vcd/*
+!hdl/vcd/.gitkeep
