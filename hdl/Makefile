@@ -17,6 +17,9 @@ $(TARGETS) : analysis
 $(TARGETS) : %.vcd: %.vhd
 	$(GHDL) -e $(GHDLFLAGS) $(basename $(notdir $<))
 	$(GHDL) -r $(GHDLFLAGS) $(basename $(notdir $<)) --vcd=$(VCDDIR)/$(notdir $@)
+	@echo "-------------------------------------------------"
+	@echo " " $(basename $(notdir $<)) "PASSED!!!"
+	@echo "-------------------------------------------------"
 
 
 analysis: clean
