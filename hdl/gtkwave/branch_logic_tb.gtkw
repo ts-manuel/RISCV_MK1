@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Fri Dec 17 17:15:05 2021
+[*]
+[dumpfile] "/media/sf_W_DRIVE/riscv_mk1/hdl/vcd/branch_logic_tb.vcd"
+[dumpfile_mtime] "Fri Dec 17 17:13:51 2021"
+[dumpfile_size] 14942
+[savefile] "/media/sf_W_DRIVE/riscv_mk1/hdl/gtkwave/branch_logic_tb.gtkw"
+[timestart] 0
+[size] 2560 1203
+[pos] -1 -1
+*-26.741434 109300000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] branch_logic_tb.
+[sst_width] 233
+[signals_width] 214
+[sst_expanded] 1
+[sst_vpaned_height] 343
+@28
+branch_logic_tb.dut.i_ce
+branch_logic_tb.dut.i_clk
+branch_logic_tb.dut.i_func[2:0]
+@22
+branch_logic_tb.dut.i_in1[31:0]
+branch_logic_tb.dut.i_in2[31:0]
+branch_logic_tb.dut.o_branch[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
