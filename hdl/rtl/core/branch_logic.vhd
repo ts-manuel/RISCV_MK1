@@ -28,7 +28,7 @@ entity branch_logic is
     i_in1     : in std_logic_vector(31 downto 0);
     i_in2     : in std_logic_vector(31 downto 0);
     i_func    : in std_logic_vector(2 downto 0);
-    o_branch  : out std_logic_vector(31 downto 0)
+    o_branch  : out std_logic
   );
 end entity branch_logic;
 
@@ -46,30 +46,30 @@ begin
 
           -- BEQ (Branch if i_in1 == i_in2)
           when "000" =>
-            o_branch <= x"00000001" when (i_in1 = i_in2) else x"00000000";
+            o_branch <= '1' when (i_in1 = i_in2) else '0';
 
           -- BNE (Branch if i_in1 != i_in2)
           when "001" =>
-            o_branch <= x"00000001" when (i_in1 /= i_in2) else x"00000000";
+            o_branch <= '1' when (i_in1 /= i_in2) else '0';
 
           -- BLT (Branch if i_in1 < i_in2) signed
           when "100" =>
-            o_branch <= x"00000001" when (signed(i_in1) < signed(i_in2)) else x"00000000";
+            o_branch <= '1' when (signed(i_in1) < signed(i_in2)) else '0';
 
           -- BGE (Branch if i_in1 >= i_in2) signed
           when "101" =>
-            o_branch <= x"00000001" when (signed(i_in1) >= signed(i_in2)) else x"00000000";
+            o_branch <= '1' when (signed(i_in1) >= signed(i_in2)) else '0';
 
           -- BLTU (Branch if i_in1 < i_in2) unsigned
           when "110" =>
-            o_branch <= x"00000001" when (unsigned(i_in1) < unsigned(i_in2)) else x"00000000";
+            o_branch <= '1' when (unsigned(i_in1) < unsigned(i_in2)) else '0';
 
           -- BGEU (Branch if i_in1 >= i_in2) unsigned
           when "111" =>
-            o_branch <= x"00000001" when (unsigned(i_in1) >= unsigned(i_in2)) else x"00000000";
+            o_branch <= '1' when (unsigned(i_in1) >= unsigned(i_in2)) else '0';
 
           when others =>
-            o_branch <= x"00000000";
+            o_branch <= '0';
 
         end case;
 
