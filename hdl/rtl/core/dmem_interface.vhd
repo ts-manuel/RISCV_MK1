@@ -12,8 +12,7 @@
 --  i_writedata:      input write data
 --  i_rd:             read signal
 --  i_wr:             write signal
---  i_byte_enable:    selects between 8/16/32 bit read / write
---  i_load_unsign:    when low data is sign extended on 8bit and 16bit reads
+--  i_func:           selects between 8/16/32 bit read / write and whe to sign extend the data
 --  o_readdata:       output data
 --  o_wait:           output wait signals
 --  o_av_addr:        Avalon address
@@ -40,11 +39,10 @@ entity dmem_interface is
     i_writedata       : in  std_logic_vector(31 downto 0);
     i_rd              : in  std_logic;
     i_wr              : in  std_logic;
-    i_byte_enable     : in  std_logic_vector(3 downto 0);
-    i_load_unsign     : in  std_logic;
+    i_func            : in  std_logic_vector(2 downto 0);
     o_readdata        : out std_logic_vector(31 downto 0);
     o_wait            : out std_logic;
-    o_av_addr         : out std_logic_vector(31 downto 0);
+    o_av_addr         : out std_logic_vector(29 downto 0);
     o_av_writedata    : out std_logic_vector(31 downto 0);
     o_av_byte_enable  : out std_logic_vector(3 downto 0);
     o_av_read         : out std_logic;
@@ -57,39 +55,53 @@ end entity dmem_interface;
 
 architecture behave of dmem_interface is
 
+  constant c_byte_mask : std_logic_vector(3 downto 0) := "0001";
+  constant c_word_mask : std_logic_vector(3 downto 0) := "0011";
+
+  signal w_offset : integer range 0 to 3;
+  signal w_data_in_aligned : std_logic_vector(31 downto 0);
   signal w_byte  : std_logic_vector(31 downto 0);
   signal w_word  : std_logic_vector(31 downto 0);
   signal w_ubyte : std_logic_vector(31 downto 0);
   signal w_uword : std_logic_vector(31 downto 0);
-
+  
 begin
 
-  -- Sign extend data input
-  w_byte(7 downto 0)    <= i_av_readdata(7 downto 0);
-  w_byte(31 downto 8)   <= (others=>i_av_readdata(7));
-  w_word(15 downto 0)   <= i_av_readdata(15 downto 0);
-  w_word(31 downto 16)  <= (others=>i_av_readdata(15));
+  -- Allign input data to 32-bit boundary
+  w_offset <= to_integer(unsigned(i_addr(1 downto 0)));
+  w_data_in_aligned <= std_logic_vector(shift_right(unsigned(i_av_readdata), w_offset*8));
 
-  w_ubyte(7 downto 0)   <= i_av_readdata(7 downto 0);
+  -- Sign extend input data
+  w_byte(7 downto 0)    <= w_data_in_aligned(7 downto 0);
+  w_byte(31 downto 8)   <= (others=>w_data_in_aligned(7));
+  w_word(15 downto 0)   <= w_data_in_aligned(15 downto 0);
+  w_word(31 downto 16)  <= (others=>w_data_in_aligned(15));
+
+  w_ubyte(7 downto 0)   <= w_data_in_aligned(7 downto 0);
   w_ubyte(31 downto 8)  <= (others=>'0');
-  w_uword(15 downto 0)  <= i_av_readdata(15 downto 0);
+  w_uword(15 downto 0)  <= w_data_in_aligned(15 downto 0);
   w_uword(31 downto 16) <= (others=>'0');
 
 
   -- Output signals
-  o_readdata <= w_byte  when (i_byte_enable = "0001" and i_load_unsign = '0') else
-                w_word  when (i_byte_enable = "0011" and i_load_unsign = '0') else
-                w_ubyte when (i_byte_enable = "0001" and i_load_unsign = '1') else
-                w_uword when (i_byte_enable = "0011" and i_load_unsign = '1') else
-                i_av_readdata;
+  o_readdata <= w_byte  when (i_func = "000") else
+                w_word  when (i_func = "001") else
+                w_ubyte when (i_func = "100") else
+                w_uword when (i_func = "101") else
+                w_data_in_aligned;
 
   o_wait  <= i_av_waitrequest;
 
 
   -- Avalon output signals
-  o_av_addr         <= i_addr;
-  o_av_writedata    <= i_writedata;
-  o_av_byte_enable  <= i_byte_enable;
+  o_av_addr         <= i_addr(31 downto 2);
+
+  o_av_writedata    <= std_logic_vector(shift_left(unsigned(i_writedata), w_offset*8));
+
+  o_av_byte_enable  <=  std_logic_vector(shift_left(unsigned(c_byte_mask), w_offset)) when (i_func(1 downto 0) = "00") else
+                        std_logic_vector(shift_left(unsigned(c_word_mask), w_offset)) when (i_func(1 downto 0) = "01") else
+                        "1111";
+
   o_av_read         <= '1' when (i_ce = '1' and i_rd = '1') else '0';
   o_av_write        <= '1' when (i_ce = '1' and i_wr = '1') else '0';
 

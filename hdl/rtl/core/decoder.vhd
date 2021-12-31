@@ -21,8 +21,7 @@
 --  o_branch_func:  branch condition
 --  o_branch:       this is a branch instruction
 --  o_jump:         this is a jump instruction
---  o_byte_enable:  byte enable for memory write
---  o_load_unsign:  when active loads from memory are not sign extended
+--  o_mem_func:     data memory function
 --  o_load:         this is a load instruction
 --  o_store:        this is a store instruction
 --
@@ -51,8 +50,7 @@ entity decoder is
     o_branch_func : out std_logic_vector(2 downto 0);
     o_branch      : out std_logic;
     o_jump        : out std_logic;
-    o_byte_enable : out std_logic_vector(3 downto 0);
-    o_load_unsign : out std_logic;
+    o_mem_func    : out std_logic_vector(2 downto 0);
     o_load        : out std_logic;
     o_store       : out std_logic
   );
@@ -77,8 +75,7 @@ architecture behave of decoder is
   signal w_branch_func : std_logic_vector(2 downto 0);
   signal w_branch      : std_logic;
   signal w_jump        : std_logic;
-  signal w_byte_enable : std_logic_vector(3 downto 0);
-  signal w_load_unsign : std_logic;
+  signal w_mem_func    : std_logic_vector(2 downto 0);
   signal w_load        : std_logic;
   signal w_store       : std_logic;
 
@@ -121,15 +118,7 @@ begin
   w_load        <= '1'  when (w_ins_type = LOAD)  else '0';
   w_store       <= '1'  when (w_ins_type = STORE) else '0';
 
-
-  with i_opcode(13 downto 12) select
-    w_byte_enable <=  "0001" when "00",
-                      "0011" when "01",
-                      "1111" when "10",
-                      "0000" when others;
-                
-  w_load_unsign <= i_opcode(14);
-
+  w_mem_func <= i_opcode(14 downto 12);
 
   -- Decode immediate
   p_imm : process (i_opcode, w_ins_type)
@@ -175,8 +164,7 @@ begin
         o_branch_func <= w_branch_func;
         o_branch      <= w_branch;     
         o_jump        <= w_jump;       
-        o_byte_enable <= w_byte_enable;
-        o_load_unsign <= w_load_unsign;
+        o_mem_func    <= w_mem_func;
         o_load        <= w_load;       
         o_store       <= w_store;      
       end if;

@@ -14,7 +14,7 @@
    id="svg8"
    inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
    sodipodi:docname="cpu_diagram.svg"
-   inkscape:export-filename="W:\riscv_mk1\inkscape\cpu_diagram.png"
+   inkscape:export-filename="W:\riscv_mk1\inkscape\cpu_diagram_timings.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
   <defs
@@ -1540,8 +1540,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="560.78091"
-     inkscape:cy="413.92288"
+     inkscape:cx="579.14819"
+     inkscape:cy="393.74079"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -1922,12 +1922,12 @@
          id="tspan4398">MEMORY</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-3)"
-       d="m 145.52084,92.604162 70.11458,5e-6 -3e-5,-25.135413 31.75003,-4e-6"
+       d="m 145.52083,84.666667 70.11458,5e-6 -2e-5,-18.520835 31.75003,-4e-6"
        id="path1460-55-2-3"
        sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-2)"
-       d="m 145.52084,96.572912 74.10701,6e-6 -0.0237,-25.135414 27.78126,-4e-6"
+       d="m 145.49715,88.635416 74.10701,6e-6 0,-18.520835 27.78126,-4e-6"
        id="path1460-55-2-8"
        sodipodi:nodetypes="cccc" />
     <text
@@ -1936,7 +1936,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-8"
-       transform="translate(76.950869,34.39584)"><tspan
+       transform="translate(76.950866,33.072923)"><tspan
          id="tspan1406-2-8-1-1"
          x="173.03284"
          y="41.729237"
@@ -1947,7 +1947,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0"
-       transform="translate(76.950869,30.427084)"><tspan
+       transform="translate(76.950866,29.104167)"><tspan
          id="tspan1406-2-8-1-7"
          x="173.03284"
          y="41.729237"
@@ -2095,7 +2095,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-8-6"
-       transform="translate(-26.314665,58.208334)"><tspan
+       transform="translate(-26.45884,50.282203)"><tspan
          id="tspan1406-2-8-1-1-4"
          x="173.03284"
          y="41.729237"
@@ -2106,7 +2106,7 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3"
-       transform="translate(-26.351355,54.239584)"><tspan
+       transform="translate(-26.49553,46.313453)"><tspan
          id="tspan1406-2-8-1-7-7"
          x="173.03284"
          y="41.729237"
@@ -2288,14 +2288,14 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-0-7"
-       transform="translate(-33.65528,69.993658)"><tspan
+       transform="translate(-38.946972,69.993635)"><tspan
          id="tspan1406-2-8-1-7-7-0-7"
          x="173.03284"
          y="41.729237"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">TAKE_BRANCH</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-0-8-9)"
-       d="m 157.42712,112.44792 -150.8125306,-1e-5 V 68.791667 h 5.2916656"
+       d="m 152.13542,112.44792 -145.5208306,-1e-5 V 68.791667 h 5.2916656"
        id="path1460-55-2-5-1-9-5"
        sodipodi:nodetypes="cccc" />
     <text
@@ -2719,22 +2719,22 @@
        id="rect1404-4-6-1"
        width="26.458334"
        height="13.229182"
-       x="157.42711"
-       y="105.83334" />
+       x="152.13542"
+       y="105.83332" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:0;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="169.34059"
-       y="111.76889"
+       x="164.0489"
+       y="111.76887"
        id="text1408-8-4-1"><tspan
          sodipodi:role="line"
          id="tspan1406-26-1-5"
-         x="169.34059"
-         y="111.76889"
+         x="164.0489"
+         y="111.76887"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;text-align:center;text-anchor:middle;stroke-width:0.264583">BRANCH</tspan><tspan
          sodipodi:role="line"
-         x="169.34059"
-         y="116.00222"
+         x="164.0489"
+         y="116.0022"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;text-align:center;text-anchor:middle;stroke-width:0.264583"
          id="tspan46896-7">LOGIC</tspan></text>
     <path
@@ -2761,7 +2761,7 @@
        r="0.52916664" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-7-4-3-3)"
-       d="m 145.52087,83.343747 h 30.42708 v 21.166673"
+       d="m 145.52083,97.895833 17.19792,0 v 6.614587"
        id="path1460-55-8-9-8-0"
        sodipodi:nodetypes="ccc" />
     <path
@@ -2874,45 +2874,45 @@
        r="0.52916664" />
     <path
        style="fill:none;stroke:#0e9300;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-9-2)"
-       d="m 196.24525,112.43637 -11.90624,1e-5"
+       d="m 190.95356,112.43635 -11.90624,10e-6"
        id="path1460-55-2-5-2-2-02-4"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="187.02374"
-       y="111.84382"
+       x="181.73206"
+       y="111.8438"
        id="text1408-6-3-8-2-8-5-0-61-4-9-73"><tspan
          sodipodi:role="line"
-         x="187.02374"
-         y="111.84382"
+         x="181.73206"
+         y="111.8438"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-1-8-6-5-6-21">EXECUTE</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="179.76424"
-       y="113.16674"
+       x="174.47255"
+       y="113.16672"
        id="text1408-6-0-9-9-3"><tspan
          sodipodi:role="line"
          id="tspan1406-2-6-4-3-7"
-         x="179.76424"
-         y="113.16674"
+         x="174.47255"
+         y="113.16672"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">CE</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 183.88545,117.73958 -1.32292,-1.3229 1.32292,-1.32292"
+       d="m 178.59376,117.73956 -1.32292,-1.3229 1.32292,-1.32292"
        id="path1410-4-6-0-3" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="177.85841"
-       y="117.13549"
+       x="172.56673"
+       y="117.13547"
        id="text1408-6-2-0-5-8-9"><tspan
          sodipodi:role="line"
          id="tspan1406-2-9-1-2-9-3"
-         x="177.85841"
-         y="117.13549"
+         x="172.56673"
+         y="117.13547"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">CLK</tspan></text>
     <text
        xml:space="preserve"
@@ -3002,7 +3002,7 @@
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-2-8)"
-       d="m 145.52086,100.54167 78.07576,-1e-5 -0.0237,-25.135403 23.81256,-7e-6"
+       d="m 145.52083,92.604167 78.07576,-1e-5 -0.0237,-18.520817 23.81256,-7e-6"
        id="path1460-55-2-8-9"
        sodipodi:nodetypes="cccc" />
     <text
@@ -3011,22 +3011,22 @@
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-7"
-       transform="translate(-26.636616,50.138542)"><tspan
+       transform="translate(-26.780791,42.212411)"><tspan
          id="tspan1406-2-8-1-7-7-2"
          x="173.03284"
          y="41.729237"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">BYTE_ENABLE</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">MEM_FUNC</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="173.03284"
        y="41.729237"
        id="text1408-6-9-6-0-3-7-4"
-       transform="translate(76.880061,26.333281)"><tspan
+       transform="translate(76.880058,25.010364)"><tspan
          id="tspan1406-2-8-1-7-7-2-9"
          x="173.03284"
          y="41.729237"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">BYTE_ENABLE</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">FUNC</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -3141,14 +3141,14 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="146.67685"
-       y="82.618729"
+       x="146.57451"
+       y="97.170815"
        id="text1408-6-3-8-2-8-59-8"><tspan
-         x="146.67685"
-         y="82.618729"
+         x="146.57451"
+         y="97.170815"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-9-8"
-         sodipodi:role="line">FUNC</tspan></text>
+         sodipodi:role="line">BRANCH_FUNC</tspan></text>
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.25;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1404-43-3-0"
@@ -3304,33 +3304,6 @@
          y="38.962482"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
          id="tspan2481-1-7-3-5">PC_NEXT</tspan></text>
-    <path
-       style="fill:none;stroke:#c46d00;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-3-0)"
-       d="m 145.52087,88.635408 66.14583,5e-6 -3e-5,-25.135413 35.71878,-4e-6"
-       id="path1460-55-2-3-6"
-       sodipodi:nodetypes="cccc" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="173.03284"
-       y="41.729237"
-       id="text1408-6-9-6-0-3-7-0"
-       transform="translate(-26.636616,46.169792)"><tspan
-         id="tspan1406-2-8-1-7-7-2-5"
-         x="173.03284"
-         y="41.729237"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">LOAD_UNSIGNED</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;white-space:pre;inline-size:0;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="173.03284"
-       y="41.729237"
-       id="text1408-6-9-6-0-3-7-0-1"
-       transform="translate(76.714697,22.368661)"><tspan
-         id="tspan1406-2-8-1-7-7-2-5-1"
-         x="173.03284"
-         y="41.729237"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">LOAD_UNSIGNED</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

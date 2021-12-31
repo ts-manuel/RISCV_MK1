@@ -27,11 +27,10 @@ architecture behave of dmem_interface_tb is
   signal r_writedata      : std_logic_vector(31 downto 0) := (others=>'0');
   signal r_rd             : std_logic := '0';
   signal r_wr             : std_logic := '0';
-  signal r_byte_enable    : std_logic_vector(3 downto 0) := (others=>'0');
-  signal r_load_unsign    : std_logic := '0';
+  signal r_func           : std_logic_vector(2 downto 0) := (others=>'0');
   signal w_readdata       : std_logic_vector(31 downto 0);
   signal w_wait           : std_logic;
-  signal w_av_addr        : std_logic_vector(31 downto 0);
+  signal w_av_addr        : std_logic_vector(29 downto 0);
   signal w_av_writedata   : std_logic_vector(31 downto 0);
   signal w_av_byte_enable : std_logic_vector(3 downto 0);
   signal w_av_read        : std_logic;
@@ -44,27 +43,35 @@ architecture behave of dmem_interface_tb is
   type pattern_type is record
     storeddata  : std_logic_vector(31 downto 0);
     waitstates  : integer;
-    byte_enable : std_logic_vector(3 downto 0);
-    load_unsign : std_logic;
+    offset      : integer;
+    func        : std_logic_vector(2 downto 0);
     readdata    : std_logic_vector(31 downto 0);
   end record;
   type pattern_array is array (natural range <>) of pattern_type;
   constant patterns : pattern_array := (
-    (x"c3ed7a90",  0, "1111", '0', x"c3ed7a90"),
-    (x"70008164",  1, "1111", '0', x"70008164"),
-    (x"41660703",  4, "1111", '0', x"41660703"),
-    (x"62b88b6c",  0, "0011", '0', x"ffff8b6c"),
-    (x"6fda25f7",  1, "0011", '0', x"000025f7"),
-    (x"9413823b",  4, "0011", '0', x"ffff823b"),
-    (x"b6f2b37a",  0, "0011", '1', x"0000b37a"),
-    (x"496c7f70",  1, "0011", '1', x"00007f70"),
-    (x"bed1b161",  4, "0011", '1', x"0000b161"),
-    (x"97f0794d",  0, "0001", '0', x"0000004d"),
-    (x"012a7280",  1, "0001", '0', x"ffffff80"),
-    (x"578856e4",  4, "0001", '0', x"ffffffe4"),
-    (x"0ed68edb",  0, "0001", '1', x"000000db"),
-    (x"854a3394",  1, "0001", '1', x"00000094"),
-    (x"0b9997f3",  4, "0001", '1', x"000000f3")
+    (x"c3ed7a90", 0, 0, "010", x"c3ed7a90"),  -- Alligned
+    (x"70008164", 1, 0, "010", x"70008164"),
+    (x"41660703", 4, 0, "010", x"41660703"),
+    (x"62b88b6c", 0, 0, "001", x"ffff8b6c"),
+    (x"6fda25f7", 1, 0, "001", x"000025f7"),
+    (x"9413823b", 4, 0, "001", x"ffff823b"),
+    (x"b6f2b37a", 0, 0, "101", x"0000b37a"),
+    (x"496c7f70", 1, 0, "101", x"00007f70"),
+    (x"bed1b161", 4, 0, "101", x"0000b161"),
+    (x"97f0794d", 0, 0, "000", x"0000004d"),
+    (x"012a7280", 1, 0, "000", x"ffffff80"),
+    (x"578856e4", 4, 0, "000", x"ffffffe4"),
+    (x"0ed68edb", 0, 0, "100", x"000000db"),
+    (x"854a3394", 1, 0, "100", x"00000094"),
+    (x"0b9997f3", 4, 0, "100", x"000000f3"),
+    (x"00008a00", 0, 1, "000", x"ffffff8a"),  -- Unaligned 8-bit
+    (x"00850000", 1, 2, "000", x"ffffff85"),
+    (x"81000000", 4, 3, "000", x"ffffff81"),
+    (x"00008b00", 0, 1, "100", x"0000008b"),
+    (x"00da0000", 1, 2, "100", x"000000da"),
+    (x"94000000", 4, 3, "100", x"00000094"),
+    (x"b6f20000", 0, 2, "001", x"ffffb6f2"),  -- Unaligned 16-bit
+    (x"8f700000", 1, 2, "101", x"00008f70")
   );
 
 
@@ -85,11 +92,10 @@ architecture behave of dmem_interface_tb is
       i_writedata       : in  std_logic_vector(31 downto 0);
       i_rd              : in  std_logic;
       i_wr              : in  std_logic;
-      i_byte_enable     : in  std_logic_vector(3 downto 0);
-      i_load_unsign     : in  std_logic;
+      i_func            : in  std_logic_vector(2 downto 0);
       o_readdata        : out std_logic_vector(31 downto 0);
       o_wait            : out std_logic;
-      o_av_addr         : out std_logic_vector(31 downto 0);
+      o_av_addr         : out std_logic_vector(29 downto 0);
       o_av_writedata    : out std_logic_vector(31 downto 0);
       o_av_byte_enable  : out std_logic_vector(3 downto 0);
       o_av_read         : out std_logic;
@@ -119,9 +125,8 @@ begin
       r_ce  <= '1';
       r_rd  <= '1';
       r_wr  <= '0';
-      r_byte_enable <= patterns(i).byte_enable;
-      r_load_unsign <= patterns(i).load_unsign;
-      r_addr  <= std_logic_vector(to_unsigned(i, r_addr'length));
+      r_func <= patterns(i).func;
+      r_addr  <= std_logic_vector(to_unsigned(i*4 + patterns(i).offset, r_addr'length));
       wait until rising_edge(r_clk);
       while w_wait = '1' loop
         wait until rising_edge(r_clk);
@@ -136,9 +141,8 @@ begin
       r_ce  <= '1';
       r_rd  <= '1';
       r_wr  <= '0';
-      r_byte_enable <= patterns(i).byte_enable;
-      r_load_unsign <= patterns(i).load_unsign;
-      r_addr  <= std_logic_vector(to_unsigned(i, r_addr'length));
+      r_func <= patterns(i).func;
+      r_addr  <= std_logic_vector(to_unsigned(i*4 + patterns(i).offset, r_addr'length));
       wait until rising_edge(r_clk);
       while w_wait = '1' loop
         wait until rising_edge(r_clk);
@@ -150,26 +154,64 @@ begin
     r_ce  <= '1';
     r_rd  <= '0';
     r_wr  <= '1';
-    r_load_unsign <= '0';
-    r_byte_enable <= "1111";
+    r_func <= "010";
+    r_addr <= (others=>'0');
     r_writedata   <= x"01234567";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = r_byte_enable)  report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byte_enable  = "1111")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = r_writedata)    report "Failed write: writedata signal"   severity failure;
-    r_byte_enable <= "0011";
+    r_func <= "001";
     r_writedata   <= x"89012345";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = r_byte_enable)  report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byte_enable  = "0011")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = r_writedata)    report "Failed write: writedata signal"   severity failure;
-    r_byte_enable <= "0001";
+    r_func <= "000";
     r_writedata   <= x"67891054";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = r_byte_enable)  report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byte_enable  = "0001")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = r_writedata)    report "Failed write: writedata signal"   severity failure;
   
+    -- Test unaligned 8-bit writes
+    r_ce  <= '1';
+    r_rd  <= '0';
+    r_wr  <= '1';
+    r_func <= "000";
+    r_addr <= x"0000000" & "0001";
+    r_writedata   <= x"01234567";
+    wait until rising_edge(r_clk);
+    assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
+    assert (w_av_byte_enable  = "0010")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_writedata    = x"23456700")    report "Failed write: writedata signal"   severity failure;
+    r_func <= "000";
+    r_addr <= x"0000000" & "0010";
+    r_writedata   <= x"89012345";
+    wait until rising_edge(r_clk);
+    assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
+    assert (w_av_byte_enable  = "0100")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_writedata    = x"23450000")    report "Failed write: writedata signal"   severity failure;
+    r_func <= "000";
+    r_addr <= x"0000000" & "0011";
+    r_writedata   <= x"67891054";
+    wait until rising_edge(r_clk);
+    assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
+    assert (w_av_byte_enable  = "1000")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_writedata    = x"54000000")    report "Failed write: writedata signal"   severity failure;
+
+    -- Test unaligned 16-bit writes
+    r_ce  <= '1';
+    r_rd  <= '0';
+    r_wr  <= '1';
+    r_func <= "001";
+    r_addr <= x"0000000" & "0010";
+    r_writedata   <= x"01234567";
+    wait until rising_edge(r_clk);
+    assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
+    assert (w_av_byte_enable  = "1100")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_writedata    = x"45670000")    report "Failed write: writedata signal"   severity failure;
+
     -- End simulation
     finish;
 
@@ -218,8 +260,7 @@ begin
       i_writedata       => r_writedata,
       i_rd              => r_rd,
       i_wr              => r_wr,
-      i_byte_enable     => r_byte_enable,
-      i_load_unsign     => r_load_unsign,
+      i_func            => r_func,
       o_readdata        => w_readdata,
       o_wait            => w_wait,
       o_av_addr         => w_av_addr,

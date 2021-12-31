@@ -5,3 +5,5 @@ hdl/vcd/*
 !hdl/vcd/.gitkeep
 
 hdl/gtkwave/*
+
+hdl/code/*/obj/*

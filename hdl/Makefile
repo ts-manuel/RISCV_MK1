@@ -2,7 +2,7 @@
 VPATH = rtl/core tb/core #Search path
 WORKDIR=work# Work directory
 VCDDIR=vcd
-VHDL_RTL := $(wildcard rtl/core/*.vhd)# VHDL source files
+VHDL_RTL := $(wildcard rtl/core/*.vhd tb/util/*.vhd)# VHDL source files
 VHDL_TB  := $(wildcard tb/core/*.vhd)# VHDL test bench files
 TARGETS := $(notdir $(VHDL_TB:.vhd=.vcd))# Target files simulation output
 #

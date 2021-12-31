@@ -29,7 +29,7 @@ entity imem_interface is
     i_clk             : in  std_logic;
     i_ce              : in  std_logic;
     i_pc              : in  std_logic_vector(31 downto 0);
-    o_av_addr         : out std_logic_vector(31 downto 0);
+    o_av_addr         : out std_logic_vector(29 downto 0);
     o_av_read         : out std_logic;
     i_av_waitrequest  : in  std_logic;
     i_av_readdata     : in  std_logic_vector(31 downto 0);
@@ -44,7 +44,7 @@ begin
 
   -- Signal remapping
   o_av_read <= i_ce;
-  o_av_addr <= i_pc;
+  o_av_addr <= i_pc(31 downto 2);
   o_wait    <= i_av_waitrequest;
   o_opcode  <= i_av_readdata;
   

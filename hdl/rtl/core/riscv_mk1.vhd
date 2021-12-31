@@ -32,14 +32,14 @@ entity riscv_mk1 is
   port (
     i_clk                 : in  std_logic;
     i_rst                 : in  std_logic;
-    o_av_inst_addr        : out std_logic_vector(31 downto 0);
+    o_av_inst_addr        : out std_logic_vector(29 downto 0);
     o_av_inst_read        : out std_logic;
     i_av_inst_waitrequest : in  std_logic;
     i_av_inst_readdata    : in  std_logic_vector(31 downto 0);
     o_av_data_read        : out std_logic;
     o_av_data_write       : out std_logic;
     o_av_data_byte_enable : out std_logic_vector(3 downto 0);
-    o_av_data_addr        : out std_logic_vector(31 downto 0);
+    o_av_data_addr        : out std_logic_vector(29 downto 0);
     o_av_data_writedata   : out std_logic_vector(31 downto 0);
     i_av_data_waitrequest : in  std_logic;
     i_av_data_readdata    : in  std_logic_vector(31 downto 0)
@@ -70,8 +70,7 @@ architecture behave of riscv_mk1 is
   signal w_branch_func  : std_logic_vector(2 downto 0);
   signal w_branch       : std_logic;
   signal w_jump         : std_logic;
-  signal w_byte_enable  : std_logic_vector(3 downto 0);
-  signal w_load_unsign  : std_logic;
+  signal w_mem_func     : std_logic_vector(2 downto 0);
   signal w_load         : std_logic;
   signal w_store        : std_logic;
 
@@ -124,8 +123,7 @@ architecture behave of riscv_mk1 is
       o_branch_func : out std_logic_vector(2 downto 0);
       o_branch      : out std_logic;
       o_jump        : out std_logic;
-      o_byte_enable : out std_logic_vector(3 downto 0);
-      o_load_unsign : out std_logic;
+      o_mem_func    : out std_logic_vector(2 downto 0);
       o_load        : out std_logic;
       o_store       : out std_logic
     );
@@ -174,11 +172,10 @@ architecture behave of riscv_mk1 is
       i_writedata       : in  std_logic_vector(31 downto 0);
       i_rd              : in  std_logic;
       i_wr              : in  std_logic;
-      i_byte_enable     : in  std_logic_vector(3 downto 0);
-      i_load_unsign     : in  std_logic;
+      i_func            : in  std_logic_vector(2 downto 0);
       o_readdata        : out std_logic_vector(31 downto 0);
       o_wait            : out std_logic;
-      o_av_addr         : out std_logic_vector(31 downto 0);
+      o_av_addr         : out std_logic_vector(29 downto 0);
       o_av_writedata    : out std_logic_vector(31 downto 0);
       o_av_byte_enable  : out std_logic_vector(3 downto 0);
       o_av_read         : out std_logic;
@@ -193,7 +190,7 @@ architecture behave of riscv_mk1 is
       i_clk             : in  std_logic;
       i_ce              : in  std_logic;
       i_pc              : in  std_logic_vector(31 downto 0);
-      o_av_addr         : out std_logic_vector(31 downto 0);
+      o_av_addr         : out std_logic_vector(29 downto 0);
       o_av_read         : out std_logic;
       i_av_waitrequest  : in  std_logic;
       i_av_readdata     : in  std_logic_vector(31 downto 0);
@@ -261,8 +258,7 @@ begin
       o_branch_func => w_branch_func,
       o_branch      => w_branch,     
       o_jump        => w_jump,       
-      o_byte_enable => w_byte_enable,
-      o_load_unsign => w_load_unsign,
+      o_mem_func    => w_mem_func,
       o_load        => w_load,       
       o_store       => w_store     
     );
@@ -307,8 +303,7 @@ begin
       i_writedata       => w_reg_out2,
       i_rd              => w_load,
       i_wr              => w_store,
-      i_byte_enable     => w_byte_enable,
-      i_load_unsign     => w_load_unsign,
+      i_func            => w_mem_func,
       o_readdata        => w_data_out,
       o_wait            => w_memory_wait,
       o_av_addr         => o_av_data_addr,

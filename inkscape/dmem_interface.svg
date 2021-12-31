@@ -2504,10 +2504,10 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="323.40165"
-     inkscape:cy="423.96515"
+     inkscape:cx="372.89912"
+     inkscape:cy="948.63837"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
      inkscape:snap-center="true"
@@ -2542,7 +2542,7 @@
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1404-3"
        width="58.208332"
-       height="100.54166"
+       height="95.25"
        x="37.041668"
        y="23.812502" />
     <text
@@ -2575,33 +2575,33 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="39.812828"
-       y="88.341881"
+       x="39.812824"
+       y="83.050209"
        id="text1408-6-3-8-2-5-5-6"><tspan
          sodipodi:role="line"
-         x="39.812828"
-         y="88.341881"
+         x="39.812824"
+         y="83.050209"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
-         id="tspan2279-6-5-9">o_av_addr [31:0]</tspan></text>
+         id="tspan2279-6-5-9">o_av_addr [29:0]</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-9)"
-       d="m 34.39578,87.312513 -13.229221,-10e-6"
+       d="m 34.395778,82.020843 -13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-1"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="40.149471"
-       y="104.17657"
+       x="40.149467"
+       y="98.884895"
        id="text1408-6-3-8-2-5-5-6-0-6"><tspan
          sodipodi:role="line"
-         x="40.149471"
-         y="104.17657"
+         x="40.149467"
+         y="98.884895"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          id="tspan2279-6-5-9-3-0">o_av_read</tspan></text>
     <path
        style="fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-0-0)"
-       d="m 34.39578,103.1875 -13.229221,-1e-5"
+       d="m 34.395778,97.89583 -13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-01-2"
        sodipodi:nodetypes="cc" />
     <text
@@ -2616,14 +2616,60 @@
          sodipodi:role="line"
          id="tspan4785">The data read from memory is sign extended to 32 bits when <tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Rockwell;-inkscape-font-specification:'Rockwell Bold'"
-   id="tspan17298">i_load_unsigned</tspan> is LOW and</tspan><tspan
+   id="tspan17298">i_func[2]</tspan> is HIGH and</tspan><tspan
          x="8.4407635"
          y="245.48181"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          sodipodi:role="line"
          id="tspan7820"><tspan
    style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Rockwell;-inkscape-font-specification:'Rockwell Bold'"
-   id="tspan17353">i_byte_enable</tspan> is &quot;0001&quot; (8 bit read) or &quot;0011&quot; (16 bit read).</tspan></text>
+   id="tspan17353">i_func[1:0]</tspan> is &quot;00&quot; (8 bit read) or &quot;01&quot; (16 bit read).</tspan><tspan
+         x="8.4407635"
+         y="249.71515"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2279" /><tspan
+         x="8.4407635"
+         y="253.95659"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2281">RV32I provides a 32-bit address space that is byte-adressed. Code compiled with the <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Rockwell;-inkscape-font-specification:'Rockwell Bold'"
+   id="tspan2285">-mstrict-align</tspan></tspan><tspan
+         x="8.4407635"
+         y="258.18994"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2283">option will always acces memory with the address naturally aligned to the reference datatype</tspan><tspan
+         x="8.4407635"
+         y="262.42328"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2287">(i.e., on a four-byte boundary for 32-bit access, and a two-byte boundary for 16-bit access).</tspan><tspan
+         x="8.4407635"
+         y="266.65662"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2289" /><tspan
+         x="8.4407635"
+         y="270.88995"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2291">The avalon bus is word-adressed (i.e. the lower two bits are always zero and thus are omitted)</tspan><tspan
+         x="8.4407635"
+         y="275.12329"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2293" /><tspan
+         x="8.4407635"
+         y="279.36472"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2297"><tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Rockwell;-inkscape-font-specification:'Rockwell Bold'"
+   id="tspan2391">o_av_addr</tspan> = <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Rockwell;-inkscape-font-specification:'Rockwell Bold'"
+   id="tspan2393">i_addr</tspan> / 4</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.529166px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 37.041669,26.458336 2.64582,2.645834 -2.64582,2.645834"
@@ -2805,49 +2851,49 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="40.089939"
-       y="80.568718"
+       x="40.089935"
+       y="75.277046"
        id="text1408-6-8-5"><tspan
          sodipodi:role="line"
          id="tspan1406-2-1-0"
-         x="40.089939"
-         y="80.568718"
+         x="40.089935"
+         y="75.277046"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166">o_wait</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-3-79)"
-       d="m 34.395889,79.375013 -13.22922,-10e-6"
+       d="m 34.395887,74.083343 -13.22922,-1e-5"
        id="path1460-55-2-5-2-2-1-8-0-0"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="41.056629"
-       y="114.7599"
+       x="41.056625"
+       y="109.46823"
        id="text1408-6-3-8-2-5-5-6-0-6-4"><tspan
          sodipodi:role="line"
-         x="41.056629"
-         y="114.7599"
+         x="41.056625"
+         y="109.46823"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          id="tspan2279-6-5-9-3-0-0">i_av_waitrequest</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-0-0-9)"
-       d="m 21.166614,113.77084 13.229221,-1e-5"
+       d="m 21.166612,108.47917 13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-01-2-1"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="41.056629"
-       y="120.05159"
+       x="41.056625"
+       y="114.75992"
        id="text1408-6-3-8-2-5-5-6-0-6-3"><tspan
          sodipodi:role="line"
-         x="41.056629"
-         y="120.05159"
+         x="41.056625"
+         y="114.75992"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          id="tspan2279-6-5-9-3-0-08">i_av_data [31:0]</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-0-0-0)"
-       d="m 21.166614,119.06251 13.229221,-1e-5"
+       d="m 21.166612,113.77084 13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-01-2-9"
        sodipodi:nodetypes="cc" />
     <text
@@ -2968,7 +3014,7 @@
          sodipodi:role="line"
          x="55.033306"
          y="136.26041"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:monospace;-inkscape-font-specification:'monospace Bold';stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.264583;"
          id="tspan6033">WAIT</tspan></text>
     <text
        xml:space="preserve"
@@ -2980,7 +3026,7 @@
          id="tspan29271-9-0"
          x="74.612465"
          y="136.26041"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:monospace;-inkscape-font-specification:'monospace Bold';stroke-width:0.264583">READ</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.264583;">READ</tspan></text>
     <g
        id="g13198"
        transform="translate(92.604167,-74.083336)">
@@ -3028,65 +3074,65 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="39.796005"
-       y="75.277046"
+       x="39.796001"
+       y="69.985374"
        id="text1408-6-2-03-5-3"><tspan
          sodipodi:role="line"
          id="tspan1406-2-9-7-21-7"
-         x="39.796005"
-         y="75.277046"
+         x="39.796001"
+         y="69.985374"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166">o_data [31:0]</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-4-4)"
-       d="m 35.302993,74.083336 -13.229221,-1e-5"
+       d="m 35.302991,68.791666 -13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-18-7"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="40.149471"
-       y="109.46825"
+       x="40.149467"
+       y="104.17657"
        id="text1408-6-3-8-2-5-5-6-0-6-36"><tspan
          sodipodi:role="line"
-         x="40.149471"
-         y="109.46825"
+         x="40.149467"
+         y="104.17657"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          id="tspan2279-6-5-9-3-0-7">o_av_write</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-0-0-1)"
-       d="m 34.39578,108.47917 -13.229221,-1e-5"
+       d="m 34.395778,103.1875 -13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-01-2-8"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="39.812828"
-       y="93.633537"
+       x="39.812824"
+       y="88.341866"
        id="text1408-6-3-8-2-5-5-6-1"><tspan
          sodipodi:role="line"
-         x="39.812828"
-         y="93.633537"
+         x="39.812824"
+         y="88.341866"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          id="tspan2279-6-5-9-4">o_av_data [31:0]</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-9-8)"
-       d="m 34.39578,92.604173 -13.229221,-1e-5"
+       d="m 34.395778,87.312503 -13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-1-5"
        sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="40.149471"
-       y="98.884903"
+       x="40.149467"
+       y="93.593231"
        id="text1408-6-3-8-2-5-5-6-0-6-36-0"><tspan
          sodipodi:role="line"
-         x="40.149471"
-         y="98.884903"
+         x="40.149467"
+         y="93.593231"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          id="tspan2279-6-5-9-3-0-7-1">o_av_byte_enable [3:0]</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-0-0-1-6)"
-       d="m 34.39578,97.895843 -13.229221,-1e-5"
+       d="m 34.395778,92.604173 -13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-01-2-8-0"
        sodipodi:nodetypes="cc" />
     <text
@@ -3124,37 +3170,22 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="40.854336"
-       y="64.693718"
-       id="text1408-6-2-03-52"><tspan
-         sodipodi:role="line"
-         id="tspan1406-2-9-7-3"
-         x="40.854336"
-         y="64.693718"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166">i_byte_enable [3:0]</tspan></text>
-    <path
-       style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-94)"
-       d="m 21.166669,63.500003 13.229221,-10e-6"
-       id="path1460-55-2-5-2-2-1-8-2"
-       sodipodi:nodetypes="cc" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:1.25;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="40.854336"
-       y="69.985382"
+       x="40.854332"
+       y="64.69371"
        id="text1408-6-2-03-52-9"><tspan
          sodipodi:role="line"
          id="tspan1406-2-9-7-3-2"
-         x="40.854336"
-         y="69.985382"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166">i_load_unsigned</tspan></text>
+         x="40.854332"
+         y="64.69371"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166">i_func [2:0]</tspan></text>
     <path
        style="display:inline;fill:none;stroke:#c46d00;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Mend-5-6-1-4-8-64-1-94-6)"
-       d="m 21.166669,68.79167 13.229221,-1e-5"
+       d="m 21.166667,63.5 13.229221,-1e-5"
        id="path1460-55-2-5-2-2-1-8-2-3"
        sodipodi:nodetypes="cc" />
     <g
-       id="g13326">
+       id="g13326"
+       transform="translate(-2.3333333e-6,-5.29167)">
       <path
          style="display:inline;fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
          d="m 13.229166,103.1875 c 0.851642,0.2282 1.703232,0.45638 1.923895,3.32413 0.220664,2.86775 -0.190015,8.36888 0.265847,11.34178 0.455863,2.9729 1.778743,3.41386 3.101927,3.85492"
@@ -3173,12 +3204,12 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:0;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
-       x="-116.98409"
-       y="9.3462"
+       x="-111.69242"
+       y="9.3461981"
        id="text1408-60-7-9-4-2-9-13-4"
        transform="rotate(-90)"><tspan
-         x="-116.98409"
-         y="9.3462"
+         x="-111.69242"
+         y="9.3461981"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.529166"
          sodipodi:role="line"
          id="tspan4785-2-6">Avalon Master</tspan></text>
@@ -3302,7 +3333,7 @@
          sodipodi:role="line"
          x="118.00412"
          y="136.26041"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:monospace;-inkscape-font-specification:'monospace Bold';stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.264583;"
          id="tspan6033-1">WAIT</tspan></text>
     <text
        xml:space="preserve"
@@ -3314,7 +3345,7 @@
          id="tspan29271-9-0-0"
          x="137.58315"
          y="136.26041"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:monospace;-inkscape-font-specification:'monospace Bold';stroke-width:0.264583">WRITE</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.264583;">WRITE</tspan></text>
     <path
        id="path26925-4-4-3-0-8-3-3-1"
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.529166px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -3444,6 +3475,143 @@
        xml:space="preserve"
        id="text17304"
        style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:10.58333333px;white-space:pre;shape-inside:url(#rect17306);" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23334px;line-height:0;font-family:sans-serif;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529166"
+       x="8.4138374"
+       y="283.59506"
+       id="text1408-60-7-9-4-2-9-13-57"><tspan
+         x="8.4138374"
+         y="283.59506"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan4785-2-0" /><tspan
+         x="8.4138374"
+         y="287.8284"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2555">LOAD BYTE:  <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2525">o_av_data</tspan> = (<tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2537">i_data</tspan> &gt;&gt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2545">i_addr[1:0]*8</tspan>) &amp; 0x000000ff</tspan><tspan
+         x="8.4138374"
+         y="292.06174"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2489"
+         dy="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0">            <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2527">o_av_byteenable</tspan> = 0x01 &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2547">i_addr[1:0]</tspan></tspan><tspan
+         x="8.4138374"
+         y="296.29507"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2485">LOAD WORD:  <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2529">o_av_data</tspan> = (<tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2541">i_data</tspan> &gt;&gt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2549">i_addr[1:0]*8</tspan>) &amp; 0x0000ffff</tspan><tspan
+         x="8.4138374"
+         y="300.52841"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2497">            <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2531">o_av_byteenable</tspan> = 0x03 &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2551">i_addr[1:0]</tspan></tspan><tspan
+         x="8.4138374"
+         y="304.76175"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2499">LOAD DWORD: <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2533">o_av_data</tspan> = (<tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2543">i_data</tspan> &gt;&gt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2602">i_addr[1:0]*8</tspan>) &amp; 0xffffffff</tspan><tspan
+         x="8.4138374"
+         y="308.99509"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2501">            <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2535">o_av_byteenable</tspan> = 0x0f &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2553">i_addr[1:0]</tspan></tspan><tspan
+         x="8.4138374"
+         y="313.22845"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2560" /><tspan
+         x="8.4138374"
+         y="317.46179"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2562">STORE BYTE: <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2572">o_av_data</tspan> = <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2584">i_data</tspan> &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2596">i_addr[1:0]*8</tspan></tspan><tspan
+         x="8.4138374"
+         y="321.69513"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2564">            <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2574">o_av_byteenable</tspan> = 0x01 &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2594">i_addr[1:0]</tspan></tspan><tspan
+         x="8.4138374"
+         y="325.92847"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2503">LOAD WORD:  <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2576">o_av_data</tspan> = <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2586">i_data</tspan> &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2598">i_addr[1:0]*8</tspan></tspan><tspan
+         x="8.4138374"
+         y="330.1618"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2566">            <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2578">o_av_byteenable</tspan> = 0x03 &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2592">i_addr[1:0]</tspan></tspan><tspan
+         x="8.4138374"
+         y="334.39514"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2568">LOAD DWORD: <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2580">o_av_data</tspan> = <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2588">i_data</tspan> &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2600">i_addr[1:0]*8</tspan></tspan><tspan
+         x="8.4138374"
+         y="338.62848"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23334px;line-height:1;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT';stroke-width:0.529166"
+         sodipodi:role="line"
+         id="tspan2570">            <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2582">o_av_byteenable</tspan> = 0x0f &lt;&lt; <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Monospac821 BT';-inkscape-font-specification:'Monospac821 BT Bold'"
+   id="tspan2590">i_addr[1:0]</tspan></tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

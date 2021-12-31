@@ -24,10 +24,10 @@ architecture behave of imem_interface_tb is
   signal r_clk            : std_logic := '0';
   signal r_ce             : std_logic := '0';
   signal r_pc             : std_logic_vector(31 downto 0) := (others=>'0');
-  signal w_av_addr        : std_logic_vector(31 downto 0);
+  signal w_av_addr        : std_logic_vector(29 downto 0);
   signal w_av_read        : std_logic;
   signal r_av_waitrequest : std_logic := '0';
-  signal r_av_readdata        : std_logic_vector(31 downto 0) := (others=>'0');
+  signal r_av_readdata    : std_logic_vector(31 downto 0) := (others=>'0');
   signal w_opcode         : std_logic_vector(31 downto 0);
   signal w_wait           : std_logic;
 
@@ -64,7 +64,7 @@ architecture behave of imem_interface_tb is
       i_clk             : in  std_logic;
       i_ce              : in  std_logic;
       i_pc              : in  std_logic_vector(31 downto 0);
-      o_av_addr         : out std_logic_vector(31 downto 0);
+      o_av_addr         : out std_logic_vector(29 downto 0);
       o_av_read         : out std_logic;
       i_av_waitrequest  : in  std_logic;
       i_av_readdata     : in  std_logic_vector(31 downto 0);
@@ -91,7 +91,7 @@ begin
     -- Test intermittent read
     for i in patterns'range loop
       r_ce  <= '1';
-      r_pc  <= std_logic_vector(to_unsigned(i, r_pc'length));
+      r_pc  <= std_logic_vector(to_unsigned(i * 4, r_pc'length));
       wait until rising_edge(r_clk);
       while w_wait = '1' loop
         wait until rising_edge(r_clk);
@@ -104,7 +104,7 @@ begin
     -- Test continous read
     for i in patterns'range loop
       r_ce  <= '1';
-      r_pc  <= std_logic_vector(to_unsigned(i, r_pc'length));
+      r_pc  <= std_logic_vector(to_unsigned(i * 4, r_pc'length));
       wait until rising_edge(r_clk);
       while w_wait = '1' loop
         wait until rising_edge(r_clk);

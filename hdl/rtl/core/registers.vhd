@@ -43,22 +43,30 @@ architecture behave of registers is
   type t_Memory is array (1 to 31) of std_logic_vector(31 downto 0);
   signal r_regs : t_Memory;
 
+  signal w_rs1 : integer range 0 to 31;
+  signal w_rs2 : integer range 0 to 31;
+  signal w_rd  : integer range 0 to 31;
+
 begin
 
+  w_rs1   <= to_integer(unsigned(i_rs1));
+  w_rs2   <= to_integer(unsigned(i_rs2));
+  w_rd    <= to_integer(unsigned(i_rd));
+
   -- Output selected registers
-  o_reg1 <= x"00000000" when (i_rs1 = "00000") else r_regs(to_integer(unsigned(i_rs1)));
-  o_reg2 <= x"00000000" when (i_rs2 = "00000") else r_regs(to_integer(unsigned(i_rs2)));
+  o_reg1  <= x"00000000" when (w_rs1 = 0) else r_regs(w_rs1);
+  o_reg2  <= x"00000000" when (w_rs2 = 0) else r_regs(w_rs2);
 
   -- Write to destination register
   p_reg_write : process (i_clk)
   begin
     if (rising_edge(i_clk)) then
       if (i_ce) then
-        if (i_rd /= "00000") then
-          r_regs(to_integer(unsigned(i_rd))) <= i_value;
+        if (w_rd /= 0) then
+          r_regs(w_rd) <= i_value;
         end if;
       end if;
     end if;
-  end process;
+  end process p_reg_write;
 
 end architecture behave;
