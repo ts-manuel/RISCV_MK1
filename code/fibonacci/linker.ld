@@ -1,37 +1,36 @@
 
-/* Entry Point */
-ENTRY(_start);
 
-/* Used to double the adressing range of a single instruction */
-PROVIDE( __global_pointer$ = . + 0x800 );
+ OUTPUT_ARCH( "riscv" )
 
-/* Highest address of the user mode stack */
-_estack = ORIGIN(RAM) + LENGTH(RAM);	/* end of "RAM" Ram type memory */
+ /* Entry Point */
+ ENTRY( _start )
 
-_Min_Heap_Size = 0x000 ;	/* required amount of heap  */
-_Min_Stack_Size = 0x100 ;	/* required amount of stack */
+_Min_Heap_size  = 0x000; /* Required amount of heap */
+_Min_Stack_size = 0x100; /* Required amount of stack */
 
 /* Memories definition */
 MEMORY
 {
-  RAM      (rw)    : ORIGIN = 0x20000000,   LENGTH = 2K   /* Read only and Read/Write */
-  FLASH    (rx)    : ORIGIN = 0x00000000,   LENGTH = 4K	  /* Read only Execute */
+  rom   (rx)  : ORIGIN = 0x00000000,  LENGTH = 32K   /* Read only and Execute */
+  ram   (rw)  : ORIGIN = 0x00008000,  LENGTH = 32K	 /* Read only and Read/Write */
 }
 
-/* Sections */
+PROVIDE( __estack$ = ORIGIN(ram) + LENGTH(ram));
+
+PROVIDE( __global_pointer$ = _gp);
+
 SECTIONS
 {
   /* The program code and other data into "FLASH" Rom type memory */
   .text :
   {
     . = ALIGN(4);
-    /*.text._start*/
     *(.text)           /* .text sections (code) */
     *(.text*)          /* .text* sections (code) */
 
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
-  } >FLASH
+  } > rom
 
   /* Constant data into "FLASH" Rom type memory */
   .rodata :
@@ -40,7 +39,7 @@ SECTIONS
     *(.rodata)         /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
     . = ALIGN(4);
-  } >FLASH
+  } > rom
 
   /* Initialized data sections into "RAM" Ram type memory */
   .data : 
@@ -52,7 +51,11 @@ SECTIONS
 
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
-  } >RAM AT> FLASH
+  } > ram AT > rom
+
+  /* Have _gp point to middle of sdata/sbss to maximize displacement range */
+  . = ALIGN(16);
+  _gp = . + 0x800;
 
   /* Uninitialized data section into "RAM" Ram type memory */
   . = ALIGN(4);
@@ -68,19 +71,17 @@ SECTIONS
     . = ALIGN(4);
     _ebss = .;         /* define a global symbol at bss end */
     __bss_end__ = _ebss;
-  } >RAM
+  } > ram
 
-  /* User_heap_stack section, used to check that there is enough "RAM" Ram  type memory left */
-  ._user_heap_stack :
+  /* User heap stack section, used to check that there is enought "ram" memory left */
+  .user_heap_stack :
   {
     . = ALIGN(8);
     PROVIDE ( end = . );
     PROVIDE ( _end = . );
-    . = . + _Min_Heap_Size;
-    . = . + _Min_Stack_Size;
+    . = . + _Min_Heap_size;
+    . = . + _Min_Stack_size;
     . = ALIGN(8);
-  } >RAM
+  } > ram
 
 }
-
-

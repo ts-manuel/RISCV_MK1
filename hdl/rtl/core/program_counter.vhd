@@ -24,13 +24,13 @@ use ieee.numeric_std.all;
 
 entity program_counter is
   port (
-    i_clk     : in  std_logic;
-    i_rst     : in  std_logic;
-    i_ce      : in  std_logic;
-    i_load    : out std_logic;
-    i_value   : out std_logic_vector(31 downto 0);
-    o_pc      : out std_logic_vector(31 downto 0);
-    o_pc_next : out std_logic_vector(31 downto 0)
+    i_clk     : in      std_logic;
+    i_rst     : in      std_logic;
+    i_ce      : in      std_logic;
+    i_load    : in      std_logic;
+    i_value   : in      std_logic_vector(31 downto 0);
+    o_pc      : buffer  std_logic_vector(31 downto 0) := (others=>'0');
+    o_pc_next : buffer  std_logic_vector(31 downto 0) := (others=>'0')
   );
 end entity program_counter;
 
@@ -45,8 +45,10 @@ begin
     if (rising_edge(i_clk)) then
       if (i_rst = '1') then
         o_pc <= (others=>'0');
-      elsif (i_ce = '1') then
-        o_pc <= i_value when (i_load = '1') else o_pc_next;
+      elsif (i_ce = '1' and i_load = '0') then
+        o_pc <= o_pc_next;
+      elsif (i_ce = '1' and i_load = '1') then
+        o_pc <= i_value;
       end if;
     end if;
   end process p_load;

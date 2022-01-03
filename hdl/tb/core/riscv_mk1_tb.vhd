@@ -19,40 +19,38 @@ end entity;
 
 architecture behave of riscv_mk1_tb is
 
-  constant CLK_P : time := 10 ns;
-  constant INST_WAIT_STATES : integer := 0; -- Wait states between instruction memory reads
-  constant DATA_WAIT_STATES : integer := 0; -- Wait states between data memory reads
+  -- *********************************************************************
+  -- Testbench parameters
+  constant MEM_SIZE       : integer := 2**16; -- 64 Kbyte
+  constant MEM_INIT_FILE  : string  := "../code/fibonacci/bin/fibo.vhdl";
+  constant MEM_TRACE_FILE : string  := "tb_out/fibo_trace.txt";
+  constant WAIT_STATES    : integer := 0;     -- Memory wait states
+  -- *********************************************************************
 
-  signal r_clk                  : std_logic := '0';
-  signal r_rst                  : std_logic := '0';
-  signal w_av_inst_addr         : std_logic_vector(29 downto 0);
-  signal w_av_inst_read         : std_logic;
-  signal r_av_inst_waitrequest  : std_logic := '0';
-  signal r_av_inst_readdata     : std_logic_vector(31 downto 0) := (others=>'0');
-  signal w_av_data_read         : std_logic;
-  signal w_av_data_write        : std_logic;
-  signal w_av_data_byte_enable  : std_logic_vector(3 downto 0);
-  signal w_av_data_addr         : std_logic_vector(29 downto 0);
-  signal w_av_data_writedata    : std_logic_vector(31 downto 0);
-  signal r_av_data_waitrequest  : std_logic := '0';
-  signal r_av_data_readdata     : std_logic_vector(31 downto 0) := (others=>'0');
+  constant CLK_P : time := 10 ns;
+  
+  signal r_clk            : std_logic := '0';
+  signal r_rst            : std_logic := '0';
+  signal w_av_addr        : std_logic_vector(29 downto 0);
+  signal w_av_byteenable  : std_logic_vector(3 downto 0);
+  signal w_av_read        : std_logic;
+  signal w_av_write       : std_logic;
+  signal w_av_waitrequest : std_logic := '0';
+  signal w_av_writedata   : std_logic_vector(31 downto 0);
+  signal w_av_readdata    : std_logic_vector(31 downto 0) := (others=>'0');
 
 
   component riscv_mk1 is
     port (
-      i_clk                 : in  std_logic;
-      i_rst                 : in  std_logic;
-      o_av_inst_addr        : out std_logic_vector(29 downto 0);
-      o_av_inst_read        : out std_logic;
-      i_av_inst_waitrequest : in  std_logic;
-      i_av_inst_readdata    : in  std_logic_vector(31 downto 0);
-      o_av_data_read        : out std_logic;
-      o_av_data_write       : out std_logic;
-      o_av_data_byte_enable : out std_logic_vector(3 downto 0);
-      o_av_data_addr        : out std_logic_vector(29 downto 0);
-      o_av_data_writedata   : out std_logic_vector(31 downto 0);
-      i_av_data_waitrequest : in  std_logic;
-      i_av_data_readdata    : in  std_logic_vector(31 downto 0)
+      i_clk             : in  std_logic;
+      i_rst             : in  std_logic;
+      o_av_addr         : out std_logic_vector(29 downto 0);
+      o_av_byteenable   : out std_logic_vector(3 downto 0);
+      o_av_read         : out std_logic;
+      o_av_write        : out std_logic;
+      i_av_waitrequest  : in  std_logic;
+      o_av_writedata    : out std_logic_vector(31 downto 0);
+      i_av_readdata     : in  std_logic_vector(31 downto 0)
     );
   end component riscv_mk1;
 
@@ -60,16 +58,17 @@ architecture behave of riscv_mk1_tb is
     generic (
       g_addr_start  : integer;
       g_addr_stop   : integer;
-      g_in_file     : string;
-      g_out_file    : string
+      g_init_file   : string;
+      g_trace_file  : string;
+      g_wait_states : integer
     );
     port (
       i_clk         : in  std_logic;
+      i_address     : in  std_logic_vector(29 downto 0);
+      i_bytenable   : in  std_logic_vector(3 downto 0);
       i_read        : in  std_logic;
       i_write       : in  std_logic;
       o_waitrequest : out std_logic;
-      i_bytenable   : in  std_logic_vector(3 downto 0);
-      i_address     : in  std_logic_vector(29 downto 0);
       i_writedata   : in  std_logic_vector(31 downto 0);
       o_readdata    : out std_logic_vector(31 downto 0)
     );
@@ -95,7 +94,7 @@ begin
     wait until rising_edge(r_clk);
 
     -- Run until (JALR x0 0) instruction (infinite loop)
-    while (r_av_inst_readdata /= x"0000006f") loop
+    while (w_av_readdata /= x"0000006f") loop
       wait until rising_edge(r_clk);
     end loop;
 
@@ -105,59 +104,37 @@ begin
   end process p_sim;
 
 
-  av_inst : avalon_bus
+  av_bus : avalon_bus
     generic map (
       g_addr_start  => 0,
-      g_addr_stop   => 65535,
-      g_in_file     => "code/fibonacci/fibo.vhdl",
-      g_out_file    => ""
+      g_addr_stop   => MEM_SIZE,
+      g_init_file   => MEM_INIT_FILE,
+      g_trace_file  => MEM_TRACE_FILE,
+      g_wait_states => WAIT_STATES
     )
     port map (
       i_clk         => r_clk,
-      i_read        => w_av_inst_read,
-      i_write       => '0',
-      o_waitrequest => r_av_inst_waitrequest,
-      i_bytenable   => "0000",
-      i_address     => w_av_inst_addr,
-      i_writedata   => x"00000000",
-      o_readdata    => r_av_inst_readdata
-    );
-
-
-    av_data : avalon_bus
-    generic map (
-      g_addr_start  => 16#20000000# /4,
-      g_addr_stop   => 16#20010000# /4,
-      g_in_file     => "",
-      g_out_file    => ""
-    )
-    port map (
-      i_clk         => r_clk,
-      i_read        => w_av_data_read,
-      i_write       => w_av_data_write,
-      o_waitrequest => r_av_data_waitrequest,
-      i_bytenable   => w_av_data_byte_enable,
-      i_address     => w_av_data_addr,
-      i_writedata   => w_av_data_writedata,
-      o_readdata    => r_av_data_readdata
+      i_address     => w_av_addr,
+      i_bytenable   => w_av_byteenable,
+      i_read        => w_av_read,
+      i_write       => w_av_write,
+      o_waitrequest => w_av_waitrequest,
+      i_writedata   => w_av_writedata,
+      o_readdata    => w_av_readdata
     );
 
 
   cpu : riscv_mk1
     port map (
-      i_clk                 => r_clk,
-      i_rst                 => r_rst,
-      o_av_inst_addr        => w_av_inst_addr,
-      o_av_inst_read        => w_av_inst_read,
-      i_av_inst_waitrequest => r_av_inst_waitrequest,
-      i_av_inst_readdata    => r_av_inst_readdata,
-      o_av_data_read        => w_av_data_read,
-      o_av_data_write       => w_av_data_write,
-      o_av_data_byte_enable => w_av_data_byte_enable,
-      o_av_data_addr        => w_av_data_addr,
-      o_av_data_writedata   => w_av_data_writedata,
-      i_av_data_waitrequest => r_av_data_waitrequest,
-      i_av_data_readdata    => r_av_data_readdata
+      i_clk            => r_clk,
+      i_rst            => r_rst,
+      o_av_addr        => w_av_addr,
+      o_av_byteenable  => w_av_byteenable,
+      o_av_read        => w_av_read,
+      o_av_write       => w_av_write,
+      i_av_waitrequest => w_av_waitrequest,
+      o_av_writedata   => w_av_writedata,
+      i_av_readdata    => w_av_readdata
     );
 
 end architecture behave;

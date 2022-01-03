@@ -25,8 +25,11 @@ architecture behave of imem_interface_tb is
   signal r_ce             : std_logic := '0';
   signal r_pc             : std_logic_vector(31 downto 0) := (others=>'0');
   signal w_av_addr        : std_logic_vector(29 downto 0);
+  signal w_av_byteenable  : std_logic_vector(3 downto 0);
   signal w_av_read        : std_logic;
+  signal w_av_write       : std_logic;
   signal r_av_waitrequest : std_logic := '0';
+  signal w_av_writedata   : std_logic_vector(31 downto 0);
   signal r_av_readdata    : std_logic_vector(31 downto 0) := (others=>'0');
   signal w_opcode         : std_logic_vector(31 downto 0);
   signal w_wait           : std_logic;
@@ -65,8 +68,11 @@ architecture behave of imem_interface_tb is
       i_ce              : in  std_logic;
       i_pc              : in  std_logic_vector(31 downto 0);
       o_av_addr         : out std_logic_vector(29 downto 0);
+      o_av_byteenable   : out std_logic_vector(3 downto 0);
       o_av_read         : out std_logic;
+      o_av_write        : out std_logic;
       i_av_waitrequest  : in  std_logic;
+      o_av_writedata    : out std_logic_vector(31 downto 0);
       i_av_readdata     : in  std_logic_vector(31 downto 0);
       o_opcode          : out std_logic_vector(31 downto 0);
       o_wait            : out std_logic
@@ -158,8 +164,11 @@ begin
       i_ce              => r_ce,
       i_pc              => r_pc,
       o_av_addr         => w_av_addr,
+      o_av_byteenable   => w_av_byteenable,
       o_av_read         => w_av_read,
+      o_av_write        => w_av_write,
       i_av_waitrequest  => r_av_waitrequest,
+      o_av_writedata    => w_av_writedata,
       i_av_readdata     => r_av_readdata,
       o_opcode          => w_opcode,
       o_wait            => w_wait

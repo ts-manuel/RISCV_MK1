@@ -16,12 +16,12 @@
 --  o_readdata:       output data
 --  o_wait:           output wait signals
 --  o_av_addr:        Avalon address
---  o_av_data:        Avalon write data
---  o_av_byte_enable: Avalon byte enable
+--  o_av_byteenable:  Avalon byte enable
 --  o_av_read:        Avalon read
 --  o_av_write:       Avalon write
 --  i_av_waitrequest: Avalon wait request
---  i_av_data:        Avalon read data
+--  o_av_writedata:   Avalon write data
+--  i_av_readdata:    Avalon read data
 --
 -- *********************************************************************
 
@@ -43,11 +43,11 @@ entity dmem_interface is
     o_readdata        : out std_logic_vector(31 downto 0);
     o_wait            : out std_logic;
     o_av_addr         : out std_logic_vector(29 downto 0);
-    o_av_writedata    : out std_logic_vector(31 downto 0);
-    o_av_byte_enable  : out std_logic_vector(3 downto 0);
+    o_av_byteenable   : out std_logic_vector(3 downto 0);
     o_av_read         : out std_logic;
     o_av_write        : out std_logic;
     i_av_waitrequest  : in  std_logic;
+    o_av_writedata    : out std_logic_vector(31 downto 0);
     i_av_readdata     : in  std_logic_vector(31 downto 0)
   );
 end entity dmem_interface;
@@ -98,7 +98,7 @@ begin
 
   o_av_writedata    <= std_logic_vector(shift_left(unsigned(i_writedata), w_offset*8));
 
-  o_av_byte_enable  <=  std_logic_vector(shift_left(unsigned(c_byte_mask), w_offset)) when (i_func(1 downto 0) = "00") else
+  o_av_byteenable   <=  std_logic_vector(shift_left(unsigned(c_byte_mask), w_offset)) when (i_func(1 downto 0) = "00") else
                         std_logic_vector(shift_left(unsigned(c_word_mask), w_offset)) when (i_func(1 downto 0) = "01") else
                         "1111";
 

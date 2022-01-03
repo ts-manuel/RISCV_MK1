@@ -6,4 +6,4 @@ hdl/vcd/*
 
 hdl/gtkwave/*
 
-hdl/code/*/obj/*
+code/*/obj/*

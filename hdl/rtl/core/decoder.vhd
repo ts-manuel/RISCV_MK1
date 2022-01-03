@@ -38,21 +38,21 @@ entity decoder is
     i_clk         : in  std_logic;
     i_ce          : in  std_logic;
     i_opcode      : in  std_logic_vector(31 downto 0);
-    o_rs1         : out std_logic_vector( 4 downto 0);
-    o_rs2         : out std_logic_vector( 4 downto 0);
-    o_rd          : out std_logic_vector( 4 downto 0);
-    o_reg_mux     : out std_logic_vector( 1 downto 0);
-    o_reg_wb      : out std_logic;
-    o_imm         : out std_logic_vector(31 downto 0);
-    o_alu_in1_mux : out std_logic;
-    o_alu_in2_mux : out std_logic;
-    o_alu_func    : out std_logic_vector(4 downto 0);
-    o_branch_func : out std_logic_vector(2 downto 0);
-    o_branch      : out std_logic;
-    o_jump        : out std_logic;
-    o_mem_func    : out std_logic_vector(2 downto 0);
-    o_load        : out std_logic;
-    o_store       : out std_logic
+    o_rs1         : out std_logic_vector( 4 downto 0) := (others=>'0');
+    o_rs2         : out std_logic_vector( 4 downto 0) := (others=>'0');
+    o_rd          : out std_logic_vector( 4 downto 0) := (others=>'0');
+    o_reg_mux     : out std_logic_vector( 1 downto 0) := (others=>'0');
+    o_reg_wb      : out std_logic := '0';
+    o_imm         : out std_logic_vector(31 downto 0) := (others=>'0');
+    o_alu_in1_mux : out std_logic := '0';
+    o_alu_in2_mux : out std_logic := '0';
+    o_alu_func    : out std_logic_vector(4 downto 0) := (others=>'0');
+    o_branch_func : out std_logic_vector(2 downto 0) := (others=>'0');
+    o_branch      : out std_logic := '0';
+    o_jump        : out std_logic := '0';
+    o_mem_func    : out std_logic_vector(2 downto 0) := (others=>'0');
+    o_load        : out std_logic := '0';
+    o_store       : out std_logic := '0'
   );
 end entity decoder;
 
@@ -101,7 +101,8 @@ begin
   w_branch_func <= i_opcode(14 downto 12);
 
   -- ALU control signals
-  w_alu_func(3)           <= '1' when (i_opcode(30) = '1' and (w_ins_type = ALU_REG or i_opcode(14 downto 12) = "101")) else '0';
+  w_alu_func(3)           <= '1' when (i_opcode(30) = '1' and (w_ins_type = ALU_REG or
+                                      (w_ins_type = ALU_IMM and i_opcode(14 downto 12) = "101"))) else '0';
   w_alu_func(2 downto 0)  <= i_opcode(14 downto 12) when (w_ins_type = ALU_REG or w_ins_type = ALU_IMM) else "000";
 
   -- Control signals

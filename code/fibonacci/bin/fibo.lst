@@ -1,0 +1,113 @@
+
+bin/fibo.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00009197          	auipc	gp,0x9
+   4:	80018193          	addi	gp,gp,-2048 # 8800 <__global_pointer$>
+   8:	00010117          	auipc	sp,0x10
+   c:	ff810113          	addi	sp,sp,-8 # 10000 <__estack$>
+  10:	088000ef          	jal	ra,98 <main>
+  14:	0000006f          	j	14 <_start+0x14>
+	...
+
+00000020 <fibo>:
+  20:	fe010113          	addi	sp,sp,-32
+  24:	00112e23          	sw	ra,28(sp)
+  28:	00812c23          	sw	s0,24(sp)
+  2c:	00912a23          	sw	s1,20(sp)
+  30:	02010413          	addi	s0,sp,32
+  34:	fea42623          	sw	a0,-20(s0)
+  38:	fec42783          	lw	a5,-20(s0)
+  3c:	00078863          	beqz	a5,4c <fibo+0x2c>
+  40:	fec42703          	lw	a4,-20(s0)
+  44:	00100793          	li	a5,1
+  48:	00f71663          	bne	a4,a5,54 <fibo+0x34>
+  4c:	00100793          	li	a5,1
+  50:	0300006f          	j	80 <fibo+0x60>
+  54:	fec42783          	lw	a5,-20(s0)
+  58:	fff78793          	addi	a5,a5,-1
+  5c:	00078513          	mv	a0,a5
+  60:	fc1ff0ef          	jal	ra,20 <fibo>
+  64:	00050493          	mv	s1,a0
+  68:	fec42783          	lw	a5,-20(s0)
+  6c:	ffe78793          	addi	a5,a5,-2
+  70:	00078513          	mv	a0,a5
+  74:	fadff0ef          	jal	ra,20 <fibo>
+  78:	00050793          	mv	a5,a0
+  7c:	00f487b3          	add	a5,s1,a5
+  80:	00078513          	mv	a0,a5
+  84:	01c12083          	lw	ra,28(sp)
+  88:	01812403          	lw	s0,24(sp)
+  8c:	01412483          	lw	s1,20(sp)
+  90:	02010113          	addi	sp,sp,32
+  94:	00008067          	ret
+
+00000098 <main>:
+  98:	fe010113          	addi	sp,sp,-32
+  9c:	00112e23          	sw	ra,28(sp)
+  a0:	00812c23          	sw	s0,24(sp)
+  a4:	02010413          	addi	s0,sp,32
+  a8:	fe042623          	sw	zero,-20(s0)
+  ac:	0340006f          	j	e0 <main+0x48>
+  b0:	fec42503          	lw	a0,-20(s0)
+  b4:	f6dff0ef          	jal	ra,20 <fibo>
+  b8:	00050693          	mv	a3,a0
+  bc:	000087b7          	lui	a5,0x8
+  c0:	00078713          	mv	a4,a5
+  c4:	fec42783          	lw	a5,-20(s0)
+  c8:	00279793          	slli	a5,a5,0x2
+  cc:	00f707b3          	add	a5,a4,a5
+  d0:	00d7a023          	sw	a3,0(a5) # 8000 <values>
+  d4:	fec42783          	lw	a5,-20(s0)
+  d8:	00178793          	addi	a5,a5,1
+  dc:	fef42623          	sw	a5,-20(s0)
+  e0:	fec42703          	lw	a4,-20(s0)
+  e4:	00900793          	li	a5,9
+  e8:	fce7d4e3          	bge	a5,a4,b0 <main+0x18>
+  ec:	00000793          	li	a5,0
+  f0:	00078513          	mv	a0,a5
+  f4:	01c12083          	lw	ra,28(sp)
+  f8:	01812403          	lw	s0,24(sp)
+  fc:	02010113          	addi	sp,sp,32
+ 100:	00008067          	ret
+
+Disassembly of section .bss:
+
+00008000 <values>:
+	...
+
+Disassembly of section .user_heap_stack:
+
+00008028 <.user_heap_stack>:
+	...
+
+Disassembly of section .riscv.attributes:
+
+00000000 <.riscv.attributes>:
+   0:	1b41                	addi	s6,s6,-16
+   2:	0000                	unimp
+   4:	7200                	flw	fs0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <_Min_Heap_size+0x14>
+   c:	0011                	c.nop	4
+   e:	0000                	unimp
+  10:	1004                	addi	s1,sp,32
+  12:	7205                	lui	tp,0xfffe1
+  14:	3376                	fld	ft6,376(sp)
+  16:	6932                	flw	fs2,12(sp)
+  18:	7032                	flw	ft0,44(sp)
+  1a:	0030                	addi	a2,sp,8
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	3a434347          	fmsub.d	ft6,ft6,ft4,ft7,rmm
+   4:	2820                	fld	fs0,80(s0)
+   6:	29554e47          	fmsub.s	ft8,fa0,fs5,ft5,rmm
+   a:	3120                	fld	fs0,96(a0)
+   c:	2e31                	jal	328 <_etext+0x224>
+   e:	2e31                	jal	32a <_etext+0x226>
+  10:	0030                	addi	a2,sp,8

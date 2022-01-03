@@ -6,19 +6,15 @@
 -- Generic:
 --
 -- Port:
---  i_clk:                  clock input
---  i_rst:                  reset active HIGH
---  o_av_inst_addr:         instruction memory bus
---  o_av_inst_read:         instruction memory bus
---  i_av_inst_waitrequest:  instruction memory bus
---  i_av_inst_readdata:     instruction memory bus
---  o_av_data_read:         data memory bus
---  o_av_data_write:        data memory bus
---  o_av_data_byte_enable:  data memory bus
---  o_av_data_addr:         data memory bus
---  o_av_data_writedata:    data memory bus
---  i_av_data_waitrequest:  data memory bus
---  i_av_data_readdata:     data memory bus
+--  i_clk:             clock input
+--  i_rst:             reset active HIGH
+--  o_av_read:         Avalon memory bus
+--  o_av_write:        Avalon memory bus
+--  o_av_byte_enable:  Avalon memory bus
+--  o_av_addr:         Avalon memory bus
+--  o_av_writedata:    Avalon memory bus
+--  i_av_waitrequest:  Avalon memory bus
+--  i_av_readdata:     Avalon memory bus
 --
 -- *********************************************************************
 
@@ -30,19 +26,15 @@ use ieee.numeric_std.all;
 
 entity riscv_mk1 is
   port (
-    i_clk                 : in  std_logic;
-    i_rst                 : in  std_logic;
-    o_av_inst_addr        : out std_logic_vector(29 downto 0);
-    o_av_inst_read        : out std_logic;
-    i_av_inst_waitrequest : in  std_logic;
-    i_av_inst_readdata    : in  std_logic_vector(31 downto 0);
-    o_av_data_read        : out std_logic;
-    o_av_data_write       : out std_logic;
-    o_av_data_byte_enable : out std_logic_vector(3 downto 0);
-    o_av_data_addr        : out std_logic_vector(29 downto 0);
-    o_av_data_writedata   : out std_logic_vector(31 downto 0);
-    i_av_data_waitrequest : in  std_logic;
-    i_av_data_readdata    : in  std_logic_vector(31 downto 0)
+    i_clk             : in  std_logic;
+    i_rst             : in  std_logic;
+    o_av_addr         : out std_logic_vector(29 downto 0);
+    o_av_byteenable   : out std_logic_vector(3 downto 0);
+    o_av_read         : out std_logic;
+    o_av_write        : out std_logic;
+    i_av_waitrequest  : in  std_logic;
+    o_av_writedata    : out std_logic_vector(31 downto 0);
+    i_av_readdata     : in  std_logic_vector(31 downto 0)
   );
 end entity riscv_mk1;
 
@@ -90,6 +82,23 @@ architecture behave of riscv_mk1 is
   signal w_pc_load  : std_logic;
   signal w_pc_next  : std_logic_vector(31 downto 0);
   signal w_pc       : std_logic_vector(31 downto 0);
+
+  -- Instruction and Data memory intermediate signals
+  signal w_data_memory_active   : std_logic;
+  signal w_av_inst_read         : std_logic;
+  signal w_av_inst_write        : std_logic;
+  signal w_av_inst_byteenable   : std_logic_vector(3 downto 0);
+  signal w_av_inst_addr         : std_logic_vector(29 downto 0);
+  signal w_av_inst_writedata    : std_logic_vector(31 downto 0);
+  signal w_av_inst_waitrequest  : std_logic;
+  signal w_av_inst_readdata     : std_logic_vector(31 downto 0);
+  signal w_av_data_read         : std_logic;
+  signal w_av_data_write        : std_logic;
+  signal w_av_data_byteenable   : std_logic_vector(3 downto 0);
+  signal w_av_data_addr         : std_logic_vector(29 downto 0);
+  signal w_av_data_writedata    : std_logic_vector(31 downto 0);
+  signal w_av_data_waitrequest  : std_logic;
+  signal w_av_data_readdata     : std_logic_vector(31 downto 0);
 
 
   component control_unit is
@@ -176,11 +185,11 @@ architecture behave of riscv_mk1 is
       o_readdata        : out std_logic_vector(31 downto 0);
       o_wait            : out std_logic;
       o_av_addr         : out std_logic_vector(29 downto 0);
-      o_av_writedata    : out std_logic_vector(31 downto 0);
-      o_av_byte_enable  : out std_logic_vector(3 downto 0);
+      o_av_byteenable   : out std_logic_vector(3 downto 0);
       o_av_read         : out std_logic;
       o_av_write        : out std_logic;
       i_av_waitrequest  : in  std_logic;
+      o_av_writedata    : out std_logic_vector(31 downto 0);
       i_av_readdata     : in  std_logic_vector(31 downto 0)
     );
   end component dmem_interface;
@@ -191,8 +200,11 @@ architecture behave of riscv_mk1 is
       i_ce              : in  std_logic;
       i_pc              : in  std_logic_vector(31 downto 0);
       o_av_addr         : out std_logic_vector(29 downto 0);
+      o_av_byteenable   : out std_logic_vector(3 downto 0);
       o_av_read         : out std_logic;
+      o_av_write        : out std_logic;
       i_av_waitrequest  : in  std_logic;
+      o_av_writedata    : out std_logic_vector(31 downto 0);
       i_av_readdata     : in  std_logic_vector(31 downto 0);
       o_opcode          : out std_logic_vector(31 downto 0);
       o_wait            : out std_logic
@@ -204,8 +216,8 @@ architecture behave of riscv_mk1 is
       i_clk     : in  std_logic;
       i_rst     : in  std_logic;
       i_ce      : in  std_logic;
-      i_load    : out std_logic;
-      i_value   : out std_logic_vector(31 downto 0);
+      i_load    : in  std_logic;
+      i_value   : in  std_logic_vector(31 downto 0);
       o_pc      : out std_logic_vector(31 downto 0);
       o_pc_next : out std_logic_vector(31 downto 0)
     );
@@ -226,6 +238,17 @@ begin
   w_reg_ce <= w_phase_write_back and w_reg_wb;
   w_pc_load <= w_jump or (w_branch and w_take_branch);
 
+  -- Multiplexing betwen instruction and data bus
+  w_data_memory_active  <= w_av_data_read or w_av_data_write;
+  o_av_read             <= w_av_inst_read or w_av_data_read;
+  o_av_write            <= w_av_inst_write or w_av_data_write;
+  o_av_byteenable       <= w_av_data_byteenable when (w_data_memory_active = '1') else w_av_inst_byteenable;
+  o_av_addr             <= w_av_data_addr       when (w_data_memory_active = '1') else w_av_inst_addr;
+  o_av_writedata        <= w_av_data_writedata  when (w_data_memory_active = '1') else w_av_inst_writedata;
+  w_av_inst_waitrequest <= i_av_waitrequest;
+  w_av_data_waitrequest <= i_av_waitrequest;
+  w_av_inst_readdata    <= i_av_readdata;
+  w_av_data_readdata    <= i_av_readdata;
 
 
   control_unit0 : control_unit
@@ -306,13 +329,13 @@ begin
       i_func            => w_mem_func,
       o_readdata        => w_data_out,
       o_wait            => w_memory_wait,
-      o_av_addr         => o_av_data_addr,
-      o_av_writedata    => o_av_data_writedata,
-      o_av_byte_enable  => o_av_data_byte_enable,
-      o_av_read         => o_av_data_read,
-      o_av_write        => o_av_data_write,
-      i_av_waitrequest  => i_av_data_waitrequest,
-      i_av_readdata     => i_av_data_readdata
+      o_av_addr         => w_av_data_addr,
+      o_av_byteenable   => w_av_data_byteenable,
+      o_av_read         => w_av_data_read,
+      o_av_write        => w_av_data_write,
+      i_av_waitrequest  => w_av_data_waitrequest,
+      o_av_writedata    => w_av_data_writedata,
+      i_av_readdata     => w_av_data_readdata
     );
 
   imem_interface0 : imem_interface
@@ -320,10 +343,13 @@ begin
       i_clk             => i_clk,
       i_ce              => w_phase_fetch,
       i_pc              => w_pc,
-      o_av_addr         => o_av_inst_addr,
-      o_av_read         => o_av_inst_read,
-      i_av_waitrequest  => i_av_inst_waitrequest,
-      i_av_readdata     => i_av_inst_readdata,
+      o_av_addr         => w_av_inst_addr,
+      o_av_byteenable   => w_av_inst_byteenable,
+      o_av_read         => w_av_inst_read,
+      o_av_write        => w_av_inst_write,
+      i_av_waitrequest  => w_av_inst_waitrequest,
+      o_av_writedata    => w_av_inst_writedata,
+      i_av_readdata     => w_av_inst_readdata,
       o_opcode          => w_opcode,
       o_wait            => w_fetch_wait
     );

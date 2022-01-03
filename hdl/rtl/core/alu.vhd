@@ -27,7 +27,7 @@ entity alu is
     i_in1   : in  std_logic_vector(31 downto 0);
     i_in2   : in  std_logic_vector(31 downto 0);
     i_func  : in  std_logic_vector(4 downto 0);
-    o_res   : out std_logic_vector(31 downto 0)
+    o_res   : out std_logic_vector(31 downto 0) := (others=>'0')
   );
 end entity alu;
 
@@ -53,7 +53,7 @@ begin
   p_alu : process (i_clk) is
   begin
     if (rising_edge(i_clk)) then
-      if (i_ce) then
+      if (i_ce = '1') then
 
         if (w_bypas = '1') then
           o_res <= i_in2;
@@ -74,11 +74,19 @@ begin
             
             -- SLT (Set lower than signed)
             when "010" =>
-              o_res <= x"00000001" when (signed(i_in1) < signed(i_in2)) else x"00000000";
+              if (signed(i_in1) < signed(i_in2)) then
+                o_res <= x"00000001";
+              else
+                o_res <= x"00000000";
+              end if;
 
             -- SLTU (Set lower than unsigned)
             when "011" =>
-              o_res <= x"00000001" when (unsigned(i_in1) < unsigned(i_in2)) else x"00000000";
+              if (unsigned(i_in1) < unsigned(i_in2)) then
+                o_res <= x"00000001";
+              else
+                o_res <= x"00000000";
+              end if;
 
             -- XOR
             when "100" =>

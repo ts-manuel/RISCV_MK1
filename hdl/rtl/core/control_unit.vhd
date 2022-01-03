@@ -26,15 +26,15 @@ use ieee.numeric_std.all;
 
 entity control_unit is
   port (
-    i_clk         : in  std_logic;
-    i_rst         : in  std_logic;
-    i_fetch_wait  : in  std_logic;
-    i_memory_wait : in  std_logic;
-    o_fetch       : out std_logic;
-    o_decode      : out std_logic;
-    o_execute     : out std_logic;
-    o_memory      : out std_logic;
-    o_write_back  : out std_logic
+    i_clk         : in      std_logic;
+    i_rst         : in      std_logic;
+    i_fetch_wait  : in      std_logic;
+    i_memory_wait : in      std_logic;
+    o_fetch       : buffer  std_logic;
+    o_decode      : out     std_logic;
+    o_execute     : out     std_logic;
+    o_memory      : buffer  std_logic;
+    o_write_back  : out     std_logic
   );
 end entity control_unit;
 

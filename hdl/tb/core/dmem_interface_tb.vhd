@@ -32,7 +32,7 @@ architecture behave of dmem_interface_tb is
   signal w_wait           : std_logic;
   signal w_av_addr        : std_logic_vector(29 downto 0);
   signal w_av_writedata   : std_logic_vector(31 downto 0);
-  signal w_av_byte_enable : std_logic_vector(3 downto 0);
+  signal w_av_byteenable : std_logic_vector(3 downto 0);
   signal w_av_read        : std_logic;
   signal w_av_write       : std_logic;
   signal r_av_waitrequest : std_logic := '0';
@@ -96,11 +96,11 @@ architecture behave of dmem_interface_tb is
       o_readdata        : out std_logic_vector(31 downto 0);
       o_wait            : out std_logic;
       o_av_addr         : out std_logic_vector(29 downto 0);
-      o_av_writedata    : out std_logic_vector(31 downto 0);
-      o_av_byte_enable  : out std_logic_vector(3 downto 0);
+      o_av_byteenable   : out std_logic_vector(3 downto 0);
       o_av_read         : out std_logic;
       o_av_write        : out std_logic;
       i_av_waitrequest  : in  std_logic;
+      o_av_writedata    : out std_logic_vector(31 downto 0);
       i_av_readdata     : in  std_logic_vector(31 downto 0)
     );
   end component dmem_interface;
@@ -159,19 +159,19 @@ begin
     r_writedata   <= x"01234567";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "1111")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "1111")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = r_writedata)    report "Failed write: writedata signal"   severity failure;
     r_func <= "001";
     r_writedata   <= x"89012345";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "0011")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "0011")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = r_writedata)    report "Failed write: writedata signal"   severity failure;
     r_func <= "000";
     r_writedata   <= x"67891054";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "0001")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "0001")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = r_writedata)    report "Failed write: writedata signal"   severity failure;
   
     -- Test unaligned 8-bit writes
@@ -183,21 +183,21 @@ begin
     r_writedata   <= x"01234567";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "0010")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "0010")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = x"23456700")    report "Failed write: writedata signal"   severity failure;
     r_func <= "000";
     r_addr <= x"0000000" & "0010";
     r_writedata   <= x"89012345";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "0100")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "0100")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = x"23450000")    report "Failed write: writedata signal"   severity failure;
     r_func <= "000";
     r_addr <= x"0000000" & "0011";
     r_writedata   <= x"67891054";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "1000")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "1000")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = x"54000000")    report "Failed write: writedata signal"   severity failure;
 
     -- Test unaligned 16-bit writes
@@ -209,7 +209,7 @@ begin
     r_writedata   <= x"01234567";
     wait until rising_edge(r_clk);
     assert (w_av_write        = r_wr)           report "Failed write: write signal"       severity failure;
-    assert (w_av_byte_enable  = "1100")         report "Failed write: byte enable signal" severity failure;
+    assert (w_av_byteenable  = "1100")         report "Failed write: byte enable signal" severity failure;
     assert (w_av_writedata    = x"45670000")    report "Failed write: writedata signal"   severity failure;
 
     -- End simulation
@@ -265,7 +265,7 @@ begin
       o_wait            => w_wait,
       o_av_addr         => w_av_addr,
       o_av_writedata    => w_av_writedata,
-      o_av_byte_enable  => w_av_byte_enable,
+      o_av_byteenable   => w_av_byteenable,
       o_av_read         => w_av_read,
       o_av_write        => w_av_write,
       i_av_waitrequest  => r_av_waitrequest,
