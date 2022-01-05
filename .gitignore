@@ -7,3 +7,18 @@ hdl/vcd/*
 hdl/gtkwave/*
 
 code/*/obj/*
+
+quartus/.qsys_edit/
+quartus/db/
+quartus/dse/
+quartus/greybox_tmp/
+quartus/incremental_db/
+quartus/simulation/
+quartus/*.qws
+quartus/*.summary
+quartus/*.smsg
+quartus/*.done
+quartus/*.cdf
+quartus/*.sld
+*.bak
+*.rpt
