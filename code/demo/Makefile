@@ -29,7 +29,6 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 
 $(TARGET).elf: $(OBJ)
 	$(CC) -T linker.ld -o $(BDIR)/$@ $(OBJ) $(CFLAGS)
-#	$(CC) -T default.ld -o $(BDIR)/$@ $(OBJ) $(CFLAGS)
 	$(STRIP) --strip-debug $(BDIR)/$@
 
 $(TARGET).bin: $(TARGET).elf

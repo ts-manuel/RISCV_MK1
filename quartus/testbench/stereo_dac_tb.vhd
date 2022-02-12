@@ -1,5 +1,5 @@
 -- *********************************************************************
--- File: avalon_bus.vhd
+-- File: stereo_dac_tb.vhd
 --
 -- Stereo DAC Test Bench
 --

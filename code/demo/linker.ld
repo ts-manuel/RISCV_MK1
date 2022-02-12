@@ -11,7 +11,7 @@ _Min_Stack_size = 0x400; /* Required amount of stack */
 /* Memories definition */
 MEMORY
 {
-  rom   (rx)  : ORIGIN = 0x00000000,  LENGTH = 170K   /* Read only and Execute */
+  rom   (rx)  : ORIGIN = 0x00000000,  LENGTH = 160K   /* Read only and Execute */
   ram   (rw)  : ORIGIN = 0x04000000,  LENGTH = 64M	  /* Read only and Read/Write */
 }
 

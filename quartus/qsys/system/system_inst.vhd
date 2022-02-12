@@ -16,6 +16,14 @@
 			av_uart_external_interface_rw          : out   std_logic;                                        -- rw
 			av_uart_external_interface_write_data  : out   std_logic_vector(31 downto 0);                    -- write_data
 			av_uart_external_interface_read_data   : in    std_logic_vector(31 downto 0) := (others => 'X'); -- read_data
+			av_vga_external_interface_acknowledge  : in    std_logic                     := 'X';             -- acknowledge
+			av_vga_external_interface_irq          : in    std_logic                     := 'X';             -- irq
+			av_vga_external_interface_address      : out   std_logic_vector(3 downto 0);                     -- address
+			av_vga_external_interface_bus_enable   : out   std_logic;                                        -- bus_enable
+			av_vga_external_interface_byte_enable  : out   std_logic_vector(3 downto 0);                     -- byte_enable
+			av_vga_external_interface_rw           : out   std_logic;                                        -- rw
+			av_vga_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    -- write_data
+			av_vga_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => 'X'); -- read_data
 			clk_clk                                : in    std_logic                     := 'X';             -- clk
 			clk_sdram_clk                          : out   std_logic;                                        -- clk
 			disp0_export                           : out   std_logic_vector(7 downto 0);                     -- export
@@ -57,6 +65,14 @@
 			av_uart_external_interface_rw          => CONNECTED_TO_av_uart_external_interface_rw,          --                           .rw
 			av_uart_external_interface_write_data  => CONNECTED_TO_av_uart_external_interface_write_data,  --                           .write_data
 			av_uart_external_interface_read_data   => CONNECTED_TO_av_uart_external_interface_read_data,   --                           .read_data
+			av_vga_external_interface_acknowledge  => CONNECTED_TO_av_vga_external_interface_acknowledge,  --  av_vga_external_interface.acknowledge
+			av_vga_external_interface_irq          => CONNECTED_TO_av_vga_external_interface_irq,          --                           .irq
+			av_vga_external_interface_address      => CONNECTED_TO_av_vga_external_interface_address,      --                           .address
+			av_vga_external_interface_bus_enable   => CONNECTED_TO_av_vga_external_interface_bus_enable,   --                           .bus_enable
+			av_vga_external_interface_byte_enable  => CONNECTED_TO_av_vga_external_interface_byte_enable,  --                           .byte_enable
+			av_vga_external_interface_rw           => CONNECTED_TO_av_vga_external_interface_rw,           --                           .rw
+			av_vga_external_interface_write_data   => CONNECTED_TO_av_vga_external_interface_write_data,   --                           .write_data
+			av_vga_external_interface_read_data    => CONNECTED_TO_av_vga_external_interface_read_data,    --                           .read_data
 			clk_clk                                => CONNECTED_TO_clk_clk,                                --                        clk.clk
 			clk_sdram_clk                          => CONNECTED_TO_clk_sdram_clk,                          --                  clk_sdram.clk
 			disp0_export                           => CONNECTED_TO_disp0_export,                           --                      disp0.export

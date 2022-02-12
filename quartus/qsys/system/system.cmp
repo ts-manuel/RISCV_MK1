@@ -16,6 +16,14 @@
 			av_uart_external_interface_rw          : out   std_logic;                                        -- rw
 			av_uart_external_interface_write_data  : out   std_logic_vector(31 downto 0);                    -- write_data
 			av_uart_external_interface_read_data   : in    std_logic_vector(31 downto 0) := (others => 'X'); -- read_data
+			av_vga_external_interface_acknowledge  : in    std_logic                     := 'X';             -- acknowledge
+			av_vga_external_interface_irq          : in    std_logic                     := 'X';             -- irq
+			av_vga_external_interface_address      : out   std_logic_vector(3 downto 0);                     -- address
+			av_vga_external_interface_bus_enable   : out   std_logic;                                        -- bus_enable
+			av_vga_external_interface_byte_enable  : out   std_logic_vector(3 downto 0);                     -- byte_enable
+			av_vga_external_interface_rw           : out   std_logic;                                        -- rw
+			av_vga_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    -- write_data
+			av_vga_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => 'X'); -- read_data
 			clk_clk                                : in    std_logic                     := 'X';             -- clk
 			clk_sdram_clk                          : out   std_logic;                                        -- clk
 			disp0_export                           : out   std_logic_vector(7 downto 0);                     -- export

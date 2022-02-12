@@ -1,6 +1,6 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="dbcf26d28f15ead453dc"/>
+    <hash md5_digest_80b="b4b22554d69b701250d8"/>
   </project>
   <file_info>
     <file device="10M50DAF484C7G" path="riscv_mk1_demo.sof" usercode="0xFFFFFFFF"/>
@@ -8,7 +8,7 @@
   <sld_infos>
     <sld_info hpath="system:soc" name="soc">
       <assignment_values>
-        <assignment_value text="QSYS_NAME system HAS_SOPCINFO 1 GENERATION_ID 1641238014"/>
+        <assignment_value text="QSYS_NAME system HAS_SOPCINFO 1 GENERATION_ID 1644678632"/>
       </assignment_values>
       <parameters/>
     </sld_info>

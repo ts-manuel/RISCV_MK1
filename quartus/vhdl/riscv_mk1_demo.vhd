@@ -67,10 +67,12 @@ end entity riscv_mk1_demo;
 architecture behave of riscv_mk1_demo is
 
   -- Constants
-  constant SYS_CLK_FREQ       : integer := 50000000;
+  constant SYS_CLK_FREQ       : integer := 100000000;
   constant UART_BAUDRATE      : integer := 2000000;
   constant UART_TX_FIFO_SIZE  : integer := 64;
   constant UART_RX_FIFO_SIZE  : integer := 64;
+  constant DAC_FIFO_SIZE      : integer := 64;
+  constant VGA_FIFO_SIZE      : integer := 128;
 
   -- Clock and Reset
   signal w_sys_clk  : std_logic;
@@ -101,6 +103,16 @@ architecture behave of riscv_mk1_demo is
   signal w_uart_RX            : std_logic;
   signal w_uart_TX            : std_logic;
 
+  -- VGA Avalon Interface
+  signal av_vga_acknowledge  : std_logic;
+  signal av_vga_irq          : std_logic;
+  signal av_vga_address      : std_logic_vector(3 downto 0);
+  signal av_vga_bus_enable   : std_logic;
+  signal av_vga_byte_enable  : std_logic_vector(3 downto 0);
+  signal av_vga_rw           : std_logic;
+  signal av_vga_write_data   : std_logic_vector(31 downto 0);
+  signal av_vga_read_data    : std_logic_vector(31 downto 0);
+  
   component system is
     port (
       clk_clk     : in  std_logic;
@@ -132,6 +144,14 @@ architecture behave of riscv_mk1_demo is
       av_uart_external_interface_rw           : out   std_logic;
       av_uart_external_interface_write_data   : out   std_logic_vector(31 downto 0);
       av_uart_external_interface_read_data    : in    std_logic_vector(31 downto 0);
+      av_vga_external_interface_acknowledge   : in    std_logic;
+      av_vga_external_interface_irq           : in    std_logic;
+      av_vga_external_interface_address       : out   std_logic_vector(3 downto 0);
+      av_vga_external_interface_bus_enable    : out   std_logic;
+      av_vga_external_interface_byte_enable   : out   std_logic_vector(3 downto 0);
+      av_vga_external_interface_rw            : out   std_logic;
+      av_vga_external_interface_write_data    : out   std_logic_vector(31 downto 0);
+      av_vga_external_interface_read_data     : in    std_logic_vector(31 downto 0);
       disp0_export  : out   std_logic_vector(7 downto 0);
 		  disp1_export  : out   std_logic_vector(7 downto 0);
 		  disp2_export  : out   std_logic_vector(7 downto 0);
@@ -143,6 +163,9 @@ architecture behave of riscv_mk1_demo is
   end component system;
 
   component stereo_dac is
+    generic (
+      FIFO_SIZE       : integer
+    );
     port (
       i_clk           : in  std_logic;
       av_acknowledge  : out std_logic;
@@ -185,6 +208,28 @@ architecture behave of riscv_mk1_demo is
 	  );
   end component UART;
 
+  component video_gen is
+    generic (
+      FIFO_SIZE : integer
+    );
+    port (
+      i_clk           : in  std_logic;
+      av_acknowledge  : out std_logic;
+      av_irq          : out std_logic;
+      av_address      : in  std_logic_vector(3 downto 0);
+      av_bus_enable   : in  std_logic;
+      av_byte_enable  : in  std_logic_vector(3 downto 0);
+      av_rw           : in  std_logic;
+      av_write_data   : in  std_logic_vector(31 downto 0);
+      av_read_data    : out std_logic_vector(31 downto 0);
+      o_vga_r         : out std_logic_vector(3 downto 0);
+      o_vga_g         : out std_logic_vector(3 downto 0);
+      o_vga_b         : out std_logic_vector(3 downto 0);
+      o_vga_hs        : out std_logic;
+      o_vga_vs        : out std_logic
+    );
+  end component video_gen;
+
 begin
 
   ARDUINO_IO(12) <= w_dac_left;
@@ -194,6 +239,8 @@ begin
   w_uart_RX <= GPIO(0);
   GPIO(1)   <= w_uart_TX;
 
+  av_uart_irq <= '0';
+  
   -- Sinchronize inputs
   p_sync : process (MAX10_CLK1_50)
   begin
@@ -240,6 +287,15 @@ begin
       av_uart_external_interface_write_data   => av_uart_write_data,
       av_uart_external_interface_read_data    => av_uart_read_data,
 
+      av_vga_external_interface_acknowledge   => av_vga_acknowledge,
+      av_vga_external_interface_irq           => av_vga_irq,
+      av_vga_external_interface_address       => av_vga_address,
+      av_vga_external_interface_bus_enable    => av_vga_bus_enable,
+      av_vga_external_interface_byte_enable   => av_vga_byte_enable,
+      av_vga_external_interface_rw            => av_vga_rw,
+      av_vga_external_interface_write_data    => av_vga_write_data,
+      av_vga_external_interface_read_data     => av_vga_read_data,
+
       disp0_export  => HEX0,
       disp1_export  => HEX1,
       disp2_export  => HEX2,
@@ -252,6 +308,9 @@ begin
 
 
   stereo_dac0 : stereo_dac
+    generic map(
+      FIFO_SIZE       => DAC_FIFO_SIZE
+    )
     port map(
       i_clk           => w_sys_clk,
       av_acknowledge  => av_dac_acknowledge,
@@ -286,5 +345,26 @@ begin
       o_TX            => w_uart_TX
     );
 
+
+  video_gen0 : video_gen
+    generic map (
+      FIFO_SIZE       => VGA_FIFO_SIZE
+    )
+    port map (
+      i_clk           => w_sys_clk,
+      av_acknowledge  => av_vga_acknowledge,
+      av_irq          => av_vga_irq,
+      av_address      => av_vga_address,
+      av_bus_enable   => av_vga_bus_enable,
+      av_byte_enable  => av_vga_byte_enable,
+      av_rw           => av_vga_rw,
+      av_write_data   => av_vga_write_data,
+      av_read_data    => av_vga_read_data,
+      o_vga_r         => VGA_R,
+      o_vga_g         => VGA_G,
+      o_vga_b         => VGA_B,
+      o_vga_hs        => VGA_HS,
+      o_vga_vs        => VGA_VS
+    );
 
 end architecture behave;

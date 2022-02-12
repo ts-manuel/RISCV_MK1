@@ -5,7 +5,7 @@
 -- Uses Pulse Code Modulation to generate a bit pattern that after
 -- low-pass filtering rappresents the analog value
 --
--- Memory mAApped Inteface:
+-- Memory Mapped Inteface:
 -- offset                 data
 --   0   |  [31:16]=left_sample [15:0]=right_sample
 --   4   |  [31:16]=clock_div   [15:0]=available
@@ -28,10 +28,13 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
+use ieee.math_real.all;
 
 
 entity stereo_dac is
+  generic (
+    FIFO_SIZE       : integer
+  );
   port (
     i_clk           : in  std_logic;
     av_acknowledge  : out std_logic;
@@ -51,8 +54,7 @@ end entity stereo_dac;
 architecture behave of stereo_dac is
 
   constant DAC_RES    : integer := 12;  -- Number of bits
-  constant FIFO_BW    : integer := 6;
-  constant FIFO_SIZE  : integer := 2**FIFO_BW;  -- Number of slots in the FIFO
+  constant FIFO_BW    : integer := integer(ceil(log2(real(FIFO_SIZE))));
 
   signal r_clock_div_ctr : unsigned(15 downto 0) := to_unsigned(0, 16);
   signal r_pcm_counter   : unsigned(DAC_RES-1 downto 0) := to_unsigned(0, DAC_RES);

@@ -185,7 +185,7 @@ module UART #(
 	end
 	
 	wire [$clog2(RX_FIFO_DEPTH)-1:0] _rx_fifo_usedw;
-	assign rx_fifo_usedw = _rx_fifo_usedw == 0 ? 0 : (8'h00 | _rx_fifo_usedw) - 1;
+	assign rx_fifo_usedw = _rx_fifo_usedw == 0 ? 8'h00 : (8'h00 | _rx_fifo_usedw) - 1;
 	
 	UART_FIFO #( .WIDTH(8), .DEPTH(RX_FIFO_DEPTH)
 		) rx_fifo (

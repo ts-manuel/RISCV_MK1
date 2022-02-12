@@ -3,37 +3,40 @@
 preplace inst system.disp_7_seg.pio_disp_0 -pg 1
 preplace inst system.disp_7_seg.pio_disp_1 -pg 1
 preplace inst system.disp_7_seg.pio_disp_2 -pg 1
-preplace inst system.disp_7_seg -pg 1 -lvl 4 -y 200
-preplace inst system.av_dac -pg 1 -lvl 4 -y 50
+preplace inst system.disp_7_seg -pg 1 -lvl 4 -y 180
+preplace inst system.av_dac -pg 1 -lvl 4 -y 30
 preplace inst system.disp_7_seg.pio_disp_3 -pg 1
+preplace inst system.timer_0 -pg 1 -lvl 4 -y 1260
 preplace inst system.disp_7_seg.pio_disp_4 -pg 1
 preplace inst system.disp_7_seg.pio_disp_5 -pg 1
-preplace inst system.sdram -pg 1 -lvl 4 -y 950
-preplace inst system.riscv_mk1_0 -pg 1 -lvl 3 -y 780
-preplace inst system.code_ram -pg 1 -lvl 4 -y 730
-preplace inst system.av_uart -pg 1 -lvl 4 -y 1150
-preplace inst system.altpll_0 -pg 1 -lvl 2 -y 680
+preplace inst system.av_vga -pg 1 -lvl 4 -y 700
+preplace inst system.sdram -pg 1 -lvl 4 -y 940
+preplace inst system.riscv_mk1_0 -pg 1 -lvl 3 -y 790
+preplace inst system.code_ram -pg 1 -lvl 4 -y 860
+preplace inst system.av_uart -pg 1 -lvl 4 -y 1140
+preplace inst system.altpll_0 -pg 1 -lvl 2 -y 670
 preplace inst system -pg 1 -lvl 1 -y 40 -regy -20
-preplace inst system.pio_leds -pg 1 -lvl 4 -y 1050
-preplace inst system.clock_bridge_0 -pg 1 -lvl 3 -y 720
-preplace inst system.clk_0 -pg 1 -lvl 1 -y 810
-preplace netloc EXPORT<net_container>system</net_container>(MASTER)clock_bridge_0.out_clk,(MASTER)system.sys) 1 3 2 NJ 720 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_3_external_connection,(SLAVE)system.disp3) 1 0 4 NJ 960 NJ 960 NJ 960 NJ
-preplace netloc EXPORT<net_container>system</net_container>(MASTER)system.clk_sdram,(MASTER)altpll_0.c1) 1 2 3 NJ 710 NJ 40 NJ
-preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)code_ram.clk1,(SLAVE)disp_7_seg.pio_disp_5_clk,(SLAVE)riscv_mk1_0.clock,(SLAVE)clock_bridge_0.in_clk,(SLAVE)pio_leds.clk,(MASTER)altpll_0.c0,(SLAVE)av_uart.clk,(SLAVE)disp_7_seg.pio_disp_4_clk,(SLAVE)disp_7_seg.pio_disp_0_clk,(SLAVE)disp_7_seg.pio_disp_2_clk,(SLAVE)sdram.clk,(SLAVE)av_dac.clk,(SLAVE)disp_7_seg.pio_disp_1_clk,(SLAVE)disp_7_seg.pio_disp_3_clk) 1 2 2 640 850 990
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)clk_0.clk_in_reset,(SLAVE)system.rst) 1 0 1 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_4_external_connection,(SLAVE)system.disp4) 1 0 4 NJ 560 NJ 560 NJ 560 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)av_dac.external_interface,(SLAVE)system.av_dac_external_interface) 1 0 4 NJ 100 NJ 100 NJ 100 NJ
-preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)av_uart.reset,(SLAVE)disp_7_seg.pio_disp_2_reset,(SLAVE)disp_7_seg.pio_disp_5_reset,(SLAVE)av_dac.reset,(SLAVE)disp_7_seg.pio_disp_4_reset,(SLAVE)disp_7_seg.pio_disp_0_reset,(SLAVE)pio_leds.reset,(SLAVE)code_ram.reset1,(SLAVE)disp_7_seg.pio_disp_1_reset,(SLAVE)sdram.reset,(MASTER)clk_0.clk_reset,(SLAVE)altpll_0.inclk_interface_reset,(SLAVE)riscv_mk1_0.reset,(SLAVE)disp_7_seg.pio_disp_3_reset) 1 1 3 400 800 620 770 910
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.sdram,(SLAVE)sdram.wire) 1 0 4 NJ 1020 NJ 1020 NJ 1020 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_5_external_connection,(SLAVE)system.disp5) 1 0 4 NJ 640 NJ 640 NJ 640 NJ
-preplace netloc POINT_TO_POINT<net_container>system</net_container>(SLAVE)altpll_0.inclk_interface,(MASTER)clk_0.clk) 1 1 1 380
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.leds,(SLAVE)pio_leds.external_connection) 1 0 4 NJ 1080 NJ 1080 NJ 1080 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.disp0,(SLAVE)disp_7_seg.pio_disp_0_external_connection) 1 0 4 NJ 230 NJ 230 NJ 230 NJ
+preplace inst system.pio_leds -pg 1 -lvl 4 -y 1040
+preplace inst system.clock_bridge_0 -pg 1 -lvl 3 -y 710
+preplace inst system.clk_0 -pg 1 -lvl 1 -y 800
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_3_external_connection,(SLAVE)system.disp3) 1 0 4 NJ 450 NJ 450 NJ 450 NJ
+preplace netloc EXPORT<net_container>system</net_container>(MASTER)system.clk_sdram,(MASTER)altpll_0.c1) 1 2 3 NJ 700 NJ 830 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_2_external_connection,(SLAVE)system.disp2) 1 0 4 NJ 370 NJ 370 NJ 370 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)av_vga.external_interface,(SLAVE)system.av_vga_external_interface) 1 0 4 NJ 660 NJ 660 NJ 660 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.disp4,(SLAVE)disp_7_seg.pio_disp_4_external_connection) 1 0 4 NJ 530 NJ 530 NJ 530 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)av_dac.external_interface,(SLAVE)system.av_dac_external_interface) 1 0 4 NJ 80 NJ 80 NJ 80 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_5_external_connection,(SLAVE)system.disp5) 1 0 4 NJ 610 NJ 610 NJ 610 NJ
+preplace netloc POINT_TO_POINT<net_container>system</net_container>(MASTER)clk_0.clk,(SLAVE)altpll_0.inclk_interface) 1 1 1 380
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_0_external_connection,(SLAVE)system.disp0) 1 0 4 NJ 210 NJ 210 NJ 210 NJ
+preplace netloc FAN_OUT<net_container>system</net_container>(MASTER)clk_0.clk_reset,(SLAVE)timer_0.reset,(SLAVE)code_ram.reset1,(SLAVE)disp_7_seg.pio_disp_3_reset,(SLAVE)disp_7_seg.pio_disp_1_reset,(SLAVE)av_dac.reset,(SLAVE)disp_7_seg.pio_disp_5_reset,(SLAVE)riscv_mk1_0.reset,(SLAVE)disp_7_seg.pio_disp_2_reset,(SLAVE)altpll_0.inclk_interface_reset,(SLAVE)av_uart.reset,(SLAVE)av_vga.reset,(SLAVE)sdram.reset,(SLAVE)disp_7_seg.pio_disp_4_reset,(SLAVE)disp_7_seg.pio_disp_0_reset,(SLAVE)pio_leds.reset) 1 1 3 400 820 640 780 930
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.leds,(SLAVE)pio_leds.external_connection) 1 0 4 NJ 1070 NJ 1070 NJ 1070 NJ
 preplace netloc EXPORT<net_container>system</net_container>(SLAVE)clk_0.clk_in,(SLAVE)system.clk) 1 0 1 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.disp2,(SLAVE)disp_7_seg.pio_disp_2_external_connection) 1 0 4 NJ 940 NJ 940 NJ 940 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.disp1,(SLAVE)disp_7_seg.pio_disp_1_external_connection) 1 0 4 NJ 310 NJ 310 NJ 310 NJ
-preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.av_uart_external_interface,(SLAVE)av_uart.external_interface) 1 0 4 NJ 1200 NJ 1200 NJ 1200 NJ
-preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_5_s1,(SLAVE)sdram.s1,(SLAVE)disp_7_seg.pio_disp_0_s1,(SLAVE)pio_leds.s1,(SLAVE)av_uart.avalon_slave,(SLAVE)disp_7_seg.pio_disp_2_s1,(SLAVE)disp_7_seg.pio_disp_3_s1,(SLAVE)disp_7_seg.pio_disp_1_s1,(MASTER)riscv_mk1_0.avalon_master,(SLAVE)disp_7_seg.pio_disp_4_s1,(SLAVE)code_ram.s1,(SLAVE)av_dac.avalon_slave) 1 3 1 950
+preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)pio_leds.s1,(SLAVE)disp_7_seg.pio_disp_1_s1,(SLAVE)disp_7_seg.pio_disp_5_s1,(SLAVE)disp_7_seg.pio_disp_4_s1,(MASTER)riscv_mk1_0.avalon_master,(SLAVE)sdram.s1,(SLAVE)disp_7_seg.pio_disp_3_s1,(SLAVE)av_uart.avalon_slave,(SLAVE)disp_7_seg.pio_disp_2_s1,(SLAVE)av_dac.avalon_slave,(SLAVE)av_vga.avalon_slave,(SLAVE)disp_7_seg.pio_disp_0_s1,(SLAVE)timer_0.s1,(SLAVE)code_ram.s1) 1 3 1 910
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)sdram.wire,(SLAVE)system.sdram) 1 0 4 NJ 1010 NJ 1010 NJ 1010 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_1_external_connection,(SLAVE)system.disp1) 1 0 4 NJ 290 NJ 290 NJ 290 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.av_uart_external_interface,(SLAVE)av_uart.external_interface) 1 0 4 NJ 1190 NJ 1190 NJ 1190 NJ
+preplace netloc EXPORT<net_container>system</net_container>(MASTER)system.sys,(MASTER)clock_bridge_0.out_clk) 1 3 2 NJ 850 NJ
+preplace netloc EXPORT<net_container>system</net_container>(SLAVE)system.rst,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>system</net_container>(SLAVE)disp_7_seg.pio_disp_1_clk,(SLAVE)disp_7_seg.pio_disp_5_clk,(SLAVE)pio_leds.clk,(SLAVE)av_vga.clk,(SLAVE)disp_7_seg.pio_disp_2_clk,(SLAVE)sdram.clk,(SLAVE)disp_7_seg.pio_disp_3_clk,(SLAVE)clock_bridge_0.in_clk,(SLAVE)av_dac.clk,(SLAVE)riscv_mk1_0.clock,(MASTER)altpll_0.c0,(SLAVE)code_ram.clk1,(SLAVE)timer_0.clk,(SLAVE)disp_7_seg.pio_disp_0_clk,(SLAVE)disp_7_seg.pio_disp_4_clk,(SLAVE)av_uart.clk) 1 2 2 620 760 870
 levelinfo -pg 1 0 170 1500
 levelinfo -hier system 180 210 430 670 1260 1410

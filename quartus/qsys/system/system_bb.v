@@ -16,6 +16,14 @@ module system (
 	av_uart_external_interface_rw,
 	av_uart_external_interface_write_data,
 	av_uart_external_interface_read_data,
+	av_vga_external_interface_acknowledge,
+	av_vga_external_interface_irq,
+	av_vga_external_interface_address,
+	av_vga_external_interface_bus_enable,
+	av_vga_external_interface_byte_enable,
+	av_vga_external_interface_rw,
+	av_vga_external_interface_write_data,
+	av_vga_external_interface_read_data,
 	clk_clk,
 	clk_sdram_clk,
 	disp0_export,
@@ -53,6 +61,14 @@ module system (
 	output		av_uart_external_interface_rw;
 	output	[31:0]	av_uart_external_interface_write_data;
 	input	[31:0]	av_uart_external_interface_read_data;
+	input		av_vga_external_interface_acknowledge;
+	input		av_vga_external_interface_irq;
+	output	[3:0]	av_vga_external_interface_address;
+	output		av_vga_external_interface_bus_enable;
+	output	[3:0]	av_vga_external_interface_byte_enable;
+	output		av_vga_external_interface_rw;
+	output	[31:0]	av_vga_external_interface_write_data;
+	input	[31:0]	av_vga_external_interface_read_data;
 	input		clk_clk;
 	output		clk_sdram_clk;
 	output	[7:0]	disp0_export;

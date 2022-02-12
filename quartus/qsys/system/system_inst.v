@@ -15,6 +15,14 @@
 		.av_uart_external_interface_rw          (<connected-to-av_uart_external_interface_rw>),          //                           .rw
 		.av_uart_external_interface_write_data  (<connected-to-av_uart_external_interface_write_data>),  //                           .write_data
 		.av_uart_external_interface_read_data   (<connected-to-av_uart_external_interface_read_data>),   //                           .read_data
+		.av_vga_external_interface_acknowledge  (<connected-to-av_vga_external_interface_acknowledge>),  //  av_vga_external_interface.acknowledge
+		.av_vga_external_interface_irq          (<connected-to-av_vga_external_interface_irq>),          //                           .irq
+		.av_vga_external_interface_address      (<connected-to-av_vga_external_interface_address>),      //                           .address
+		.av_vga_external_interface_bus_enable   (<connected-to-av_vga_external_interface_bus_enable>),   //                           .bus_enable
+		.av_vga_external_interface_byte_enable  (<connected-to-av_vga_external_interface_byte_enable>),  //                           .byte_enable
+		.av_vga_external_interface_rw           (<connected-to-av_vga_external_interface_rw>),           //                           .rw
+		.av_vga_external_interface_write_data   (<connected-to-av_vga_external_interface_write_data>),   //                           .write_data
+		.av_vga_external_interface_read_data    (<connected-to-av_vga_external_interface_read_data>),    //                           .read_data
 		.clk_clk                                (<connected-to-clk_clk>),                                //                        clk.clk
 		.clk_sdram_clk                          (<connected-to-clk_sdram_clk>),                          //                  clk_sdram.clk
 		.disp0_export                           (<connected-to-disp0_export>),                           //                      disp0.export

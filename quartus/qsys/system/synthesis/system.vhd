@@ -24,6 +24,14 @@ entity system is
 		av_uart_external_interface_rw          : out   std_logic;                                        --                           .rw
 		av_uart_external_interface_write_data  : out   std_logic_vector(31 downto 0);                    --                           .write_data
 		av_uart_external_interface_read_data   : in    std_logic_vector(31 downto 0) := (others => '0'); --                           .read_data
+		av_vga_external_interface_acknowledge  : in    std_logic                     := '0';             --  av_vga_external_interface.acknowledge
+		av_vga_external_interface_irq          : in    std_logic                     := '0';             --                           .irq
+		av_vga_external_interface_address      : out   std_logic_vector(3 downto 0);                     --                           .address
+		av_vga_external_interface_bus_enable   : out   std_logic;                                        --                           .bus_enable
+		av_vga_external_interface_byte_enable  : out   std_logic_vector(3 downto 0);                     --                           .byte_enable
+		av_vga_external_interface_rw           : out   std_logic;                                        --                           .rw
+		av_vga_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    --                           .write_data
+		av_vga_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => '0'); --                           .read_data
 		clk_clk                                : in    std_logic                     := '0';             --                        clk.clk
 		clk_sdram_clk                          : out   std_logic;                                        --                  clk_sdram.clk
 		disp0_export                           : out   std_logic_vector(7 downto 0);                     --                      disp0.export
@@ -100,6 +108,30 @@ architecture rtl of system is
 			read_data          : in  std_logic_vector(31 downto 0) := (others => 'X')  -- export
 		);
 	end component system_av_dac;
+
+	component system_av_vga is
+		port (
+			clk                : in  std_logic                     := 'X';             -- clk
+			reset              : in  std_logic                     := 'X';             -- reset
+			avalon_address     : in  std_logic_vector(1 downto 0)  := (others => 'X'); -- address
+			avalon_byteenable  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			avalon_chipselect  : in  std_logic                     := 'X';             -- chipselect
+			avalon_read        : in  std_logic                     := 'X';             -- read
+			avalon_write       : in  std_logic                     := 'X';             -- write
+			avalon_writedata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			avalon_readdata    : out std_logic_vector(31 downto 0);                    -- readdata
+			avalon_waitrequest : out std_logic;                                        -- waitrequest
+			avalon_irq         : out std_logic;                                        -- irq
+			acknowledge        : in  std_logic                     := 'X';             -- export
+			irq                : in  std_logic                     := 'X';             -- export
+			address            : out std_logic_vector(3 downto 0);                     -- export
+			bus_enable         : out std_logic;                                        -- export
+			byte_enable        : out std_logic_vector(3 downto 0);                     -- export
+			rw                 : out std_logic;                                        -- export
+			write_data         : out std_logic_vector(31 downto 0);                    -- export
+			read_data          : in  std_logic_vector(31 downto 0) := (others => 'X')  -- export
+		);
+	end component system_av_vga;
 
 	component system_code_ram is
 		port (
@@ -222,6 +254,19 @@ architecture rtl of system is
 		);
 	end component system_sdram;
 
+	component system_timer_0 is
+		port (
+			clk        : in  std_logic                     := 'X';             -- clk
+			reset_n    : in  std_logic                     := 'X';             -- reset_n
+			address    : in  std_logic_vector(2 downto 0)  := (others => 'X'); -- address
+			writedata  : in  std_logic_vector(15 downto 0) := (others => 'X'); -- writedata
+			readdata   : out std_logic_vector(15 downto 0);                    -- readdata
+			chipselect : in  std_logic                     := 'X';             -- chipselect
+			write_n    : in  std_logic                     := 'X';             -- write_n
+			irq        : out std_logic                                         -- irq
+		);
+	end component system_timer_0;
+
 	component system_mm_interconnect_0 is
 		port (
 			altpll_0_c0_clk                               : in  std_logic                     := 'X';             -- clk
@@ -249,6 +294,14 @@ architecture rtl of system is
 			av_uart_avalon_slave_byteenable               : out std_logic_vector(3 downto 0);                     -- byteenable
 			av_uart_avalon_slave_waitrequest              : in  std_logic                     := 'X';             -- waitrequest
 			av_uart_avalon_slave_chipselect               : out std_logic;                                        -- chipselect
+			av_vga_avalon_slave_address                   : out std_logic_vector(1 downto 0);                     -- address
+			av_vga_avalon_slave_write                     : out std_logic;                                        -- write
+			av_vga_avalon_slave_read                      : out std_logic;                                        -- read
+			av_vga_avalon_slave_readdata                  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			av_vga_avalon_slave_writedata                 : out std_logic_vector(31 downto 0);                    -- writedata
+			av_vga_avalon_slave_byteenable                : out std_logic_vector(3 downto 0);                     -- byteenable
+			av_vga_avalon_slave_waitrequest               : in  std_logic                     := 'X';             -- waitrequest
+			av_vga_avalon_slave_chipselect                : out std_logic;                                        -- chipselect
 			code_ram_s1_address                           : out std_logic_vector(15 downto 0);                    -- address
 			code_ram_s1_write                             : out std_logic;                                        -- write
 			code_ram_s1_readdata                          : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -299,7 +352,12 @@ architecture rtl of system is
 			sdram_s1_byteenable                           : out std_logic_vector(1 downto 0);                     -- byteenable
 			sdram_s1_readdatavalid                        : in  std_logic                     := 'X';             -- readdatavalid
 			sdram_s1_waitrequest                          : in  std_logic                     := 'X';             -- waitrequest
-			sdram_s1_chipselect                           : out std_logic                                         -- chipselect
+			sdram_s1_chipselect                           : out std_logic;                                        -- chipselect
+			timer_0_s1_address                            : out std_logic_vector(2 downto 0);                     -- address
+			timer_0_s1_write                              : out std_logic;                                        -- write
+			timer_0_s1_readdata                           : in  std_logic_vector(15 downto 0) := (others => 'X'); -- readdata
+			timer_0_s1_writedata                          : out std_logic_vector(15 downto 0);                    -- writedata
+			timer_0_s1_chipselect                         : out std_logic                                         -- chipselect
 		);
 	end component system_mm_interconnect_0;
 
@@ -369,7 +427,7 @@ architecture rtl of system is
 		);
 	end component altera_reset_controller;
 
-	signal altpll_0_c0_clk                                            : std_logic;                     -- altpll_0:c0 -> [sys_clk, av_dac:clk, av_uart:clk, code_ram:clk, disp_7_seg:pio_disp_0_clk_clk, disp_7_seg:pio_disp_1_clk_clk, disp_7_seg:pio_disp_2_clk_clk, disp_7_seg:pio_disp_3_clk_clk, disp_7_seg:pio_disp_4_clk_clk, disp_7_seg:pio_disp_5_clk_clk, mm_interconnect_0:altpll_0_c0_clk, pio_leds:clk, riscv_mk1_0:i_clk, rst_controller:clk, sdram:clk]
+	signal altpll_0_c0_clk                                            : std_logic;                     -- altpll_0:c0 -> [sys_clk, av_dac:clk, av_uart:clk, av_vga:clk, code_ram:clk, disp_7_seg:pio_disp_0_clk_clk, disp_7_seg:pio_disp_1_clk_clk, disp_7_seg:pio_disp_2_clk_clk, disp_7_seg:pio_disp_3_clk_clk, disp_7_seg:pio_disp_4_clk_clk, disp_7_seg:pio_disp_5_clk_clk, mm_interconnect_0:altpll_0_c0_clk, pio_leds:clk, riscv_mk1_0:i_clk, rst_controller:clk, sdram:clk, timer_0:clk]
 	signal riscv_mk1_0_avalon_master_waitrequest                      : std_logic;                     -- mm_interconnect_0:riscv_mk1_0_avalon_master_waitrequest -> riscv_mk1_0:i_av_waitrequest
 	signal riscv_mk1_0_avalon_master_readdata                         : std_logic_vector(31 downto 0); -- mm_interconnect_0:riscv_mk1_0_avalon_master_readdata -> riscv_mk1_0:i_av_readdata
 	signal riscv_mk1_0_avalon_master_address                          : std_logic_vector(29 downto 0); -- riscv_mk1_0:o_av_addr -> mm_interconnect_0:riscv_mk1_0_avalon_master_address
@@ -393,6 +451,14 @@ architecture rtl of system is
 	signal mm_interconnect_0_av_uart_avalon_slave_byteenable          : std_logic_vector(3 downto 0);  -- mm_interconnect_0:av_uart_avalon_slave_byteenable -> av_uart:avalon_byteenable
 	signal mm_interconnect_0_av_uart_avalon_slave_write               : std_logic;                     -- mm_interconnect_0:av_uart_avalon_slave_write -> av_uart:avalon_write
 	signal mm_interconnect_0_av_uart_avalon_slave_writedata           : std_logic_vector(31 downto 0); -- mm_interconnect_0:av_uart_avalon_slave_writedata -> av_uart:avalon_writedata
+	signal mm_interconnect_0_av_vga_avalon_slave_chipselect           : std_logic;                     -- mm_interconnect_0:av_vga_avalon_slave_chipselect -> av_vga:avalon_chipselect
+	signal mm_interconnect_0_av_vga_avalon_slave_readdata             : std_logic_vector(31 downto 0); -- av_vga:avalon_readdata -> mm_interconnect_0:av_vga_avalon_slave_readdata
+	signal mm_interconnect_0_av_vga_avalon_slave_waitrequest          : std_logic;                     -- av_vga:avalon_waitrequest -> mm_interconnect_0:av_vga_avalon_slave_waitrequest
+	signal mm_interconnect_0_av_vga_avalon_slave_address              : std_logic_vector(1 downto 0);  -- mm_interconnect_0:av_vga_avalon_slave_address -> av_vga:avalon_address
+	signal mm_interconnect_0_av_vga_avalon_slave_read                 : std_logic;                     -- mm_interconnect_0:av_vga_avalon_slave_read -> av_vga:avalon_read
+	signal mm_interconnect_0_av_vga_avalon_slave_byteenable           : std_logic_vector(3 downto 0);  -- mm_interconnect_0:av_vga_avalon_slave_byteenable -> av_vga:avalon_byteenable
+	signal mm_interconnect_0_av_vga_avalon_slave_write                : std_logic;                     -- mm_interconnect_0:av_vga_avalon_slave_write -> av_vga:avalon_write
+	signal mm_interconnect_0_av_vga_avalon_slave_writedata            : std_logic_vector(31 downto 0); -- mm_interconnect_0:av_vga_avalon_slave_writedata -> av_vga:avalon_writedata
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_chipselect      : std_logic;                     -- mm_interconnect_0:disp_7_seg_pio_disp_0_s1_chipselect -> disp_7_seg:pio_disp_0_s1_chipselect
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_readdata        : std_logic_vector(31 downto 0); -- disp_7_seg:pio_disp_0_s1_readdata -> mm_interconnect_0:disp_7_seg_pio_disp_0_s1_readdata
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_address         : std_logic_vector(1 downto 0);  -- mm_interconnect_0:disp_7_seg_pio_disp_0_s1_address -> disp_7_seg:pio_disp_0_s1_address
@@ -444,7 +510,12 @@ architecture rtl of system is
 	signal mm_interconnect_0_sdram_s1_readdatavalid                   : std_logic;                     -- sdram:za_valid -> mm_interconnect_0:sdram_s1_readdatavalid
 	signal mm_interconnect_0_sdram_s1_write                           : std_logic;                     -- mm_interconnect_0:sdram_s1_write -> mm_interconnect_0_sdram_s1_write:in
 	signal mm_interconnect_0_sdram_s1_writedata                       : std_logic_vector(15 downto 0); -- mm_interconnect_0:sdram_s1_writedata -> sdram:az_data
-	signal rst_controller_reset_out_reset                             : std_logic;                     -- rst_controller:reset_out -> [av_dac:reset, av_uart:reset, code_ram:reset, mm_interconnect_0:riscv_mk1_0_reset_reset_bridge_in_reset_reset, riscv_mk1_0:i_rst, rst_controller_reset_out_reset:in, rst_translator:in_reset]
+	signal mm_interconnect_0_timer_0_s1_chipselect                    : std_logic;                     -- mm_interconnect_0:timer_0_s1_chipselect -> timer_0:chipselect
+	signal mm_interconnect_0_timer_0_s1_readdata                      : std_logic_vector(15 downto 0); -- timer_0:readdata -> mm_interconnect_0:timer_0_s1_readdata
+	signal mm_interconnect_0_timer_0_s1_address                       : std_logic_vector(2 downto 0);  -- mm_interconnect_0:timer_0_s1_address -> timer_0:address
+	signal mm_interconnect_0_timer_0_s1_write                         : std_logic;                     -- mm_interconnect_0:timer_0_s1_write -> mm_interconnect_0_timer_0_s1_write:in
+	signal mm_interconnect_0_timer_0_s1_writedata                     : std_logic_vector(15 downto 0); -- mm_interconnect_0:timer_0_s1_writedata -> timer_0:writedata
+	signal rst_controller_reset_out_reset                             : std_logic;                     -- rst_controller:reset_out -> [av_dac:reset, av_uart:reset, av_vga:reset, code_ram:reset, mm_interconnect_0:riscv_mk1_0_reset_reset_bridge_in_reset_reset, riscv_mk1_0:i_rst, rst_controller_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_reset_out_reset_req                         : std_logic;                     -- rst_controller:reset_req -> [code_ram:reset_req, rst_translator:reset_req_in]
 	signal rst_reset_n_ports_inv                                      : std_logic;                     -- rst_reset_n:inv -> [altpll_0:reset, rst_controller:reset_in0]
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_write_ports_inv : std_logic;                     -- mm_interconnect_0_disp_7_seg_pio_disp_0_s1_write:inv -> disp_7_seg:pio_disp_0_s1_write_n
@@ -457,7 +528,8 @@ architecture rtl of system is
 	signal mm_interconnect_0_sdram_s1_read_ports_inv                  : std_logic;                     -- mm_interconnect_0_sdram_s1_read:inv -> sdram:az_rd_n
 	signal mm_interconnect_0_sdram_s1_byteenable_ports_inv            : std_logic_vector(1 downto 0);  -- mm_interconnect_0_sdram_s1_byteenable:inv -> sdram:az_be_n
 	signal mm_interconnect_0_sdram_s1_write_ports_inv                 : std_logic;                     -- mm_interconnect_0_sdram_s1_write:inv -> sdram:az_wr_n
-	signal rst_controller_reset_out_reset_ports_inv                   : std_logic;                     -- rst_controller_reset_out_reset:inv -> [disp_7_seg:pio_disp_0_reset_reset_n, disp_7_seg:pio_disp_1_reset_reset_n, disp_7_seg:pio_disp_2_reset_reset_n, disp_7_seg:pio_disp_3_reset_reset_n, disp_7_seg:pio_disp_4_reset_reset_n, disp_7_seg:pio_disp_5_reset_reset_n, pio_leds:reset_n, sdram:reset_n]
+	signal mm_interconnect_0_timer_0_s1_write_ports_inv               : std_logic;                     -- mm_interconnect_0_timer_0_s1_write:inv -> timer_0:write_n
+	signal rst_controller_reset_out_reset_ports_inv                   : std_logic;                     -- rst_controller_reset_out_reset:inv -> [disp_7_seg:pio_disp_0_reset_reset_n, disp_7_seg:pio_disp_1_reset_reset_n, disp_7_seg:pio_disp_2_reset_reset_n, disp_7_seg:pio_disp_3_reset_reset_n, disp_7_seg:pio_disp_4_reset_reset_n, disp_7_seg:pio_disp_5_reset_reset_n, pio_leds:reset_n, sdram:reset_n, timer_0:reset_n]
 
 begin
 
@@ -533,6 +605,29 @@ begin
 			rw                 => av_uart_external_interface_rw,                      --                   .export
 			write_data         => av_uart_external_interface_write_data,              --                   .export
 			read_data          => av_uart_external_interface_read_data                --                   .export
+		);
+
+	av_vga : component system_av_vga
+		port map (
+			clk                => altpll_0_c0_clk,                                   --                clk.clk
+			reset              => rst_controller_reset_out_reset,                    --              reset.reset
+			avalon_address     => mm_interconnect_0_av_vga_avalon_slave_address,     --       avalon_slave.address
+			avalon_byteenable  => mm_interconnect_0_av_vga_avalon_slave_byteenable,  --                   .byteenable
+			avalon_chipselect  => mm_interconnect_0_av_vga_avalon_slave_chipselect,  --                   .chipselect
+			avalon_read        => mm_interconnect_0_av_vga_avalon_slave_read,        --                   .read
+			avalon_write       => mm_interconnect_0_av_vga_avalon_slave_write,       --                   .write
+			avalon_writedata   => mm_interconnect_0_av_vga_avalon_slave_writedata,   --                   .writedata
+			avalon_readdata    => mm_interconnect_0_av_vga_avalon_slave_readdata,    --                   .readdata
+			avalon_waitrequest => mm_interconnect_0_av_vga_avalon_slave_waitrequest, --                   .waitrequest
+			avalon_irq         => open,                                              --          interrupt.irq
+			acknowledge        => av_vga_external_interface_acknowledge,             -- external_interface.export
+			irq                => av_vga_external_interface_irq,                     --                   .export
+			address            => av_vga_external_interface_address,                 --                   .export
+			bus_enable         => av_vga_external_interface_bus_enable,              --                   .export
+			byte_enable        => av_vga_external_interface_byte_enable,             --                   .export
+			rw                 => av_vga_external_interface_rw,                      --                   .export
+			write_data         => av_vga_external_interface_write_data,              --                   .export
+			read_data          => av_vga_external_interface_read_data                --                   .export
 		);
 
 	code_ram : component system_code_ram
@@ -651,6 +746,18 @@ begin
 			zs_we_n        => sdram_we_n                                       --      .export
 		);
 
+	timer_0 : component system_timer_0
+		port map (
+			clk        => altpll_0_c0_clk,                              --   clk.clk
+			reset_n    => rst_controller_reset_out_reset_ports_inv,     -- reset.reset_n
+			address    => mm_interconnect_0_timer_0_s1_address,         --    s1.address
+			writedata  => mm_interconnect_0_timer_0_s1_writedata,       --      .writedata
+			readdata   => mm_interconnect_0_timer_0_s1_readdata,        --      .readdata
+			chipselect => mm_interconnect_0_timer_0_s1_chipselect,      --      .chipselect
+			write_n    => mm_interconnect_0_timer_0_s1_write_ports_inv, --      .write_n
+			irq        => open                                          --   irq.irq
+		);
+
 	mm_interconnect_0 : component system_mm_interconnect_0
 		port map (
 			altpll_0_c0_clk                               => altpll_0_c0_clk,                                       --                             altpll_0_c0.clk
@@ -678,6 +785,14 @@ begin
 			av_uart_avalon_slave_byteenable               => mm_interconnect_0_av_uart_avalon_slave_byteenable,     --                                        .byteenable
 			av_uart_avalon_slave_waitrequest              => mm_interconnect_0_av_uart_avalon_slave_waitrequest,    --                                        .waitrequest
 			av_uart_avalon_slave_chipselect               => mm_interconnect_0_av_uart_avalon_slave_chipselect,     --                                        .chipselect
+			av_vga_avalon_slave_address                   => mm_interconnect_0_av_vga_avalon_slave_address,         --                     av_vga_avalon_slave.address
+			av_vga_avalon_slave_write                     => mm_interconnect_0_av_vga_avalon_slave_write,           --                                        .write
+			av_vga_avalon_slave_read                      => mm_interconnect_0_av_vga_avalon_slave_read,            --                                        .read
+			av_vga_avalon_slave_readdata                  => mm_interconnect_0_av_vga_avalon_slave_readdata,        --                                        .readdata
+			av_vga_avalon_slave_writedata                 => mm_interconnect_0_av_vga_avalon_slave_writedata,       --                                        .writedata
+			av_vga_avalon_slave_byteenable                => mm_interconnect_0_av_vga_avalon_slave_byteenable,      --                                        .byteenable
+			av_vga_avalon_slave_waitrequest               => mm_interconnect_0_av_vga_avalon_slave_waitrequest,     --                                        .waitrequest
+			av_vga_avalon_slave_chipselect                => mm_interconnect_0_av_vga_avalon_slave_chipselect,      --                                        .chipselect
 			code_ram_s1_address                           => mm_interconnect_0_code_ram_s1_address,                 --                             code_ram_s1.address
 			code_ram_s1_write                             => mm_interconnect_0_code_ram_s1_write,                   --                                        .write
 			code_ram_s1_readdata                          => mm_interconnect_0_code_ram_s1_readdata,                --                                        .readdata
@@ -728,7 +843,12 @@ begin
 			sdram_s1_byteenable                           => mm_interconnect_0_sdram_s1_byteenable,                 --                                        .byteenable
 			sdram_s1_readdatavalid                        => mm_interconnect_0_sdram_s1_readdatavalid,              --                                        .readdatavalid
 			sdram_s1_waitrequest                          => mm_interconnect_0_sdram_s1_waitrequest,                --                                        .waitrequest
-			sdram_s1_chipselect                           => mm_interconnect_0_sdram_s1_chipselect                  --                                        .chipselect
+			sdram_s1_chipselect                           => mm_interconnect_0_sdram_s1_chipselect,                 --                                        .chipselect
+			timer_0_s1_address                            => mm_interconnect_0_timer_0_s1_address,                  --                              timer_0_s1.address
+			timer_0_s1_write                              => mm_interconnect_0_timer_0_s1_write,                    --                                        .write
+			timer_0_s1_readdata                           => mm_interconnect_0_timer_0_s1_readdata,                 --                                        .readdata
+			timer_0_s1_writedata                          => mm_interconnect_0_timer_0_s1_writedata,                --                                        .writedata
+			timer_0_s1_chipselect                         => mm_interconnect_0_timer_0_s1_chipselect                --                                        .chipselect
 		);
 
 	rst_controller : component altera_reset_controller
@@ -817,6 +937,8 @@ begin
 	mm_interconnect_0_sdram_s1_byteenable_ports_inv <= not mm_interconnect_0_sdram_s1_byteenable;
 
 	mm_interconnect_0_sdram_s1_write_ports_inv <= not mm_interconnect_0_sdram_s1_write;
+
+	mm_interconnect_0_timer_0_s1_write_ports_inv <= not mm_interconnect_0_timer_0_s1_write;
 
 	rst_controller_reset_out_reset_ports_inv <= not rst_controller_reset_out_reset;
 
