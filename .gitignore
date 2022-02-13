@@ -22,3 +22,7 @@ quartus/*.cdf
 quartus/*.sld
 *.bak
 *.rpt
+
+test_files/*.mp3
+test_files/*.mp4
+test_files/*.wav
