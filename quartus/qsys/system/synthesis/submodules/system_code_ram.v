@@ -25,6 +25,7 @@ module system_code_ram (
                           chipselect,
                           clk,
                           clken,
+                          debugaccess,
                           freeze,
                           reset,
                           reset_req,
@@ -36,7 +37,7 @@ module system_code_ram (
                        )
 ;
 
-  parameter INIT_FILE = "../code/demo/bin/demo.mif";
+  parameter INIT_FILE = "../code/bench/bin/bench.mif";
 
 
   output  [ 31: 0] readdata;
@@ -45,6 +46,7 @@ module system_code_ram (
   input            chipselect;
   input            clk;
   input            clken;
+  input            debugaccess;
   input            freeze;
   input            reset;
   input            reset_req;
@@ -55,7 +57,7 @@ module system_code_ram (
 wire             clocken0;
 wire    [ 31: 0] readdata;
 wire             wren;
-  assign wren = chipselect & write;
+  assign wren = chipselect & write & debugaccess;
   assign clocken0 = clken & ~reset_req;
   altsyncram the_altsyncram
     (

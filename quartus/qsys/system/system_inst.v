@@ -42,6 +42,15 @@
 		.sdram_dqm                              (<connected-to-sdram_dqm>),                              //                           .dqm
 		.sdram_ras_n                            (<connected-to-sdram_ras_n>),                            //                           .ras_n
 		.sdram_we_n                             (<connected-to-sdram_we_n>),                             //                           .we_n
-		.sys_clk                                (<connected-to-sys_clk>)                                 //                        sys.clk
+		.sys_clk                                (<connected-to-sys_clk>),                                //                        sys.clk
+		.riscv_mk1_debug_vector_0               (<connected-to-riscv_mk1_debug_vector_0>),               //            riscv_mk1_debug.vector_0
+		.av_hpc_external_interface_acknowledge  (<connected-to-av_hpc_external_interface_acknowledge>),  //  av_hpc_external_interface.acknowledge
+		.av_hpc_external_interface_irq          (<connected-to-av_hpc_external_interface_irq>),          //                           .irq
+		.av_hpc_external_interface_address      (<connected-to-av_hpc_external_interface_address>),      //                           .address
+		.av_hpc_external_interface_bus_enable   (<connected-to-av_hpc_external_interface_bus_enable>),   //                           .bus_enable
+		.av_hpc_external_interface_byte_enable  (<connected-to-av_hpc_external_interface_byte_enable>),  //                           .byte_enable
+		.av_hpc_external_interface_rw           (<connected-to-av_hpc_external_interface_rw>),           //                           .rw
+		.av_hpc_external_interface_write_data   (<connected-to-av_hpc_external_interface_write_data>),   //                           .write_data
+		.av_hpc_external_interface_read_data    (<connected-to-av_hpc_external_interface_read_data>)     //                           .read_data
 	);
 

@@ -8,6 +8,14 @@
 			av_dac_external_interface_rw           : out   std_logic;                                        -- rw
 			av_dac_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    -- write_data
 			av_dac_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => 'X'); -- read_data
+			av_hpc_external_interface_acknowledge  : in    std_logic                     := 'X';             -- acknowledge
+			av_hpc_external_interface_irq          : in    std_logic                     := 'X';             -- irq
+			av_hpc_external_interface_address      : out   std_logic_vector(5 downto 0);                     -- address
+			av_hpc_external_interface_bus_enable   : out   std_logic;                                        -- bus_enable
+			av_hpc_external_interface_byte_enable  : out   std_logic_vector(3 downto 0);                     -- byte_enable
+			av_hpc_external_interface_rw           : out   std_logic;                                        -- rw
+			av_hpc_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    -- write_data
+			av_hpc_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => 'X'); -- read_data
 			av_uart_external_interface_acknowledge : in    std_logic                     := 'X';             -- acknowledge
 			av_uart_external_interface_irq         : in    std_logic                     := 'X';             -- irq
 			av_uart_external_interface_address     : out   std_logic_vector(2 downto 0);                     -- address
@@ -33,6 +41,7 @@
 			disp4_export                           : out   std_logic_vector(7 downto 0);                     -- export
 			disp5_export                           : out   std_logic_vector(7 downto 0);                     -- export
 			leds_export                            : out   std_logic_vector(9 downto 0);                     -- export
+			riscv_mk1_debug_vector_0               : out   std_logic_vector(31 downto 0);                    -- vector_0
 			rst_reset_n                            : in    std_logic                     := 'X';             -- reset_n
 			sdram_addr                             : out   std_logic_vector(12 downto 0);                    -- addr
 			sdram_ba                               : out   std_logic_vector(1 downto 0);                     -- ba

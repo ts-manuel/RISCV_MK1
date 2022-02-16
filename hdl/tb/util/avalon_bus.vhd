@@ -48,7 +48,9 @@ entity avalon_bus is
       i_write       : in  std_logic;
       o_waitrequest : out std_logic;
       i_writedata   : in  std_logic_vector(31 downto 0);
-      o_readdata    : out std_logic_vector(31 downto 0)
+      o_readdata    : out std_logic_vector(31 downto 0);
+      i_opcode      : in  std_logic_vector(31 downto 0);
+      i_pc          : in  std_logic_vector(31 downto 0)
     );
 end entity avalon_bus;
 
@@ -138,6 +140,11 @@ begin
 
         -- Write trace file
         if (v_trace_status = OPEN_OK) then
+          write(v_line, string'("pc: "), right, 0);
+          write(v_line, to_hstring(i_pc), right, 8);
+          write(v_line, string'(" opcode: "), right, 0);
+          write(v_line, to_hstring(i_opcode), right, 8);
+          write(v_line, string'(" addr: "), right, 0);
           write(v_line, to_hstring(std_logic_vector(to_unsigned(w_addr*4+g_addr_start, 32))), right, 8);
           write(v_line, string'(": "), right, 2);
           write(v_line, to_hstring(i_writedata), right, 8);

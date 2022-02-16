@@ -3,6 +3,15 @@
 --
 -- RISC-V MK1 CPU Core
 --
+--
+-- Debug vector:
+--  o_debug_vector(0): w_phase_fetch
+--  o_debug_vector(1): w_phase_decode
+--  o_debug_vector(2): w_phase_execute
+--  o_debug_vector(3): w_phase_memory
+--  o_debug_vector(4): w_phase_write_back
+--
+--
 -- Generic:
 --
 -- Port:
@@ -15,6 +24,7 @@
 --  o_av_writedata:    Avalon memory bus
 --  i_av_waitrequest:  Avalon memory bus
 --  i_av_readdata:     Avalon memory bus
+--  o_debug_vector:    Debug signals
 --
 -- *********************************************************************
 
@@ -28,13 +38,18 @@ entity riscv_mk1 is
   port (
     i_clk             : in  std_logic;
     i_rst             : in  std_logic;
+    -- Avalon memory interface
     o_av_addr         : out std_logic_vector(29 downto 0);
     o_av_byteenable   : out std_logic_vector(3 downto 0);
     o_av_read         : out std_logic;
     o_av_write        : out std_logic;
     i_av_waitrequest  : in  std_logic;
     o_av_writedata    : out std_logic_vector(31 downto 0);
-    i_av_readdata     : in  std_logic_vector(31 downto 0)
+    i_av_readdata     : in  std_logic_vector(31 downto 0);
+    -- Debud signals
+    o_debug_vector    : out std_logic_vector(31 downto 0);
+    o_debug_opcode    : out std_logic_vector(31 downto 0);
+    o_debug_pc        : out std_logic_vector(31 downto 0)
   );
 end entity riscv_mk1;
 
@@ -249,6 +264,18 @@ begin
   w_av_data_waitrequest <= i_av_waitrequest;
   w_av_inst_readdata    <= i_av_readdata;
   w_av_data_readdata    <= i_av_readdata;
+
+
+  -- Debud signals
+  o_debug_vector(0)           <= w_phase_fetch;
+  o_debug_vector(1)           <= w_phase_decode;
+  o_debug_vector(2)           <= w_phase_execute;
+  o_debug_vector(3)           <= w_phase_memory;
+  o_debug_vector(4)           <= w_phase_write_back;
+  o_debug_vector(31 downto 5) <= (others=>'0');
+
+  o_debug_opcode  <= w_opcode;
+  o_debug_pc      <= w_pc;
 
 
   control_unit0 : control_unit

@@ -446,7 +446,7 @@ void play_video(void)
       printf("Video initialized\n");
 
       // Initialize clocks
-      VIDEO_SET_CLK(_AV_VIDEO_GEN, 3, h_div, v_div);
+      VIDEO_SET_CLK(_AV_VIDEO_GEN, 1, h_div, v_div);
     }
     else if (decod_src_ptr > (blocks[video_stream].ptr + blocks[video_stream].size))
     {

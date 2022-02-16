@@ -16,6 +16,14 @@ entity system is
 		av_dac_external_interface_rw           : out   std_logic;                                        --                           .rw
 		av_dac_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    --                           .write_data
 		av_dac_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => '0'); --                           .read_data
+		av_hpc_external_interface_acknowledge  : in    std_logic                     := '0';             --  av_hpc_external_interface.acknowledge
+		av_hpc_external_interface_irq          : in    std_logic                     := '0';             --                           .irq
+		av_hpc_external_interface_address      : out   std_logic_vector(5 downto 0);                     --                           .address
+		av_hpc_external_interface_bus_enable   : out   std_logic;                                        --                           .bus_enable
+		av_hpc_external_interface_byte_enable  : out   std_logic_vector(3 downto 0);                     --                           .byte_enable
+		av_hpc_external_interface_rw           : out   std_logic;                                        --                           .rw
+		av_hpc_external_interface_write_data   : out   std_logic_vector(31 downto 0);                    --                           .write_data
+		av_hpc_external_interface_read_data    : in    std_logic_vector(31 downto 0) := (others => '0'); --                           .read_data
 		av_uart_external_interface_acknowledge : in    std_logic                     := '0';             -- av_uart_external_interface.acknowledge
 		av_uart_external_interface_irq         : in    std_logic                     := '0';             --                           .irq
 		av_uart_external_interface_address     : out   std_logic_vector(2 downto 0);                     --                           .address
@@ -41,6 +49,7 @@ entity system is
 		disp4_export                           : out   std_logic_vector(7 downto 0);                     --                      disp4.export
 		disp5_export                           : out   std_logic_vector(7 downto 0);                     --                      disp5.export
 		leds_export                            : out   std_logic_vector(9 downto 0);                     --                       leds.export
+		riscv_mk1_debug_vector_0               : out   std_logic_vector(31 downto 0);                    --            riscv_mk1_debug.vector_0
 		rst_reset_n                            : in    std_logic                     := '0';             --                        rst.reset_n
 		sdram_addr                             : out   std_logic_vector(12 downto 0);                    --                      sdram.addr
 		sdram_ba                               : out   std_logic_vector(1 downto 0);                     --                           .ba
@@ -135,17 +144,18 @@ architecture rtl of system is
 
 	component system_code_ram is
 		port (
-			clk        : in  std_logic                     := 'X';             -- clk
-			address    : in  std_logic_vector(15 downto 0) := (others => 'X'); -- address
-			clken      : in  std_logic                     := 'X';             -- clken
-			chipselect : in  std_logic                     := 'X';             -- chipselect
-			write      : in  std_logic                     := 'X';             -- write
-			readdata   : out std_logic_vector(31 downto 0);                    -- readdata
-			writedata  : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
-			byteenable : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
-			reset      : in  std_logic                     := 'X';             -- reset
-			reset_req  : in  std_logic                     := 'X';             -- reset_req
-			freeze     : in  std_logic                     := 'X'              -- freeze
+			clk         : in  std_logic                     := 'X';             -- clk
+			address     : in  std_logic_vector(15 downto 0) := (others => 'X'); -- address
+			debugaccess : in  std_logic                     := 'X';             -- debugaccess
+			clken       : in  std_logic                     := 'X';             -- clken
+			chipselect  : in  std_logic                     := 'X';             -- chipselect
+			write       : in  std_logic                     := 'X';             -- write
+			readdata    : out std_logic_vector(31 downto 0);                    -- readdata
+			writedata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			byteenable  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			reset       : in  std_logic                     := 'X';             -- reset
+			reset_req   : in  std_logic                     := 'X';             -- reset_req
+			freeze      : in  std_logic                     := 'X'              -- freeze
 		);
 	end component system_code_ram;
 
@@ -202,6 +212,30 @@ architecture rtl of system is
 		);
 	end component system_disp_7_seg;
 
+	component system_hpc is
+		port (
+			clk                : in  std_logic                     := 'X';             -- clk
+			reset              : in  std_logic                     := 'X';             -- reset
+			avalon_address     : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- address
+			avalon_byteenable  : in  std_logic_vector(3 downto 0)  := (others => 'X'); -- byteenable
+			avalon_chipselect  : in  std_logic                     := 'X';             -- chipselect
+			avalon_read        : in  std_logic                     := 'X';             -- read
+			avalon_write       : in  std_logic                     := 'X';             -- write
+			avalon_writedata   : in  std_logic_vector(31 downto 0) := (others => 'X'); -- writedata
+			avalon_readdata    : out std_logic_vector(31 downto 0);                    -- readdata
+			avalon_waitrequest : out std_logic;                                        -- waitrequest
+			avalon_irq         : out std_logic;                                        -- irq
+			acknowledge        : in  std_logic                     := 'X';             -- export
+			irq                : in  std_logic                     := 'X';             -- export
+			address            : out std_logic_vector(5 downto 0);                     -- export
+			bus_enable         : out std_logic;                                        -- export
+			byte_enable        : out std_logic_vector(3 downto 0);                     -- export
+			rw                 : out std_logic;                                        -- export
+			write_data         : out std_logic_vector(31 downto 0);                    -- export
+			read_data          : in  std_logic_vector(31 downto 0) := (others => 'X')  -- export
+		);
+	end component system_hpc;
+
 	component system_pio_leds is
 		port (
 			clk        : in  std_logic                     := 'X';             -- clk
@@ -225,7 +259,8 @@ architecture rtl of system is
 			o_av_writedata   : out std_logic_vector(31 downto 0);                    -- writedata
 			i_av_readdata    : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			i_clk            : in  std_logic                     := 'X';             -- clk
-			i_rst            : in  std_logic                     := 'X'              -- reset
+			i_rst            : in  std_logic                     := 'X';             -- reset
+			o_debug_vector   : out std_logic_vector(31 downto 0)                     -- vector_0
 		);
 	end component riscv_mk1;
 
@@ -309,6 +344,7 @@ architecture rtl of system is
 			code_ram_s1_byteenable                        : out std_logic_vector(3 downto 0);                     -- byteenable
 			code_ram_s1_chipselect                        : out std_logic;                                        -- chipselect
 			code_ram_s1_clken                             : out std_logic;                                        -- clken
+			code_ram_s1_debugaccess                       : out std_logic;                                        -- debugaccess
 			disp_7_seg_pio_disp_0_s1_address              : out std_logic_vector(1 downto 0);                     -- address
 			disp_7_seg_pio_disp_0_s1_write                : out std_logic;                                        -- write
 			disp_7_seg_pio_disp_0_s1_readdata             : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -339,6 +375,14 @@ architecture rtl of system is
 			disp_7_seg_pio_disp_5_s1_readdata             : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
 			disp_7_seg_pio_disp_5_s1_writedata            : out std_logic_vector(31 downto 0);                    -- writedata
 			disp_7_seg_pio_disp_5_s1_chipselect           : out std_logic;                                        -- chipselect
+			hpc_avalon_slave_address                      : out std_logic_vector(3 downto 0);                     -- address
+			hpc_avalon_slave_write                        : out std_logic;                                        -- write
+			hpc_avalon_slave_read                         : out std_logic;                                        -- read
+			hpc_avalon_slave_readdata                     : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			hpc_avalon_slave_writedata                    : out std_logic_vector(31 downto 0);                    -- writedata
+			hpc_avalon_slave_byteenable                   : out std_logic_vector(3 downto 0);                     -- byteenable
+			hpc_avalon_slave_waitrequest                  : in  std_logic                     := 'X';             -- waitrequest
+			hpc_avalon_slave_chipselect                   : out std_logic;                                        -- chipselect
 			pio_leds_s1_address                           : out std_logic_vector(1 downto 0);                     -- address
 			pio_leds_s1_write                             : out std_logic;                                        -- write
 			pio_leds_s1_readdata                          : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
@@ -427,7 +471,7 @@ architecture rtl of system is
 		);
 	end component altera_reset_controller;
 
-	signal altpll_0_c0_clk                                            : std_logic;                     -- altpll_0:c0 -> [sys_clk, av_dac:clk, av_uart:clk, av_vga:clk, code_ram:clk, disp_7_seg:pio_disp_0_clk_clk, disp_7_seg:pio_disp_1_clk_clk, disp_7_seg:pio_disp_2_clk_clk, disp_7_seg:pio_disp_3_clk_clk, disp_7_seg:pio_disp_4_clk_clk, disp_7_seg:pio_disp_5_clk_clk, mm_interconnect_0:altpll_0_c0_clk, pio_leds:clk, riscv_mk1_0:i_clk, rst_controller:clk, sdram:clk, timer_0:clk]
+	signal altpll_0_c0_clk                                            : std_logic;                     -- altpll_0:c0 -> [sys_clk, av_dac:clk, av_uart:clk, av_vga:clk, code_ram:clk, disp_7_seg:pio_disp_0_clk_clk, disp_7_seg:pio_disp_1_clk_clk, disp_7_seg:pio_disp_2_clk_clk, disp_7_seg:pio_disp_3_clk_clk, disp_7_seg:pio_disp_4_clk_clk, disp_7_seg:pio_disp_5_clk_clk, hpc:clk, mm_interconnect_0:altpll_0_c0_clk, pio_leds:clk, riscv_mk1_0:i_clk, rst_controller:clk, sdram:clk, timer_0:clk]
 	signal riscv_mk1_0_avalon_master_waitrequest                      : std_logic;                     -- mm_interconnect_0:riscv_mk1_0_avalon_master_waitrequest -> riscv_mk1_0:i_av_waitrequest
 	signal riscv_mk1_0_avalon_master_readdata                         : std_logic_vector(31 downto 0); -- mm_interconnect_0:riscv_mk1_0_avalon_master_readdata -> riscv_mk1_0:i_av_readdata
 	signal riscv_mk1_0_avalon_master_address                          : std_logic_vector(29 downto 0); -- riscv_mk1_0:o_av_addr -> mm_interconnect_0:riscv_mk1_0_avalon_master_address
@@ -459,6 +503,14 @@ architecture rtl of system is
 	signal mm_interconnect_0_av_vga_avalon_slave_byteenable           : std_logic_vector(3 downto 0);  -- mm_interconnect_0:av_vga_avalon_slave_byteenable -> av_vga:avalon_byteenable
 	signal mm_interconnect_0_av_vga_avalon_slave_write                : std_logic;                     -- mm_interconnect_0:av_vga_avalon_slave_write -> av_vga:avalon_write
 	signal mm_interconnect_0_av_vga_avalon_slave_writedata            : std_logic_vector(31 downto 0); -- mm_interconnect_0:av_vga_avalon_slave_writedata -> av_vga:avalon_writedata
+	signal mm_interconnect_0_hpc_avalon_slave_chipselect              : std_logic;                     -- mm_interconnect_0:hpc_avalon_slave_chipselect -> hpc:avalon_chipselect
+	signal mm_interconnect_0_hpc_avalon_slave_readdata                : std_logic_vector(31 downto 0); -- hpc:avalon_readdata -> mm_interconnect_0:hpc_avalon_slave_readdata
+	signal mm_interconnect_0_hpc_avalon_slave_waitrequest             : std_logic;                     -- hpc:avalon_waitrequest -> mm_interconnect_0:hpc_avalon_slave_waitrequest
+	signal mm_interconnect_0_hpc_avalon_slave_address                 : std_logic_vector(3 downto 0);  -- mm_interconnect_0:hpc_avalon_slave_address -> hpc:avalon_address
+	signal mm_interconnect_0_hpc_avalon_slave_read                    : std_logic;                     -- mm_interconnect_0:hpc_avalon_slave_read -> hpc:avalon_read
+	signal mm_interconnect_0_hpc_avalon_slave_byteenable              : std_logic_vector(3 downto 0);  -- mm_interconnect_0:hpc_avalon_slave_byteenable -> hpc:avalon_byteenable
+	signal mm_interconnect_0_hpc_avalon_slave_write                   : std_logic;                     -- mm_interconnect_0:hpc_avalon_slave_write -> hpc:avalon_write
+	signal mm_interconnect_0_hpc_avalon_slave_writedata               : std_logic_vector(31 downto 0); -- mm_interconnect_0:hpc_avalon_slave_writedata -> hpc:avalon_writedata
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_chipselect      : std_logic;                     -- mm_interconnect_0:disp_7_seg_pio_disp_0_s1_chipselect -> disp_7_seg:pio_disp_0_s1_chipselect
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_readdata        : std_logic_vector(31 downto 0); -- disp_7_seg:pio_disp_0_s1_readdata -> mm_interconnect_0:disp_7_seg_pio_disp_0_s1_readdata
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_address         : std_logic_vector(1 downto 0);  -- mm_interconnect_0:disp_7_seg_pio_disp_0_s1_address -> disp_7_seg:pio_disp_0_s1_address
@@ -491,6 +543,7 @@ architecture rtl of system is
 	signal mm_interconnect_0_disp_7_seg_pio_disp_5_s1_writedata       : std_logic_vector(31 downto 0); -- mm_interconnect_0:disp_7_seg_pio_disp_5_s1_writedata -> disp_7_seg:pio_disp_5_s1_writedata
 	signal mm_interconnect_0_code_ram_s1_chipselect                   : std_logic;                     -- mm_interconnect_0:code_ram_s1_chipselect -> code_ram:chipselect
 	signal mm_interconnect_0_code_ram_s1_readdata                     : std_logic_vector(31 downto 0); -- code_ram:readdata -> mm_interconnect_0:code_ram_s1_readdata
+	signal mm_interconnect_0_code_ram_s1_debugaccess                  : std_logic;                     -- mm_interconnect_0:code_ram_s1_debugaccess -> code_ram:debugaccess
 	signal mm_interconnect_0_code_ram_s1_address                      : std_logic_vector(15 downto 0); -- mm_interconnect_0:code_ram_s1_address -> code_ram:address
 	signal mm_interconnect_0_code_ram_s1_byteenable                   : std_logic_vector(3 downto 0);  -- mm_interconnect_0:code_ram_s1_byteenable -> code_ram:byteenable
 	signal mm_interconnect_0_code_ram_s1_write                        : std_logic;                     -- mm_interconnect_0:code_ram_s1_write -> code_ram:write
@@ -515,7 +568,7 @@ architecture rtl of system is
 	signal mm_interconnect_0_timer_0_s1_address                       : std_logic_vector(2 downto 0);  -- mm_interconnect_0:timer_0_s1_address -> timer_0:address
 	signal mm_interconnect_0_timer_0_s1_write                         : std_logic;                     -- mm_interconnect_0:timer_0_s1_write -> mm_interconnect_0_timer_0_s1_write:in
 	signal mm_interconnect_0_timer_0_s1_writedata                     : std_logic_vector(15 downto 0); -- mm_interconnect_0:timer_0_s1_writedata -> timer_0:writedata
-	signal rst_controller_reset_out_reset                             : std_logic;                     -- rst_controller:reset_out -> [av_dac:reset, av_uart:reset, av_vga:reset, code_ram:reset, mm_interconnect_0:riscv_mk1_0_reset_reset_bridge_in_reset_reset, riscv_mk1_0:i_rst, rst_controller_reset_out_reset:in, rst_translator:in_reset]
+	signal rst_controller_reset_out_reset                             : std_logic;                     -- rst_controller:reset_out -> [av_dac:reset, av_uart:reset, av_vga:reset, code_ram:reset, hpc:reset, mm_interconnect_0:riscv_mk1_0_reset_reset_bridge_in_reset_reset, riscv_mk1_0:i_rst, rst_controller_reset_out_reset:in, rst_translator:in_reset]
 	signal rst_controller_reset_out_reset_req                         : std_logic;                     -- rst_controller:reset_req -> [code_ram:reset_req, rst_translator:reset_req_in]
 	signal rst_reset_n_ports_inv                                      : std_logic;                     -- rst_reset_n:inv -> [altpll_0:reset, rst_controller:reset_in0]
 	signal mm_interconnect_0_disp_7_seg_pio_disp_0_s1_write_ports_inv : std_logic;                     -- mm_interconnect_0_disp_7_seg_pio_disp_0_s1_write:inv -> disp_7_seg:pio_disp_0_s1_write_n
@@ -632,17 +685,18 @@ begin
 
 	code_ram : component system_code_ram
 		port map (
-			clk        => altpll_0_c0_clk,                          --   clk1.clk
-			address    => mm_interconnect_0_code_ram_s1_address,    --     s1.address
-			clken      => mm_interconnect_0_code_ram_s1_clken,      --       .clken
-			chipselect => mm_interconnect_0_code_ram_s1_chipselect, --       .chipselect
-			write      => mm_interconnect_0_code_ram_s1_write,      --       .write
-			readdata   => mm_interconnect_0_code_ram_s1_readdata,   --       .readdata
-			writedata  => mm_interconnect_0_code_ram_s1_writedata,  --       .writedata
-			byteenable => mm_interconnect_0_code_ram_s1_byteenable, --       .byteenable
-			reset      => rst_controller_reset_out_reset,           -- reset1.reset
-			reset_req  => rst_controller_reset_out_reset_req,       --       .reset_req
-			freeze     => '0'                                       -- (terminated)
+			clk         => altpll_0_c0_clk,                           --   clk1.clk
+			address     => mm_interconnect_0_code_ram_s1_address,     --     s1.address
+			debugaccess => mm_interconnect_0_code_ram_s1_debugaccess, --       .debugaccess
+			clken       => mm_interconnect_0_code_ram_s1_clken,       --       .clken
+			chipselect  => mm_interconnect_0_code_ram_s1_chipselect,  --       .chipselect
+			write       => mm_interconnect_0_code_ram_s1_write,       --       .write
+			readdata    => mm_interconnect_0_code_ram_s1_readdata,    --       .readdata
+			writedata   => mm_interconnect_0_code_ram_s1_writedata,   --       .writedata
+			byteenable  => mm_interconnect_0_code_ram_s1_byteenable,  --       .byteenable
+			reset       => rst_controller_reset_out_reset,            -- reset1.reset
+			reset_req   => rst_controller_reset_out_reset_req,        --       .reset_req
+			freeze      => '0'                                        -- (terminated)
 		);
 
 	disp_7_seg : component system_disp_7_seg
@@ -697,6 +751,29 @@ begin
 			pio_disp_5_s1_readdata                => mm_interconnect_0_disp_7_seg_pio_disp_5_s1_readdata         --                               .readdata
 		);
 
+	hpc : component system_hpc
+		port map (
+			clk                => altpll_0_c0_clk,                                --                clk.clk
+			reset              => rst_controller_reset_out_reset,                 --              reset.reset
+			avalon_address     => mm_interconnect_0_hpc_avalon_slave_address,     --       avalon_slave.address
+			avalon_byteenable  => mm_interconnect_0_hpc_avalon_slave_byteenable,  --                   .byteenable
+			avalon_chipselect  => mm_interconnect_0_hpc_avalon_slave_chipselect,  --                   .chipselect
+			avalon_read        => mm_interconnect_0_hpc_avalon_slave_read,        --                   .read
+			avalon_write       => mm_interconnect_0_hpc_avalon_slave_write,       --                   .write
+			avalon_writedata   => mm_interconnect_0_hpc_avalon_slave_writedata,   --                   .writedata
+			avalon_readdata    => mm_interconnect_0_hpc_avalon_slave_readdata,    --                   .readdata
+			avalon_waitrequest => mm_interconnect_0_hpc_avalon_slave_waitrequest, --                   .waitrequest
+			avalon_irq         => open,                                           --          interrupt.irq
+			acknowledge        => av_hpc_external_interface_acknowledge,          -- external_interface.export
+			irq                => av_hpc_external_interface_irq,                  --                   .export
+			address            => av_hpc_external_interface_address,              --                   .export
+			bus_enable         => av_hpc_external_interface_bus_enable,           --                   .export
+			byte_enable        => av_hpc_external_interface_byte_enable,          --                   .export
+			rw                 => av_hpc_external_interface_rw,                   --                   .export
+			write_data         => av_hpc_external_interface_write_data,           --                   .export
+			read_data          => av_hpc_external_interface_read_data             --                   .export
+		);
+
 	pio_leds : component system_pio_leds
 		port map (
 			clk        => altpll_0_c0_clk,                               --                 clk.clk
@@ -719,7 +796,8 @@ begin
 			o_av_writedata   => riscv_mk1_0_avalon_master_writedata,   --              .writedata
 			i_av_readdata    => riscv_mk1_0_avalon_master_readdata,    --              .readdata
 			i_clk            => altpll_0_c0_clk,                       --         clock.clk
-			i_rst            => rst_controller_reset_out_reset         --         reset.reset
+			i_rst            => rst_controller_reset_out_reset,        --         reset.reset
+			o_debug_vector   => riscv_mk1_debug_vector_0               --         debug.vector_0
 		);
 
 	sdram : component system_sdram
@@ -800,6 +878,7 @@ begin
 			code_ram_s1_byteenable                        => mm_interconnect_0_code_ram_s1_byteenable,              --                                        .byteenable
 			code_ram_s1_chipselect                        => mm_interconnect_0_code_ram_s1_chipselect,              --                                        .chipselect
 			code_ram_s1_clken                             => mm_interconnect_0_code_ram_s1_clken,                   --                                        .clken
+			code_ram_s1_debugaccess                       => mm_interconnect_0_code_ram_s1_debugaccess,             --                                        .debugaccess
 			disp_7_seg_pio_disp_0_s1_address              => mm_interconnect_0_disp_7_seg_pio_disp_0_s1_address,    --                disp_7_seg_pio_disp_0_s1.address
 			disp_7_seg_pio_disp_0_s1_write                => mm_interconnect_0_disp_7_seg_pio_disp_0_s1_write,      --                                        .write
 			disp_7_seg_pio_disp_0_s1_readdata             => mm_interconnect_0_disp_7_seg_pio_disp_0_s1_readdata,   --                                        .readdata
@@ -830,6 +909,14 @@ begin
 			disp_7_seg_pio_disp_5_s1_readdata             => mm_interconnect_0_disp_7_seg_pio_disp_5_s1_readdata,   --                                        .readdata
 			disp_7_seg_pio_disp_5_s1_writedata            => mm_interconnect_0_disp_7_seg_pio_disp_5_s1_writedata,  --                                        .writedata
 			disp_7_seg_pio_disp_5_s1_chipselect           => mm_interconnect_0_disp_7_seg_pio_disp_5_s1_chipselect, --                                        .chipselect
+			hpc_avalon_slave_address                      => mm_interconnect_0_hpc_avalon_slave_address,            --                        hpc_avalon_slave.address
+			hpc_avalon_slave_write                        => mm_interconnect_0_hpc_avalon_slave_write,              --                                        .write
+			hpc_avalon_slave_read                         => mm_interconnect_0_hpc_avalon_slave_read,               --                                        .read
+			hpc_avalon_slave_readdata                     => mm_interconnect_0_hpc_avalon_slave_readdata,           --                                        .readdata
+			hpc_avalon_slave_writedata                    => mm_interconnect_0_hpc_avalon_slave_writedata,          --                                        .writedata
+			hpc_avalon_slave_byteenable                   => mm_interconnect_0_hpc_avalon_slave_byteenable,         --                                        .byteenable
+			hpc_avalon_slave_waitrequest                  => mm_interconnect_0_hpc_avalon_slave_waitrequest,        --                                        .waitrequest
+			hpc_avalon_slave_chipselect                   => mm_interconnect_0_hpc_avalon_slave_chipselect,         --                                        .chipselect
 			pio_leds_s1_address                           => mm_interconnect_0_pio_leds_s1_address,                 --                             pio_leds_s1.address
 			pio_leds_s1_write                             => mm_interconnect_0_pio_leds_s1_write,                   --                                        .write
 			pio_leds_s1_readdata                          => mm_interconnect_0_pio_leds_s1_readdata,                --                                        .readdata

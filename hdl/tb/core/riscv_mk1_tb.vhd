@@ -21,7 +21,7 @@ architecture behave of riscv_mk1_tb is
 
   -- *********************************************************************
   -- Testbench parameters
-  constant MEM_SIZE       : integer := 2**16; -- 64 Kbyte
+  constant MEM_SIZE       : integer := 2**16; -- 64 KByte
   constant MEM_INIT_FILE  : string  := "../code/fibonacci/bin/fibo.vhdl";
   constant MEM_TRACE_FILE : string  := "tb_out/fibo_trace.txt";
   constant WAIT_STATES    : integer := 0;     -- Memory wait states
@@ -35,9 +35,13 @@ architecture behave of riscv_mk1_tb is
   signal w_av_byteenable  : std_logic_vector(3 downto 0);
   signal w_av_read        : std_logic;
   signal w_av_write       : std_logic;
-  signal w_av_waitrequest : std_logic := '0';
+  signal w_av_waitrequest : std_logic;
   signal w_av_writedata   : std_logic_vector(31 downto 0);
-  signal w_av_readdata    : std_logic_vector(31 downto 0) := (others=>'0');
+  signal w_av_readdata    : std_logic_vector(31 downto 0);
+  signal w_debug_vector   : std_logic_vector(31 downto 0);
+
+  signal w_opcode : std_logic_vector(31 downto 0);
+  signal w_pc     : std_logic_vector(31 downto 0);
 
 
   component riscv_mk1 is
@@ -50,7 +54,10 @@ architecture behave of riscv_mk1_tb is
       o_av_write        : out std_logic;
       i_av_waitrequest  : in  std_logic;
       o_av_writedata    : out std_logic_vector(31 downto 0);
-      i_av_readdata     : in  std_logic_vector(31 downto 0)
+      i_av_readdata     : in  std_logic_vector(31 downto 0);
+      o_debug_vector    : out std_logic_vector(31 downto 0);
+      o_debug_opcode    : out std_logic_vector(31 downto 0);
+      o_debug_pc        : out std_logic_vector(31 downto 0)
     );
   end component riscv_mk1;
 
@@ -70,7 +77,9 @@ architecture behave of riscv_mk1_tb is
       i_write       : in  std_logic;
       o_waitrequest : out std_logic;
       i_writedata   : in  std_logic_vector(31 downto 0);
-      o_readdata    : out std_logic_vector(31 downto 0)
+      o_readdata    : out std_logic_vector(31 downto 0);
+      i_opcode      : in  std_logic_vector(31 downto 0);
+      i_pc          : in  std_logic_vector(31 downto 0)
     );
   end component avalon_bus;
 
@@ -120,7 +129,10 @@ begin
       i_write       => w_av_write,
       o_waitrequest => w_av_waitrequest,
       i_writedata   => w_av_writedata,
-      o_readdata    => w_av_readdata
+      o_readdata    => w_av_readdata,
+      -- CPU state
+      i_opcode      => w_opcode,
+      i_pc          => w_pc
     );
 
 
@@ -134,7 +146,10 @@ begin
       o_av_write       => w_av_write,
       i_av_waitrequest => w_av_waitrequest,
       o_av_writedata   => w_av_writedata,
-      i_av_readdata    => w_av_readdata
+      i_av_readdata    => w_av_readdata,
+      o_debug_vector   => w_debug_vector,
+      o_debug_opcode   => w_opcode,
+      o_debug_pc       => w_pc
     );
 
 end architecture behave;

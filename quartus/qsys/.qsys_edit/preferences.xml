@@ -8,7 +8,8 @@
    <name preferredWidth="193" />
   </columns>
  </systemtable>
- <library expandedCategories="Library,Project" />
+ <library
+   expandedCategories="Project/Processors and Peripherals,Project,Project/Processors and Peripherals/Embedded Processors,Library" />
  <window width="2576" height="1416" x="-8" y="-8" />
  <generation synthesis="VHDL" block_symbol_file="0" />
 </preferences>

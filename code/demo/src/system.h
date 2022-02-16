@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 
-#define CLK_FREQ 100000000UL
+#define CLK_FREQ 50000000UL
 
 
 #define _ALT_JTAG_UART      0x20000000

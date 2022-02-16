@@ -238,8 +238,8 @@ Disassembly of section .text:
      360:	9e0800a3          	sb	zero,-1567(a6)
      364:	4a0020ef          	jal	ra,2804 <printf>
      368:	b3042583          	lw	a1,-1232(s0)
-     36c:	05f5e537          	lui	a0,0x5f5e
-     370:	10050513          	addi	a0,a0,256 # 5f5e100 <_end+0x1d055ac>
+     36c:	02faf537          	lui	a0,0x2faf
+     370:	08050513          	addi	a0,a0,128 # 2faf080 <__global_pointer$+0x2f89710>
      374:	589000ef          	jal	ra,10fc <__udivsi3>
      378:	01c12083          	lw	ra,28(sp)
      37c:	01812403          	lw	s0,24(sp)
@@ -689,7 +689,7 @@ Disassembly of section .text:
      a44:	03c020ef          	jal	ra,2a80 <puts>
      a48:	00c12083          	lw	ra,12(sp)
      a4c:	200007b7          	lui	a5,0x20000
-     a50:	32200713          	li	a4,802
+     a50:	12200713          	li	a4,290
      a54:	20e7a423          	sw	a4,520(a5) # 20000208 <__estack$+0x18000208>
      a58:	01010113          	addi	sp,sp,16
      a5c:	00008067          	ret

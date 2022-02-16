@@ -67,7 +67,7 @@ end entity riscv_mk1_demo;
 architecture behave of riscv_mk1_demo is
 
   -- Constants
-  constant SYS_CLK_FREQ       : integer := 100000000;
+  constant SYS_CLK_FREQ       : integer := 50000000;
   constant UART_BAUDRATE      : integer := 2000000;
   constant UART_TX_FIFO_SIZE  : integer := 64;
   constant UART_RX_FIFO_SIZE  : integer := 64;
@@ -75,9 +75,10 @@ architecture behave of riscv_mk1_demo is
   constant VGA_FIFO_SIZE      : integer := 128;
 
   -- Clock and Reset
-  signal w_sys_clk  : std_logic;
-  signal r_reset    : std_logic := '0';
-  signal r_reset0   : std_logic := '0';
+  signal w_sys_clk        : std_logic;
+  signal r_reset          : std_logic := '0';
+  signal r_reset0         : std_logic := '0';
+  signal w_debug_vector_0 : std_logic_vector(31 downto 0);
 
   -- Stereo DAC Avalon interface
   signal av_dac_acknowledge : std_logic;
@@ -88,8 +89,8 @@ architecture behave of riscv_mk1_demo is
   signal av_dac_rw          : std_logic;
   signal av_dac_write_data  : std_logic_vector(31 downto 0);
   signal av_dac_read_data   : std_logic_vector(31 downto 0);
-  signal w_dac_left   : std_logic;
-  signal w_dac_right  : std_logic;
+  signal w_dac_left         : std_logic;
+  signal w_dac_right        : std_logic;
 
   -- UART Avalon Interface
   signal av_uart_acknowledge  : std_logic;
@@ -112,30 +113,42 @@ architecture behave of riscv_mk1_demo is
   signal av_vga_rw           : std_logic;
   signal av_vga_write_data   : std_logic_vector(31 downto 0);
   signal av_vga_read_data    : std_logic_vector(31 downto 0);
+
+  -- Hardware Performance Counter
+  signal av_hpc_acknowledge  : std_logic;
+  signal av_hpc_irq          : std_logic;
+  signal av_hpc_address      : std_logic_vector(5 downto 0);
+  signal av_hpc_bus_enable   : std_logic;
+  signal av_hpc_byte_enable  : std_logic_vector(3 downto 0);
+  signal av_hpc_rw           : std_logic;
+  signal av_hpc_write_data   : std_logic_vector(31 downto 0);
+  signal av_hpc_read_data    : std_logic_vector(31 downto 0);
+
   
   component system is
     port (
-      clk_clk     : in  std_logic;
-		  rst_reset_n : in  std_logic;
-      sys_clk     : out   std_logic;
-		  clk_sdram_clk : out   std_logic;
-		  sdram_addr    : out   std_logic_vector(12 downto 0);
-		  sdram_ba      : out   std_logic_vector(1 downto 0);
-		  sdram_cas_n   : out   std_logic;
-		  sdram_cke     : out   std_logic;
-		  sdram_cs_n    : out   std_logic;
-		  sdram_dq      : inout std_logic_vector(15 downto 0);
-		  sdram_dqm     : out   std_logic_vector(1 downto 0);
-		  sdram_ras_n   : out   std_logic;
-		  sdram_we_n    : out   std_logic;
+      clk_clk       : in  std_logic;
+      rst_reset_n   : in  std_logic;
+      sys_clk       : out   std_logic;
+      clk_sdram_clk : out   std_logic;
+      sdram_addr    : out   std_logic_vector(12 downto 0);
+      sdram_ba      : out   std_logic_vector(1 downto 0);
+      sdram_cas_n   : out   std_logic;
+      sdram_cke     : out   std_logic;
+      sdram_cs_n    : out   std_logic;
+      sdram_dq      : inout std_logic_vector(15 downto 0);
+      sdram_dqm     : out   std_logic_vector(1 downto 0);
+      sdram_ras_n   : out   std_logic;
+      sdram_we_n    : out   std_logic;
+      riscv_mk1_debug_vector_0                : out   std_logic_vector(31 downto 0);
       av_dac_external_interface_acknowledge   : in    std_logic;
-		  av_dac_external_interface_irq           : in    std_logic;
-		  av_dac_external_interface_address       : out   std_logic_vector(2 downto 0);
-		  av_dac_external_interface_bus_enable    : out   std_logic;
-		  av_dac_external_interface_byte_enable   : out   std_logic_vector(3 downto 0);
-		  av_dac_external_interface_rw            : out   std_logic;
-		  av_dac_external_interface_write_data    : out   std_logic_vector(31 downto 0);
-		  av_dac_external_interface_read_data     : in    std_logic_vector(31 downto 0);
+      av_dac_external_interface_irq           : in    std_logic;
+      av_dac_external_interface_address       : out   std_logic_vector(2 downto 0);
+      av_dac_external_interface_bus_enable    : out   std_logic;
+      av_dac_external_interface_byte_enable   : out   std_logic_vector(3 downto 0);
+      av_dac_external_interface_rw            : out   std_logic;
+      av_dac_external_interface_write_data    : out   std_logic_vector(31 downto 0);
+      av_dac_external_interface_read_data     : in    std_logic_vector(31 downto 0);
       av_uart_external_interface_acknowledge  : in    std_logic;
       av_uart_external_interface_irq          : in    std_logic;
       av_uart_external_interface_address      : out   std_logic_vector(2 downto 0);
@@ -152,12 +165,20 @@ architecture behave of riscv_mk1_demo is
       av_vga_external_interface_rw            : out   std_logic;
       av_vga_external_interface_write_data    : out   std_logic_vector(31 downto 0);
       av_vga_external_interface_read_data     : in    std_logic_vector(31 downto 0);
+      av_hpc_external_interface_acknowledge   : in    std_logic;
+      av_hpc_external_interface_irq           : in    std_logic;
+      av_hpc_external_interface_address       : out   std_logic_vector(5 downto 0);
+      av_hpc_external_interface_bus_enable    : out   std_logic;
+      av_hpc_external_interface_byte_enable   : out   std_logic_vector(3 downto 0);
+      av_hpc_external_interface_rw            : out   std_logic;
+      av_hpc_external_interface_write_data    : out   std_logic_vector(31 downto 0);
+      av_hpc_external_interface_read_data     : in    std_logic_vector(31 downto 0);
       disp0_export  : out   std_logic_vector(7 downto 0);
-		  disp1_export  : out   std_logic_vector(7 downto 0);
-		  disp2_export  : out   std_logic_vector(7 downto 0);
-		  disp3_export  : out   std_logic_vector(7 downto 0);
-		  disp4_export  : out   std_logic_vector(7 downto 0);
-		  disp5_export  : out   std_logic_vector(7 downto 0);
+      disp1_export  : out   std_logic_vector(7 downto 0);
+      disp2_export  : out   std_logic_vector(7 downto 0);
+      disp3_export  : out   std_logic_vector(7 downto 0);
+      disp4_export  : out   std_logic_vector(7 downto 0);
+      disp5_export  : out   std_logic_vector(7 downto 0);
       leds_export   : out std_logic_vector(9 downto 0)
     );
   end component system;
@@ -181,17 +202,16 @@ architecture behave of riscv_mk1_demo is
     );
   end component stereo_dac;
 
-
   component UART is
     generic (
-	    CLOCK_FREQUENCY : integer;
-	    BAUD_RATE       : integer;
-	    TX_FIFO_DEPTH   : integer;
-	    RX_FIFO_DEPTH   : integer
-	  );
+      CLOCK_FREQUENCY : integer;
+      BAUD_RATE       : integer;
+      TX_FIFO_DEPTH   : integer;
+      RX_FIFO_DEPTH   : integer
+    );
     port (
-	    i_clock         : in  std_logic;
-	    i_reset_n       : in  std_logic;
+      i_clock         : in  std_logic;
+      i_reset_n       : in  std_logic;
       o_tx_fifo_q     : out std_logic_vector(7 downto 0);
       o_tx_fifo_wrreq : out std_logic;
       o_tx_fifo_rdreq : out std_logic;
@@ -230,16 +250,45 @@ architecture behave of riscv_mk1_demo is
     );
   end component video_gen;
 
+  component hpc is
+    port (
+      i_clk               : in  std_logic;
+      i_rst               : in  std_logic;
+      av_acknowledge      : out std_logic;
+      av_irq              : out std_logic;
+      av_address          : in  std_logic_vector(5 downto 0);
+      av_bus_enable       : in  std_logic;
+      av_byte_enable      : in  std_logic_vector(3 downto 0);
+      av_rw               : in  std_logic;
+      av_write_data       : in  std_logic_vector(31 downto 0);
+      av_read_data        : out std_logic_vector(31 downto 0);
+      i_cpu_debug_vector  : in  std_logic_vector(31 downto 0)
+    );
+  end component hpc;
+
 begin
 
+  -- Audio DAC
   ARDUINO_IO(12) <= w_dac_left;
   ARDUINO_IO(13) <= w_dac_right;
-
+  -- Serial port
   GPIO(0)   <= 'Z';
   w_uart_RX <= GPIO(0);
   GPIO(1)   <= w_uart_TX;
-
   av_uart_irq <= '0';
+  -- CPU Debug
+  GPIO(25) <= w_sys_clk;
+  GPIO(27) <= w_debug_vector_0(0);  -- fetch
+  GPIO(29) <= w_debug_vector_0(1);  -- decode
+  GPIO(31) <= w_debug_vector_0(2);  -- execute
+  GPIO(33) <= w_debug_vector_0(3);  -- memory
+  GPIO(35) <= w_debug_vector_0(4);  -- write back
+  GPIO(26) <= '0';
+  GPIO(28) <= '0';
+  GPIO(30) <= '0';
+  GPIO(32) <= '0';
+  GPIO(34) <= '0';
+
   
   -- Sinchronize inputs
   p_sync : process (MAX10_CLK1_50)
@@ -258,25 +307,27 @@ begin
       sys_clk       => w_sys_clk,
 
       clk_sdram_clk => DRAM_CLK,
-		  sdram_addr    => DRAM_ADDR,
-		  sdram_ba      => DRAM_BA,
-		  sdram_cas_n   => DRAM_CAS_N,
-		  sdram_cke     => DRAM_CKE,
-		  sdram_cs_n    => DRAM_CS_N,
-		  sdram_dq      => DRAM_DQ,
-		  sdram_dqm(0)  => DRAM_LDQM,
-		  sdram_dqm(1)  => DRAM_UDQM,
-		  sdram_ras_n   => DRAM_RAS_N,
-		  sdram_we_n    => DRAM_WE_N,
+      sdram_addr    => DRAM_ADDR,
+      sdram_ba      => DRAM_BA,
+      sdram_cas_n   => DRAM_CAS_N,
+      sdram_cke     => DRAM_CKE,
+      sdram_cs_n    => DRAM_CS_N,
+      sdram_dq      => DRAM_DQ,
+      sdram_dqm(0)  => DRAM_LDQM,
+      sdram_dqm(1)  => DRAM_UDQM,
+      sdram_ras_n   => DRAM_RAS_N,
+      sdram_we_n    => DRAM_WE_N,
+
+      riscv_mk1_debug_vector_0  => w_debug_vector_0,
 
       av_dac_external_interface_acknowledge => av_dac_acknowledge,
-		  av_dac_external_interface_irq         => av_dac_irq,
-		  av_dac_external_interface_address     => av_dac_address,
-		  av_dac_external_interface_bus_enable  => av_dac_bus_enable,
-		  av_dac_external_interface_byte_enable => av_dac_byte_enable,
-		  av_dac_external_interface_rw          => av_dac_rw,
-		  av_dac_external_interface_write_data  => av_dac_write_data,
-		  av_dac_external_interface_read_data   => av_dac_read_data,
+      av_dac_external_interface_irq         => av_dac_irq,
+      av_dac_external_interface_address     => av_dac_address,
+      av_dac_external_interface_bus_enable  => av_dac_bus_enable,
+      av_dac_external_interface_byte_enable => av_dac_byte_enable,
+      av_dac_external_interface_rw          => av_dac_rw,
+      av_dac_external_interface_write_data  => av_dac_write_data,
+      av_dac_external_interface_read_data   => av_dac_read_data,
 
       av_uart_external_interface_acknowledge  => av_uart_acknowledge,
       av_uart_external_interface_irq          => av_uart_irq,
@@ -295,6 +346,15 @@ begin
       av_vga_external_interface_rw            => av_vga_rw,
       av_vga_external_interface_write_data    => av_vga_write_data,
       av_vga_external_interface_read_data     => av_vga_read_data,
+
+      av_hpc_external_interface_acknowledge   => av_hpc_acknowledge,
+      av_hpc_external_interface_irq           => av_hpc_irq,
+      av_hpc_external_interface_address       => av_hpc_address,
+      av_hpc_external_interface_bus_enable    => av_hpc_bus_enable,
+      av_hpc_external_interface_byte_enable   => av_hpc_byte_enable,
+      av_hpc_external_interface_rw            => av_hpc_rw,
+      av_hpc_external_interface_write_data    => av_hpc_write_data,
+      av_hpc_external_interface_read_data     => av_hpc_read_data,
 
       disp0_export  => HEX0,
       disp1_export  => HEX1,
@@ -340,7 +400,7 @@ begin
       i_write         => av_uart_bus_enable and not av_uart_rw,
       i_writedata     => av_uart_write_data,
       o_readdata      => av_uart_read_data,
-      o_acknowledge	  => av_uart_acknowledge,
+      o_acknowledge   => av_uart_acknowledge,
       i_RX            => w_uart_RX,
       o_TX            => w_uart_TX
     );
@@ -367,4 +427,19 @@ begin
       o_vga_vs        => VGA_VS
     );
 
+
+  hpc0 : hpc
+    port map(
+      i_clk               => w_sys_clk,
+      i_rst               => r_reset,
+      av_acknowledge      => av_hpc_acknowledge,
+      av_irq              => av_hpc_irq,
+      av_address          => av_hpc_address,
+      av_bus_enable       => av_hpc_bus_enable,
+      av_byte_enable      => av_hpc_byte_enable,
+      av_rw               => av_hpc_rw,
+      av_write_data       => av_hpc_write_data,
+      av_read_data        => av_hpc_read_data,
+      i_cpu_debug_vector  => w_debug_vector_0
+    );
 end architecture behave;
