@@ -68,7 +68,7 @@ architecture behave of riscv_mk1 is
   signal w_rs1          : std_logic_vector( 4 downto 0);
   signal w_rs2          : std_logic_vector( 4 downto 0);
   signal w_rd           : std_logic_vector( 4 downto 0);
-  signal w_reg_mux      : std_logic_vector( 1 downto 0);
+  signal w_reg_mux      : std_logic_vector( 2 downto 0);
   signal w_reg_wb       : std_logic;
   signal w_imm          : std_logic_vector(31 downto 0);
   signal w_alu_in1_mux  : std_logic;
@@ -138,7 +138,7 @@ architecture behave of riscv_mk1 is
       o_rs1         : out std_logic_vector( 4 downto 0);
       o_rs2         : out std_logic_vector( 4 downto 0);
       o_rd          : out std_logic_vector( 4 downto 0);
-      o_reg_mux     : out std_logic_vector( 1 downto 0);
+      o_reg_mux     : out std_logic_vector( 2 downto 0);
       o_reg_wb      : out std_logic;
       o_imm         : out std_logic_vector(31 downto 0);
       o_alu_in1_mux : out std_logic;
@@ -241,9 +241,11 @@ architecture behave of riscv_mk1 is
 begin
 
   -- Register input multiplexer
-  w_reg_in <= w_alu_out   when (w_reg_mux = "00") else
-              w_data_out  when (w_reg_mux = "01") else
-              w_pc_next;
+  with w_reg_mux select
+    w_reg_in <= w_alu_out   when "001",
+                w_data_out  when "010",
+                w_pc_next   when "100",
+                x"--------" when others;
 
   -- ALU input multiplexers
   w_alu_in1 <= w_reg_out1 when (w_alu_in1_mux = '0') else w_pc;

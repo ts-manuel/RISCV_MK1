@@ -14,7 +14,7 @@
    id="svg8"
    inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
    sodipodi:docname="cpu_diagram.svg"
-   inkscape:export-filename="W:\riscv_mk1\inkscape\cpu_diagram_timings.png"
+   inkscape:export-filename="W:\riscv_mk1\inkscape\cpu_diagram.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
   <defs
@@ -1540,8 +1540,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
-     inkscape:cx="579.14819"
-     inkscape:cy="393.74079"
+     inkscape:cx="529.12158"
+     inkscape:cy="395.59898"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -3108,36 +3108,36 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="97.322769"
+       x="96.793602"
        y="35.114647"
        id="text1408-6-0-9-9-3-8-76"><tspan
          sodipodi:role="line"
          id="tspan1406-2-6-4-3-7-7-9"
-         x="97.322769"
+         x="96.793602"
          y="35.114647"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">00</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">001</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="97.322769"
+       x="96.793602"
        y="40.406315"
        id="text1408-6-0-9-9-3-8-1-8"><tspan
          sodipodi:role="line"
-         x="97.322769"
+         x="96.793602"
          y="40.406315"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583"
-         id="tspan2570-7">10</tspan></text>
+         id="tspan2570-7">100 </tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="97.278336"
+       x="96.749168"
        y="37.760483"
        id="text1408-6-0-9-9-3-8-76-9"><tspan
          sodipodi:role="line"
          id="tspan1406-2-6-4-3-7-7-9-2"
-         x="97.278336"
+         x="96.749168"
          y="37.760483"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">01</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.11667px;font-family:Rockwell;-inkscape-font-specification:Rockwell;stroke-width:0.264583">010 </tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:2.11667px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"

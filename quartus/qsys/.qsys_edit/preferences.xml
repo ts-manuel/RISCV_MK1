@@ -9,7 +9,7 @@
   </columns>
  </systemtable>
  <library
-   expandedCategories="Project/Processors and Peripherals,Project,Project/Processors and Peripherals/Embedded Processors,Library" />
+   expandedCategories="Project,Library,Project/Processors and Peripherals,Project/Processors and Peripherals/Embedded Processors" />
  <window width="2576" height="1416" x="-8" y="-8" />
  <generation synthesis="VHDL" block_symbol_file="0" />
 </preferences>

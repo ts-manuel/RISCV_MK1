@@ -41,7 +41,7 @@ entity decoder is
     o_rs1         : out std_logic_vector( 4 downto 0) := (others=>'0');
     o_rs2         : out std_logic_vector( 4 downto 0) := (others=>'0');
     o_rd          : out std_logic_vector( 4 downto 0) := (others=>'0');
-    o_reg_mux     : out std_logic_vector( 1 downto 0) := (others=>'0');
+    o_reg_mux     : out std_logic_vector( 2 downto 0) := (others=>'0');
     o_reg_wb      : out std_logic := '0';
     o_imm         : out std_logic_vector(31 downto 0) := (others=>'0');
     o_alu_in1_mux : out std_logic := '0';
@@ -66,7 +66,7 @@ architecture behave of decoder is
   signal w_rs1         : std_logic_vector( 4 downto 0);
   signal w_rs2         : std_logic_vector( 4 downto 0);
   signal w_rd          : std_logic_vector( 4 downto 0);
-  signal w_reg_mux     : std_logic_vector( 1 downto 0);
+  signal w_reg_mux     : std_logic_vector( 2 downto 0);
   signal w_reg_wb      : std_logic;
   signal w_imm         : std_logic_vector(31 downto 0);
   signal w_alu_in1_mux : std_logic;
@@ -106,10 +106,10 @@ begin
   w_alu_func(2 downto 0)  <= i_opcode(14 downto 12) when (w_ins_type = ALU_REG or w_ins_type = ALU_IMM) else "000";
 
   -- Control signals
-  w_reg_mux     <= "01" when (w_ins_type = LOAD) else
-                   "10" when (w_ins_type = JAL)  else
-                   "10" when (w_ins_type = JALR) else
-                   "00";
+  w_reg_mux     <= "010" when (w_ins_type = LOAD) else
+                   "100" when (w_ins_type = JAL)  else
+                   "100" when (w_ins_type = JALR) else
+                   "001";
   w_reg_wb      <= '0'  when (w_ins_type = STORE or w_ins_type = BRANCH)  else '1';
   w_alu_in1_mux <= '1'  when (w_ins_type = AUIPC or w_ins_type = JAL or w_ins_type = BRANCH) else '0';
   w_alu_in2_mux <= '0'  when (w_ins_type = ALU_REG) else '1';

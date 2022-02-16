@@ -47,12 +47,11 @@ architecture behave of control_unit is
 
 begin
 
-  o_fetch       <= '0' when i_rst = '1' else r_fetch;
-  o_decode      <= '1' when (o_fetch = '1' and i_fetch_wait ='0') else '0';
-  o_execute     <= '0' when i_rst = '1' else r_execute;
-  o_memory      <= '0' when i_rst = '1' else r_memory;
+  o_fetch       <= '0' when (i_rst = '1')                           else r_fetch;
+  o_decode      <= '1' when (o_fetch = '1' and i_fetch_wait ='0')   else '0';
+  o_execute     <= r_execute;
+  o_memory      <= r_memory;
   o_write_back  <= '1' when (o_memory = '1' and i_memory_wait ='0') else '0';
-
 
   p_control : process (i_clk)
   begin
@@ -61,20 +60,10 @@ begin
         r_fetch   <= '1';
         r_execute <= '0';
         r_memory  <= '0';
-      else
-        if (r_fetch = '1' and i_fetch_wait = '0') then
-          r_fetch   <= '0';
-          r_execute <= '1';
-          r_memory  <= '0';
-        elsif (r_execute = '1') then
-          r_fetch   <= '0';
-          r_execute <= '0';
-          r_memory  <= '1';
-        elsif (r_memory = '1' and i_memory_wait = '0') then
-          r_fetch   <= '1';
-          r_execute <= '0';
-          r_memory  <= '0';
-        end if;
+      elsif (i_fetch_wait = '0' and i_memory_wait = '0') then
+        r_fetch   <= r_memory;
+        r_execute <= r_fetch;
+        r_memory  <= r_execute;
       end if;
     end if;
   end process p_control;

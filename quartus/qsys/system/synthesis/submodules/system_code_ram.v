@@ -37,7 +37,7 @@ module system_code_ram (
                        )
 ;
 
-  parameter INIT_FILE = "../code/bench/bin/bench.mif";
+  parameter INIT_FILE = "../code/demo/bin/demo.mif";
 
 
   output  [ 31: 0] readdata;

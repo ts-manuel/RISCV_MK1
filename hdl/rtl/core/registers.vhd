@@ -40,7 +40,7 @@ end entity registers;
 architecture behave of registers is
 
   -- Register Array
-  type t_Memory is array (1 to 31) of std_logic_vector(31 downto 0);
+  type t_Memory is array (0 to 31) of std_logic_vector(31 downto 0);
   signal r_regs : t_Memory := (others=>(x"00000000"));
 
   signal w_rs1 : integer range 0 to 31;
@@ -54,8 +54,8 @@ begin
   w_rd    <= to_integer(unsigned(i_rd));
 
   -- Output selected registers
-  o_reg1  <= x"00000000" when (w_rs1 = 0) else r_regs(w_rs1);
-  o_reg2  <= x"00000000" when (w_rs2 = 0) else r_regs(w_rs2);
+  o_reg1  <= r_regs(w_rs1);
+  o_reg2  <= r_regs(w_rs2);
 
   -- Write to destination register
   p_reg_write : process (i_clk)

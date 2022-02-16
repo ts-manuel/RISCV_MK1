@@ -59,7 +59,7 @@ set_false_path -to [get_ports GPIO[1]]
 # DAC
 set_false_path -to [get_ports {ARDUINO_IO[12] ARDUINO_IO[13]}]
 # VGA
-set_false_path -to [get_ports {VGA_R VGA_G VGA_B VGA_HS VGA_VS}]
+set_false_path -to [get_ports {VGA_R* VGA_G* VGA_B* VGA_HS VGA_VS}]
 
 
 #**************************************************************

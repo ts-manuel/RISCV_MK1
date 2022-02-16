@@ -7,6 +7,14 @@
 		.av_dac_external_interface_rw           (<connected-to-av_dac_external_interface_rw>),           //                           .rw
 		.av_dac_external_interface_write_data   (<connected-to-av_dac_external_interface_write_data>),   //                           .write_data
 		.av_dac_external_interface_read_data    (<connected-to-av_dac_external_interface_read_data>),    //                           .read_data
+		.av_hpc_external_interface_acknowledge  (<connected-to-av_hpc_external_interface_acknowledge>),  //  av_hpc_external_interface.acknowledge
+		.av_hpc_external_interface_irq          (<connected-to-av_hpc_external_interface_irq>),          //                           .irq
+		.av_hpc_external_interface_address      (<connected-to-av_hpc_external_interface_address>),      //                           .address
+		.av_hpc_external_interface_bus_enable   (<connected-to-av_hpc_external_interface_bus_enable>),   //                           .bus_enable
+		.av_hpc_external_interface_byte_enable  (<connected-to-av_hpc_external_interface_byte_enable>),  //                           .byte_enable
+		.av_hpc_external_interface_rw           (<connected-to-av_hpc_external_interface_rw>),           //                           .rw
+		.av_hpc_external_interface_write_data   (<connected-to-av_hpc_external_interface_write_data>),   //                           .write_data
+		.av_hpc_external_interface_read_data    (<connected-to-av_hpc_external_interface_read_data>),    //                           .read_data
 		.av_uart_external_interface_acknowledge (<connected-to-av_uart_external_interface_acknowledge>), // av_uart_external_interface.acknowledge
 		.av_uart_external_interface_irq         (<connected-to-av_uart_external_interface_irq>),         //                           .irq
 		.av_uart_external_interface_address     (<connected-to-av_uart_external_interface_address>),     //                           .address
@@ -32,6 +40,7 @@
 		.disp4_export                           (<connected-to-disp4_export>),                           //                      disp4.export
 		.disp5_export                           (<connected-to-disp5_export>),                           //                      disp5.export
 		.leds_export                            (<connected-to-leds_export>),                            //                       leds.export
+		.riscv_mk1_debug_vector_0               (<connected-to-riscv_mk1_debug_vector_0>),               //            riscv_mk1_debug.vector_0
 		.rst_reset_n                            (<connected-to-rst_reset_n>),                            //                        rst.reset_n
 		.sdram_addr                             (<connected-to-sdram_addr>),                             //                      sdram.addr
 		.sdram_ba                               (<connected-to-sdram_ba>),                               //                           .ba
@@ -42,15 +51,6 @@
 		.sdram_dqm                              (<connected-to-sdram_dqm>),                              //                           .dqm
 		.sdram_ras_n                            (<connected-to-sdram_ras_n>),                            //                           .ras_n
 		.sdram_we_n                             (<connected-to-sdram_we_n>),                             //                           .we_n
-		.sys_clk                                (<connected-to-sys_clk>),                                //                        sys.clk
-		.riscv_mk1_debug_vector_0               (<connected-to-riscv_mk1_debug_vector_0>),               //            riscv_mk1_debug.vector_0
-		.av_hpc_external_interface_acknowledge  (<connected-to-av_hpc_external_interface_acknowledge>),  //  av_hpc_external_interface.acknowledge
-		.av_hpc_external_interface_irq          (<connected-to-av_hpc_external_interface_irq>),          //                           .irq
-		.av_hpc_external_interface_address      (<connected-to-av_hpc_external_interface_address>),      //                           .address
-		.av_hpc_external_interface_bus_enable   (<connected-to-av_hpc_external_interface_bus_enable>),   //                           .bus_enable
-		.av_hpc_external_interface_byte_enable  (<connected-to-av_hpc_external_interface_byte_enable>),  //                           .byte_enable
-		.av_hpc_external_interface_rw           (<connected-to-av_hpc_external_interface_rw>),           //                           .rw
-		.av_hpc_external_interface_write_data   (<connected-to-av_hpc_external_interface_write_data>),   //                           .write_data
-		.av_hpc_external_interface_read_data    (<connected-to-av_hpc_external_interface_read_data>)     //                           .read_data
+		.sys_clk                                (<connected-to-sys_clk>)                                 //                        sys.clk
 	);
 
